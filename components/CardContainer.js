@@ -1,33 +1,40 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { FlashList } from '@shopify/flash-list'; 
 
 const CardContainer = ({ cards, handleImageClick }) => {
+  const renderItem = ({ item }) => (
+    <TouchableOpacity onPress={() => handleImageClick(item.imageUrl)} style={cardContainerStyles.cardContainer}>
+      <Image source={{ uri: item.imageUrl }} style={cardContainerStyles.cardImage} />
+    </TouchableOpacity>
+  );
+
   return (
-    <ScrollView contentContainerStyle={cardContainerStyles.container}>
-      {cards.map((card, index) => (
-        <TouchableOpacity key={index} onPress={() => handleImageClick(card.imageUrl)}>
-          <View style={cardContainerStyles.cardContainer}>
-            <Text>{card.name}</Text>
-            <Image source={{ uri: card.imageUrl }} style={cardContainerStyles.cardImage} />
-          </View>
-        </TouchableOpacity>
-      ))}
-    </ScrollView>
+    <FlashList
+      data={cards}
+      renderItem={renderItem}
+      keyExtractor={item => item.id.toString()}
+      numColumns={2} 
+      contentContainerStyle={cardContainerStyles.container}
+      estimatedItemSize={220} 
+    />
   );
 };
 
 const cardContainerStyles = StyleSheet.create({
   container: {
-    alignItems: 'center',
+    paddingHorizontal: 10,
   },
   cardContainer: {
-    alignItems: 'center',
-    marginBottom: 10,
+    flex: 1,
+    margin: 10,
+    width: 35, 
   },
   cardImage: {
-    width: 200,
-    height: 200,
+    width: '100%',
+    height: 200, 
+    resizeMode: 'contain',
   },
 });
 
-export default CardContainer;
+export default CardContainer; 
