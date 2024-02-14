@@ -5,9 +5,10 @@ const CardContainer = ({ cards, handleImageClick }) => {
   return (
     <ScrollView contentContainerStyle={cardContainerStyles.container}>
       {cards.map((card, index) => (
-        <TouchableOpacity key={index} onPress={() => handleImageClick(card.imageUrl)}>
+        <TouchableOpacity key={index} onPress={() => handleImageClick(card)}>
           <View style={cardContainerStyles.cardContainer}>
             <Text>{card.name}</Text>
+            <Text>{card.id}</Text>
             <Image source={{ uri: card.imageUrl }} style={cardContainerStyles.cardImage} />
           </View>
         </TouchableOpacity>

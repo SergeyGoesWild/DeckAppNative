@@ -3,11 +3,13 @@ import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import CardContainer from '../components/CardContainer';
 import NavBar from '../components/NavBar';
+import { useNavigation } from "@react-navigation/native";
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigation = useNavigation()
 
   useEffect(() => {
     const fetchCards = async () => {
@@ -34,8 +36,8 @@ const HomeScreen = ({ navigation }) => {
     fetchCards();
   }, []);
 
-  const handleImageClick = (imageUrl) => {
-    navigation.navigate('FullSizeImage', { imageUrl });
+  const handleImageClick = (card) => {
+    navigation.navigate('FullSizeImage', { card: card.id });
   };
 
   const handleSearch = async (searchTerm) => {
