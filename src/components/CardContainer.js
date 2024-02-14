@@ -8,7 +8,6 @@ const CardContainer = ({ cards, handleImageClick }) => {
         <TouchableOpacity key={index} onPress={() => handleImageClick(card)}>
           <View style={cardContainerStyles.cardContainer}>
             <Text>{card.name}</Text>
-            <Text>{card.id}</Text>
             <Image source={{ uri: card.imageUrl }} style={cardContainerStyles.cardImage} />
           </View>
         </TouchableOpacity>

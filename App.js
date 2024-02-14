@@ -1,8 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from './screens/HomeScreen';
-import DecksScreen from './screens/DecksScreen';
-import FullSizeImageScreen from './screens/FullSizeImageScreen';
+import HomeScreen from './src/screens/HomeScreen';
+import DecksScreen from './src/screens/DecksScreen';
+import FullSizeImageScreen from './src/screens/FullSizeImageScreen';
 
 const Stack = createStackNavigator();
 

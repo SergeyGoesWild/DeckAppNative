@@ -3,11 +3,11 @@ import { View, StyleSheet, Image } from 'react-native';
 import CardDetails from '../components/CardDetails';
 
 const FullSizeImageScreen = ({ route }) => {
-  const { card } = route.params;
+  const { card, imageUrl } = route.params;
 
   return (
     <View style={styles.container}>
-      <CardDetails card={card} />
+      <CardDetails card={card} image={imageUrl} />
     </View>
   );
 };
