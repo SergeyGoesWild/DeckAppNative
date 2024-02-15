@@ -20,8 +20,6 @@ const App = () => {
       >
         <Stack.Screen name="First" component={FirstScreen} />
         <Stack.Screen name="Pokemon Decks" component={TabsScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Decks" component={DecksScreen} />
         <Stack.Screen name="FullSizeImage" component={FullSizeImageScreen} />
         <Stack.Screen name="Error" component={ErrorScreen} />
       </Stack.Navigator>
