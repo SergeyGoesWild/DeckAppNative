@@ -7,11 +7,11 @@ export const searchBarStyles = StyleSheet.create({
     paddingVertical: 5,
     backgroundColor: Colors.searchBarStyles,
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    borderBottomColor: Colors.searchBarBorderColor,
   },
   input: {
     height: 40,
-    borderColor: "gray",
+    borderColor: Colors.inputBorderColor,
     borderWidth: 1,
     paddingHorizontal: 10,
   },

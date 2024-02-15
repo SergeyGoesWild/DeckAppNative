@@ -5,3 +5,6 @@ export const cardDetailsBackground = "#fff";
 export const searchBarBackground = "#fff";
 export const deckScreenBackground = "#fff";
 export const fullSizeBackground = "#fff";
+export const searchBarBorderColor = "#ccc";
+export const inputBorderColor = "gray";
+export const navBarBackground = "#ccc";

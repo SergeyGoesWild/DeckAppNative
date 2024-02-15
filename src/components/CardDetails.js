@@ -15,7 +15,7 @@ const CardDetails = ({ card }) => {
         const data = await response.json();
         setCardDetails(data);
       } catch (error) {
-        console.error("Error fetching card details:", error);
+        throw new Error(e);
       } finally {
         setLoading(false);
       }
