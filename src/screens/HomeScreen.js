@@ -11,11 +11,10 @@ const HomeScreen = () => {
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation()
 
-  useEffect(() => {
-    const fetchCards = async () => {
+  const fetchCards = async () => {
       setLoading(true);
       try {
-        let url = 'https://api.tcgdex.net/v2/en/cards';
+        const url = 'https://api.tcgdex.net/v2/en/cards';
         const response = await fetch(url);
         const data = await response.json();
         const cardsWithImages = data
@@ -27,14 +26,15 @@ const HomeScreen = () => {
           }));
         setCards(cardsWithImages);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        throw new Error(e)
       } finally {
         setLoading(false);
       }
     };
   
-    fetchCards();
-  }, []);
+    useEffect(() => {
+      fetchCards();
+    }, []);
 
   const handleImageClick = (card) => {
     navigation.navigate('FullSizeImage', { card: card.id });
@@ -58,24 +58,24 @@ const HomeScreen = () => {
         }));
       setCards(cardsWithImages);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      throw new Error(e)
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollViewContent}>
-      <View style={styles.container}>
+  <ScrollView contentContainerStyle={styles.scrollViewContent}>
+    <View style={styles.container}>
       <NavBar navigation={navigation} />
         <SearchBar value={searchTerm} onChangeText={setSearchTerm} onSearch={handleSearch} />
         {loading ? (
-          <Text>Loading...</Text>
+        <Text>Loading...</Text>
         ) : (
-          <CardContainer cards={cards} handleImageClick={handleImageClick} />
+        <CardContainer cards={cards} handleImageClick={handleImageClick} />
         )}
-      </View>
-    </ScrollView>
+    </View>
+  </ScrollView>
   );
 };
 

@@ -1,8 +1,10 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { styles as navBarStyles } from './styles/navBarStyles';
+import { useNavigation } from "@react-navigation/native";
 
-const NavBar = ({ navigation }) => {
+const NavBar = () => {
+  const navigation = useNavigation()
   return (
     <View style={navBarStyles.container}>
       <TouchableOpacity onPress={() => navigation.navigate('Home')}>

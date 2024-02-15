@@ -36,9 +36,12 @@ const CardDetails = ({ card }) => {
     <View style={styles.container}>
       {cardDetails ? (
         <>
-          <Text>{cardDetails.category}</Text>
+          <Text>{cardDetails.name}</Text>
+          <Text>{cardDetails.set.name}</Text>
           <Text>{cardDetails.rarity}</Text>
-          <Image source={{ uri: `${cardDetails.image}/high.webp` }} style={styles.container}/>
+          <Text>{cardDetails.types}</Text>
+          <Text>{cardDetails.description}</Text>
+          <Image source={{ uri: `${cardDetails.image}/high.webp` }} style={styles.image}/>
         </>
       ) : (
         <Text>No details available</Text>
@@ -59,6 +62,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  image : {
+    resizeMode: 'center',
+    height: '100%',
   },
 });
 
