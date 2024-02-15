@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export const searchBarStyles = StyleSheet.create({
+export const style = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
     paddingVertical: 5,
@@ -15,3 +15,5 @@ export const searchBarStyles = StyleSheet.create({
     paddingHorizontal: 10,
   },
 });
+
+export default style

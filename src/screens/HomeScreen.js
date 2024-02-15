@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import CardContainer from '../components/CardContainer';
 import NavBar from '../components/NavBar';
+import SetsMenu from '../components/SetsMenu';
 import { useNavigation } from "@react-navigation/native";
 
 const HomeScreen = () => {

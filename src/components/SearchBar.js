@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, TextInput, View, Button } from 'react-native';
-import { searchBarStyles } from './styles/searchBarStyles'
+import style from './styles/searchBarStyles'
 
 const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -10,9 +10,9 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <View style={searchBarStyles.container}>
+    <View style={style.container}>
       <TextInput
-        style={searchBarStyles.input}
+        style={style.input}
         placeholder="Search cards..."
         value={searchTerm}
         onChangeText={setSearchTerm}
