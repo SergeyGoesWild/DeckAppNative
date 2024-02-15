@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import SearchBar from "../components/SearchBar";
 import CardContainer from "../components/CardContainer";
+import * as Colors from "../components/styles/colors";
 
 const HomeScreen = ({ navigation }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -24,7 +25,7 @@ const HomeScreen = ({ navigation }) => {
           }));
         setCards(cardsWithImages);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        throw new Error("Error fetching data!", error);
       } finally {
         setLoading(false);
       }
@@ -55,7 +56,7 @@ const HomeScreen = ({ navigation }) => {
         }));
       setCards(cardsWithImages);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      throw new Error("Error fetching data!", error);
     } finally {
       setLoading(false);
     }
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.backgroundMain,
     paddingHorizontal: 10,
     paddingVertical: 20,
   },
