@@ -1,7 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import HomeScreen from "./src/screens/HomeScreen";
-import DecksScreen from "./src/screens/DecksScreen";
 import FullSizeImageScreen from "./src/screens/FullSizeImageScreen";
 import ErrorScreen from "./src/screens/ErrorScreen";
 import FirstScreen from "./src/screens/FirstScreen";

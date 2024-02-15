@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, Text, Image } from "react-native";
+import * as Colors from "../components/styles/colors";
 
 const CardDetails = ({ card }) => {
   const [cardDetails, setCardDetails] = useState(null);
@@ -14,7 +15,7 @@ const CardDetails = ({ card }) => {
         const data = await response.json();
         setCardDetails(data);
       } catch (error) {
-        console.error('Error fetching card details:', error);
+        console.error("Error fetching card details:", error);
       } finally {
         setLoading(false);
       }
@@ -22,7 +23,6 @@ const CardDetails = ({ card }) => {
 
     fetchCardDetails();
   }, [card]);
-
 
   if (loading) {
     return (
@@ -41,31 +41,33 @@ const CardDetails = ({ card }) => {
           <Text>{cardDetails.rarity}</Text>
           <Text>{cardDetails.types}</Text>
           <Text>{cardDetails.description}</Text>
-          <Image source={{ uri: `${cardDetails.image}/high.webp` }} style={styles.image}/>
+          <Image
+            source={{ uri: `${cardDetails.image}/high.webp` }}
+            style={styles.image}
+          />
         </>
       ) : (
         <Text>No details available</Text>
       )}
     </View>
-
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.cardDetailsBackground,
     paddingHorizontal: 10,
     paddingVertical: 20,
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
-  image : {
-    resizeMode: 'center',
-    height: '100%',
+  image: {
+    resizeMode: "center",
+    height: "100%",
   },
 });
 
