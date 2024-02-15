@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-around",
-    backgroundColor: Colors.navBarBackground,
+    backgroundColor: Colors.plainGrey,
     paddingVertical: 10,
   },
   link: {

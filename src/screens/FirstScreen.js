@@ -25,14 +25,14 @@ const styles = StyleSheet.create({
     padding: 30,
   },
   button: {
-    backgroundColor: Colors.button,
+    backgroundColor: Colors.buttonBlue,
     padding: 10,
     borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
   },
   buttonText: {
-    color: Colors.buttonText,
+    color: Colors.white,
     fontSize: 16,
     fontWeight: "bold",
   },

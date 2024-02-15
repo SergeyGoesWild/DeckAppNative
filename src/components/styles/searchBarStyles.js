@@ -5,13 +5,13 @@ export const searchBarStyles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
     paddingVertical: 5,
-    backgroundColor: Colors.searchBarStyles,
+    backgroundColor: Colors.white,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.searchBarBorderColor,
+    borderBottomColor: Colors.plainGrey,
   },
   input: {
     height: 40,
-    borderColor: Colors.inputBorderColor,
+    borderColor: Colors.plainGrey,
     borderWidth: 1,
     paddingHorizontal: 10,
   },
