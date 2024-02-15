@@ -1,5 +1,5 @@
 import { Text, View, Image, StyleSheet, Button } from "react-native";
-import errorImg from "../assets/ErrorImageBlack.png";
+import errorImg from "../../assets/ErrorImageBlack.png";
 
 function ErrorScreen({ navigation }) {
   return (
