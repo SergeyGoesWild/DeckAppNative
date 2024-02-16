@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
 import { FlashList } from '@shopify/flash-list'; 
 
-const CardContainer = ({ cards, handleImageClick }) => {
+const CardContainer = ({ cards, handleImageClick, handleFetchMore }) => {
   return (
     <FlashList
       data={cards}
@@ -14,7 +14,10 @@ const CardContainer = ({ cards, handleImageClick }) => {
       keyExtractor={(item, index) => index.toString()}
       contentContainerStyle={cardContainerStyles.container}
       estimatedItemSize={220}
-      numColumns={2} 
+      numColumns={2}
+      onEndReached={handleFetchMore}
+      onEndReachedThreshold={0.5} 
+      windowSize={1}
     />
   );
 };
