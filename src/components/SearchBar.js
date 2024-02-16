@@ -17,7 +17,7 @@ const SearchBar = ({ onSearch }) => {
         value={searchTerm}
         onChangeText={setSearchTerm}
       />
-      <Button title="Search" onPress={handleSearch} />
+      <Button style={style.button} title="Search" onPress={handleSearch} />
     </View>
   );
 };

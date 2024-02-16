@@ -24,7 +24,7 @@ const SetsMenu = () => {
 
   const renderSetItem = ({ item }) => (
     <TouchableOpacity style={styles.itemContainer} onPress={() => handleSetPress(item.id)}>
-      <Image source={{ uri: item.logo }} style={styles.image} />
+      <Image source={{ uri: item.symbol }} style={styles.image} />
       <Text style={styles.text}>{item.name}</Text>
     </TouchableOpacity>
   );

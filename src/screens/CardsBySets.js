@@ -4,6 +4,7 @@ import { View, Text, FlatList, StyleSheet } from 'react-native';
 const CardsBySets = ({ route }) => {
   const { setId } = route.params;
   const [cards, setCards] = useState([]);
+  console.log('LIST', setId)
 
   useEffect(() => {
     fetch(`https://api.tcgdex.net/v2/en/cards/${setId}`)

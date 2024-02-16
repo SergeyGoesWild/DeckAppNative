@@ -72,15 +72,15 @@ const CardDetails = ({ card }) => {
           )}
           <Text style={style.title}>Attacks: </Text>
           {cardDetails.attacks.map((attack, index) => (
-  <View key={index} style={style.attackContainer}>
-    <Text style={style.attackName}>{attack.name}</Text>
+  <View key={index} style={style.attacks}>
+    <Text style={style.attacks}>{attack.name}</Text>
     {attack.cost && (
       <Text style={style.attacks}>
         Cost: {Array.isArray(attack.cost) ? attack.cost.map(renderCostImage) : renderCostImage(attack.cost)}
       </Text>
     )}
-    <Text style={style.attackEffect}>Effect: {attack.effect}</Text>
-    {attack.damage && <Text style={style.attackDamage}>Damage: {attack.damage}</Text>}
+    <Text style={style.attacks}>Effect: {attack.effect}</Text>
+    {attack.damage && <Text style={style.attacks}>Damage: {attack.damage}</Text>}
   </View>
 ))}
           <Image source={{ uri: `${cardDetails.image}/high.webp` }} style={style.image}/>
