@@ -1,16 +1,17 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
+import * as Colors from "./colors";
 
 export const searchBarStyles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
     paddingVertical: 5,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.white,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: Colors.plainGrey,
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: Colors.plainGrey,
     borderWidth: 1,
     paddingHorizontal: 10,
   },
