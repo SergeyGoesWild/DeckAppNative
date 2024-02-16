@@ -1,23 +1,31 @@
 import React from 'react';
-import { StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
-import { FlashList } from '@shopify/flash-list'; 
+import { StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
+
+// Création d'un composant Card pour un élément de la liste
+const Card = ({ card, onPress }) => (
+  <TouchableOpacity onPress={onPress} style={cardContainerStyles.cardContainer}>
+    <Image source={{ uri: card.imageUrl }} style={cardContainerStyles.cardImage} />
+  </TouchableOpacity>
+);
+
+// Envelopper le composant Card avec React.memo pour éviter les rendus inutiles
+const MemoizedCard = React.memo(Card);
 
 const CardContainer = ({ cards, handleImageClick, handleFetchMore }) => {
   return (
     <FlashList
       data={cards}
-      renderItem={({ item: card, index }) => (
-        <TouchableOpacity key={index} onPress={() => handleImageClick(card)} style={cardContainerStyles.cardContainer}>
-          <Image source={{ uri: card.imageUrl }} style={cardContainerStyles.cardImage} />
-        </TouchableOpacity>
+      renderItem={({ item: card }) => (
+        <MemoizedCard card={card} onPress={() => handleImageClick(card)} />
       )}
-      keyExtractor={(item, index) => index.toString()}
+      keyExtractor={(item) => item.id.toString()}
       contentContainerStyle={cardContainerStyles.container}
       estimatedItemSize={220}
       numColumns={2}
       onEndReached={handleFetchMore}
-      onEndReachedThreshold={0.5} 
-      windowSize={1}
+      onEndReachedThreshold={0.5}
+      windowSize={3}
     />
   );
 };
@@ -29,11 +37,10 @@ const cardContainerStyles = StyleSheet.create({
   cardContainer: {
     flex: 1,
     margin: 10,
-    width: 35, 
   },
   cardImage: {
     width: '100%',
-    height: 200, 
+    height: 200,
     resizeMode: 'contain',
   },
 });

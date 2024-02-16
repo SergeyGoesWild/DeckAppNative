@@ -1,25 +1,32 @@
-import React, { useState } from 'react';
-import { StyleSheet, TextInput, View, Button } from 'react-native';
-import { searchBarStyles } from './styles/searchBarStyles'
+import React from 'react';
+import { StyleSheet, TextInput, View } from 'react-native';
 
-const SearchBar = ({ onSearch }) => {
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const handleSearch = () => {
-    onSearch(searchTerm);
-  };
-
+const SearchBar = ({ value, onChangeText }) => {
   return (
-    <View style={searchBarStyles.container}>
+    <View style={styles.container}>
       <TextInput
-        style={searchBarStyles.input}
+        style={styles.input}
         placeholder="Search cards..."
-        value={searchTerm}
-        onChangeText={setSearchTerm}
+        value={value}
+        onChangeText={onChangeText}
       />
-      <Button title="Search" onPress={handleSearch} />
     </View>
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    padding: 10,
+    backgroundColor: '#F0F0F0',
+    borderRadius: 20,
+    alignItems: 'center',
+  },
+  input: {
+    flex: 1,
+    padding: 10,
+  },
+});
+
 export default SearchBar;
+

@@ -27,8 +27,8 @@ const HomeScreen = () => {
           imageUrl: `${card.image}/low.webp`,
         }));
         setAllCards(filteredData);
-        setDisplayedCards(filteredData.slice(0, itemsPerPage));
-        if (data.length <= itemsPerPage) {
+        setDisplayedCards(filteredData.slice(0, Math.min(itemsPerPage, 180)));
+        if (filteredData.length <= itemsPerPage || filteredData.length <= 180) {
           setHasMore(false);
         }
       } catch (error) {
@@ -42,17 +42,22 @@ const HomeScreen = () => {
   }, [itemsPerPage]);
 
   const fetchMoreCards = () => {
-    if (!hasMore) return;
+    if (!hasMore || displayedCards.length >= 180) return;
 
     const nextPage = currentPage + 1;
     const startIndex = currentPage * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
+    let endIndex = startIndex + itemsPerPage;
+
+    if (endIndex > 180) {
+      endIndex = 180;
+      setHasMore(false);
+    }
 
     const nextItems = allCards.slice(startIndex, endIndex);
     setDisplayedCards(prevCards => [...prevCards, ...nextItems]);
     setCurrentPage(nextPage);
 
-    if (endIndex >= allCards.length) {
+    if (endIndex >= allCards.length || displayedCards.length >= 180) {
       setHasMore(false);
     }
   };
@@ -64,16 +69,16 @@ const HomeScreen = () => {
   const handleSearch = async (searchTerm) => {
     setLoading(true);
     try {
-      const filteredData = allCards.filter(card => card.name.toLowerCase().includes(searchTerm.toLowerCase()));
-      setDisplayedCards(filteredData.slice(0, itemsPerPage));
-      setCurrentPage(1);
-      setHasMore(filteredData.length > itemsPerPage);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const filteredData = allCards.filter(card => card.name.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 300);
+    setDisplayedCards(filteredData.slice(0, Math.min(itemsPerPage, filteredData.length)));
+    setCurrentPage(1); // Réinitialise la page courante à 1
+    setHasMore(filteredData.length > itemsPerPage); // Mise à jour de hasMore basée sur les résultats filtrés
+  } catch (error) {
+    console.error('Error during search:', error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -103,3 +108,4 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
+
