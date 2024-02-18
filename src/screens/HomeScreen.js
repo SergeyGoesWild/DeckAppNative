@@ -27,7 +27,7 @@ const HomeScreen = () => {
         }));
       setCards(cardsWithImages);
     } catch (error) {
-      throw new Error(e);
+      console.error("Error fetching cards:", error);
     } finally {
       setLoading(false);
     }
@@ -55,11 +55,11 @@ const HomeScreen = () => {
         .filter((card) => card.image)
         .map((card) => ({
           ...card,
-          imageUrl: `${card.image}/high.webp`,
+          imageUrl: `${card.image}/low.webp`,
         }));
       setCards(cardsWithImages);
     } catch (error) {
-      throw new Error(e);
+      console.error("Error searching cards:", error);
     } finally {
       setLoading(false);
     }
@@ -68,11 +68,7 @@ const HomeScreen = () => {
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContent}>
       <View style={styles.container}>
-        <SearchBar
-          value={searchTerm}
-          onChangeText={setSearchTerm}
-          onSearch={handleSearch}
-        />
+        <SearchBar onSearch={handleSearch} />
         {loading ? (
           <Text>Loading...</Text>
         ) : (
