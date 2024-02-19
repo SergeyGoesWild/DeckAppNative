@@ -38,9 +38,13 @@ const DecksScreen = () => {
       {/* TODO: input + inputState + mv to separate component like <NameForm onSubmit={(data) => addDeck(data)} /> */}
       <AddDeckOverlay
         visibleState={visibleState}
-        setVisibleState={setVisibleState}
+        onModalClose={() => setVisibleState(false)}
+        onAddDeckPress={(deck) => {
+          addDeck(deck);
+          setVisibleState(false);
+        }}
       />
-      <Button title="ADD" onPress={() => setVisibleState(!visibleState)} />
+      <Button title="ADD" onPress={() => setVisibleState(true)} />
       {decksState.map((deck, i) => (
         <DeckDropdown key={i} deck={deck} />
       ))}

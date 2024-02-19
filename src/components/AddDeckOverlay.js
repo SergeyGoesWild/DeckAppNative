@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
 
-function AddDeckOverlay({ visibleState, setVisibleState }) {
+function AddDeckOverlay({ visibleState, onModalClose, onAddDeckPress }) {
   return (
     <Modal
       animationType="slide"
@@ -9,13 +9,21 @@ function AddDeckOverlay({ visibleState, setVisibleState }) {
       visible={visibleState}
       onRequestClose={() => {
         Alert.alert("Modal has been closed.");
-        setVisibleState(!visibleState);
+        onModalClose();
       }}
     >
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <Text style={styles.modalText}>Hello World!</Text>
-          <Pressable onPress={() => setVisibleState(!visibleState)}>
+          <Pressable
+            onPress={() => {
+              const deck = {
+                name: "Water",
+                deckContent: [],
+              };
+              onAddDeckPress(deck);
+            }}
+          >
             <Text>Add Deck</Text>
           </Pressable>
         </View>
