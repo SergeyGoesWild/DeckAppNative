@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import SearchBar from "../components/SearchBar";
 import CardContainer from "../components/CardContainer";
-import NavBar from "../components/NavBar";
 import { useNavigation } from "@react-navigation/native";
 import * as Colors from "../components/styles/colors";
 
