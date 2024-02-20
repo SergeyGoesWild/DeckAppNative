@@ -1,20 +1,22 @@
 import React from 'react';
-import { StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { FlashList } from '@shopify/flash-list'; 
 
-const CardContainer = ({ cards, handleImageClick }) => {
+const CardContainer = ({ cards, handleImageClick, loadMoreCards }) => {
   return (
     <FlashList
       data={cards}
-      renderItem={({ item: card, index }) => (
-        <TouchableOpacity key={index} onPress={() => handleImageClick(card)} style={cardContainerStyles.cardContainer}>
+      renderItem={({ item: card }) => (
+        <TouchableOpacity onPress={() => handleImageClick(card)} style={cardContainerStyles.cardContainer}>
           <Image source={{ uri: card.imageUrl }} style={cardContainerStyles.cardImage} />
         </TouchableOpacity>
       )}
-      keyExtractor={(item, index) => index.toString()}
+      keyExtractor={(item) => item.id.toString()} 
       contentContainerStyle={cardContainerStyles.container}
       estimatedItemSize={220}
-      numColumns={2} 
+      numColumns={2}
+      onEndReached={loadMoreCards}
+      onEndReachedThreshold={0.8}
     />
   );
 };
@@ -30,9 +32,10 @@ const cardContainerStyles = StyleSheet.create({
   },
   cardImage: {
     width: '100%',
-    height: 200, 
+    height: 200,
     resizeMode: 'contain',
   },
 });
 
-export default CardContainer;
+export default React.memo(CardContainer);
+
