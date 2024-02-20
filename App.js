@@ -22,7 +22,6 @@ const App = () => {
         <Stack.Screen name="HomePage" component={TabScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Decks" component={DecksScreen} />
-        <Stack.Screen name="FullSizeImage" component={FullSizeImageScreen} /> 
         <Stack.Screen name="Sets" component={SetScreen} />
         <Stack.Screen name="CardsBySets" component={CardsBySets} />
       </Stack.Navigator>

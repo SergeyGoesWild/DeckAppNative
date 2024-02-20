@@ -5,75 +5,72 @@ import CardContainer from '../components/CardContainer';
 import { useNavigation } from "@react-navigation/native";
 
 const HomeScreen = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [cards, setCards] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [allCards, setAllCards] = useState([]); 
+  const [displayedCards, setDisplayedCards] = useState([]); 
   const [loading, setLoading] = useState(false);
-  const navigation = useNavigation()
+  const [offset, setOffset] = useState(0);
+  const cardsPerPage = 50; 
 
-  const fetchCards = async () => {
-      setLoading(true);
-      try {
-        const url = 'https://api.tcgdex.net/v2/en/cards';
-        const response = await fetch(url);
-        const data = await response.json();
-        const cardsWithImages = data
-          .slice(0, 50)
-          .filter(card => card.image)
-          .map(card => ({
-            ...card,
-            imageUrl: `${card.image}/high.webp`,
-          }));
-        setCards(cardsWithImages);
-      } catch (error) {
-        throw new Error(e)
-      } finally {
-        setLoading(false);
-      }
-    };
-  
-    useEffect(() => {
-      fetchCards();
-    }, []);
+  const navigation = useNavigation();
 
-  const handleImageClick = (card) => {
-    navigation.navigate('FullSizeImage', { card: card.id });
-  };
-
-  const handleSearch = async (searchTerm) => {
+  const fetchAllCards = async () => {
     setLoading(true);
     try {
-      let url = 'https://api.tcgdex.net/v2/en/cards';
-      if (searchTerm) {
-        url += `?name=${searchTerm}`;
-      }
+      let url = "https://api.tcgdex.net/v2/en/cards";
       const response = await fetch(url);
       const data = await response.json();
-      const cardsWithImages = data
+      const filteredData = data
         .slice(0, 50)
-        .filter(card => card.image)
-        .map(card => ({
+        .filter((card) => card.image)
+        .map((card) => ({
           ...card,
-          imageUrl: `${card.image}/high.webp`,
+          imageUrl: `${card.image}/low.webp`,
         }));
-      setCards(cardsWithImages);
+      setAllCards(filteredData);
+      setDisplayedCards(filteredData.slice(0, cardsPerPage)); 
+      setOffset(cardsPerPage);
     } catch (error) {
-      throw new Error(e)
+      throw new Error("Error fetching cards:", error);
     } finally {
       setLoading(false);
     }
   };
 
+  useEffect(() => {
+    fetchAllCards();
+  }, []);
+
+  const loadMoreCards = () => {
+    const nextCards = allCards.slice(offset, offset + cardsPerPage);
+    setDisplayedCards((prevCards) => [...prevCards, ...nextCards]);
+    setOffset((prevOffset) => prevOffset + cardsPerPage);
+  };
+
+  const handleSearch = (term) => {
+    const filteredCards = allCards.filter((card) =>
+      card.name.toLowerCase().includes(term.toLowerCase())
+    );
+    setSearchTerm(term);
+    setDisplayedCards(filteredCards.slice(0, cardsPerPage));
+    setOffset(cardsPerPage);
+  };
+
+  const handleImageClick = (card) => {
+    navigation.navigate("FullSizeImage", { card: card.id });
+  };
+
   return (
-    <ScrollView contentContainerStyle={styles.scrollViewContent}>
-      <View style={styles.container}>
-        <SearchBar onSearch={handleSearch} />
-        {loading ? (
-          <Text>Loading...</Text>
-        ) : (
-          <CardContainer cards={cards} handleImageClick={handleImageClick} />
-        )}
-      </View>
-    </ScrollView>
+    <ScrollView>
+    <View style={styles.container}>
+      <SearchBar onSearch={handleSearch} />
+      {loading ? (
+        <Text>Loading...</Text>
+      ) : (
+        <CardContainer cards={displayedCards} loadMoreCards={loadMoreCards} />
+      )}
+    </View>
+  </ScrollView>
   );
 };
 

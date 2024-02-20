@@ -4,7 +4,7 @@ import { FlashList } from '@shopify/flash-list';
 import style from './styles/cardContainerStyles'
 import TabComponent from './TabComponent';
 
-const CardContainer = ({ cards }) => {
+const CardContainer = ({ cards, loadMoreCards }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
 
@@ -21,15 +21,17 @@ const CardContainer = ({ cards }) => {
  <View style={style.CardContainer}>
     <FlashList
       data={cards}
-      renderItem={({ item: card, index }) => (
-        <TouchableOpacity key={index} onPress={() => openModal(card)} style={style.cardContainer}>
+      renderItem={({ item: card }) => (
+        <TouchableOpacity onPress={() => openModal(card)} style={style.cardContainer}>
           <Image source={{ uri: card.imageUrl }} style={style.cardImage} />
         </TouchableOpacity>
       )}
-      keyExtractor={(item, index) => index.toString()}
+      keyExtractor={(item) => item.id.toString()} 
       contentContainerStyle={cardContainerStyles.container}
       estimatedItemSize={220}
-      numColumns={2} 
+      numColumns={2}
+      onEndReached={loadMoreCards}
+      onEndReachedThreshold={0.8}
     />
     <Modal
     animationType="fade"
@@ -53,6 +55,11 @@ const cardContainerStyles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
   },
+  cardImage: {
+    width: 200,
+    height: 200,
+    resizeMode: 'contain',
+  },
 });
 
 const styles = StyleSheet.create({
@@ -66,4 +73,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default CardContainer;
+export default React.memo(CardContainer);
