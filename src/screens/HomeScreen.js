@@ -7,32 +7,29 @@ import * as Colors from "../components/styles/colors";
 
 const HomeScreen = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [cards, setCards] = useState([]);
+  const [allCards, setAllCards] = useState([]); // Stocke toutes les cartes chargées
+  const [displayedCards, setDisplayedCards] = useState([]); // Cartes actuellement affichées
   const [loading, setLoading] = useState(false);
   const [offset, setOffset] = useState(0);
-  const navigation = useNavigation();
-  const cardsLimit = 200;
-  const fetchIncrement = 50;
+  const cardsPerPage = 50; // Combien de cartes afficher par "page"
 
-  const fetchCards = async (newOffset = 0, newSearchTerm = "") => {
-    if (cards.length >= cardsLimit) return;
+  const navigation = useNavigation();
+
+  const fetchAllCards = async () => {
     setLoading(true);
     try {
       let url = "https://api.tcgdex.net/v2/en/cards";
-      if (newSearchTerm) {
-        url += `?name=${newSearchTerm}`;
-      }
       const response = await fetch(url);
       const data = await response.json();
-      const nextCards = data
-        .slice(newOffset, newOffset + fetchIncrement)
+      const filteredData = data
         .filter((card) => card.image)
         .map((card) => ({
           ...card,
-          imageUrl: `${card.image}/high.webp`,
+          imageUrl: `${card.image}/low.webp`,
         }));
-      setCards((prevCards) => (newOffset === 0 ? [...nextCards] : [...prevCards, ...nextCards]));
-      setOffset((prevOffset) => prevOffset + fetchIncrement);
+      setAllCards(filteredData);
+      setDisplayedCards(filteredData.slice(0, cardsPerPage)); // Initialiser avec la première "page" de cartes
+      setOffset(cardsPerPage);
     } catch (error) {
       console.error("Error fetching cards:", error);
     } finally {
@@ -41,11 +38,22 @@ const HomeScreen = () => {
   };
 
   useEffect(() => {
-    fetchCards(0, searchTerm);
-  }, [searchTerm]);
+    fetchAllCards();
+  }, []);
 
   const loadMoreCards = () => {
-    fetchCards(offset, searchTerm);
+    const nextCards = allCards.slice(offset, offset + cardsPerPage);
+    setDisplayedCards((prevCards) => [...prevCards, ...nextCards]);
+    setOffset((prevOffset) => prevOffset + cardsPerPage);
+  };
+
+  const handleSearch = (term) => {
+    const filteredCards = allCards.filter((card) =>
+      card.name.toLowerCase().includes(term.toLowerCase())
+    );
+    setSearchTerm(term);
+    setDisplayedCards(filteredCards.slice(0, cardsPerPage));
+    setOffset(cardsPerPage);
   };
 
   const handleImageClick = (card) => {
@@ -53,37 +61,18 @@ const HomeScreen = () => {
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.scrollViewContent}
-      onScroll={({ nativeEvent }) => {
-        if (
-          nativeEvent.layoutMeasurement.height + nativeEvent.contentOffset.y >=
-          nativeEvent.contentSize.height * 0.5
-        ) {
-          loadMoreCards();
-        }
-      }}
-      scrollEventThrottle={400}
-    >
-      <View style={styles.container}>
-        <SearchBar onSearch={(term) => {
-          setSearchTerm(term);
-          setOffset(0); // Reset offset on new search
-        }} />
-        {loading ? (
-          <Text>Loading...</Text>
-        ) : (
-          <CardContainer cards={cards} handleImageClick={handleImageClick} />
-        )}
-      </View>
-    </ScrollView>
+    <View style={styles.container}>
+      <SearchBar onSearch={handleSearch} />
+      {loading ? (
+        <Text>Loading...</Text>
+      ) : (
+        <CardContainer cards={displayedCards} handleImageClick={handleImageClick} loadMoreCards={loadMoreCards} />
+      )}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollViewContent: {
-    flexGrow: 1,
-  },
   container: {
     flex: 1,
     backgroundColor: Colors.white,
@@ -93,4 +82,3 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
-
