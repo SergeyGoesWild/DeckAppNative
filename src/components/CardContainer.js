@@ -11,7 +11,7 @@ const CardContainer = ({ cards, handleImageClick, loadMoreCards }) => {
           <Image source={{ uri: card.imageUrl }} style={cardContainerStyles.cardImage} />
         </TouchableOpacity>
       )}
-      keyExtractor={(item) => item.id.toString()} // Assurez-vous que chaque carte a un 'id' unique.
+      keyExtractor={(item) => item.id.toString()} 
       contentContainerStyle={cardContainerStyles.container}
       estimatedItemSize={220}
       numColumns={2}
@@ -28,7 +28,7 @@ const cardContainerStyles = StyleSheet.create({
   cardContainer: {
     flex: 1,
     margin: 10,
-    width: 35, // Vérifiez cette valeur, elle semble être très petite.
+    width: 35, 
   },
   cardImage: {
     width: '100%',
