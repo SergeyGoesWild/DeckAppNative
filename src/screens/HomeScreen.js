@@ -7,11 +7,11 @@ import * as Colors from "../components/styles/colors";
 
 const HomeScreen = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [allCards, setAllCards] = useState([]); // Stocke toutes les cartes chargées
-  const [displayedCards, setDisplayedCards] = useState([]); // Cartes actuellement affichées
+  const [allCards, setAllCards] = useState([]); 
+  const [displayedCards, setDisplayedCards] = useState([]); 
   const [loading, setLoading] = useState(false);
   const [offset, setOffset] = useState(0);
-  const cardsPerPage = 50; // Combien de cartes afficher par "page"
+  const cardsPerPage = 50; 
 
   const navigation = useNavigation();
 
@@ -28,7 +28,7 @@ const HomeScreen = () => {
           imageUrl: `${card.image}/low.webp`,
         }));
       setAllCards(filteredData);
-      setDisplayedCards(filteredData.slice(0, cardsPerPage)); // Initialiser avec la première "page" de cartes
+      setDisplayedCards(filteredData.slice(0, cardsPerPage)); 
       setOffset(cardsPerPage);
     } catch (error) {
       console.error("Error fetching cards:", error);
