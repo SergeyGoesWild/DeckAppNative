@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
-import { StyleSheet, TextInput, View, Button } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, TextInput, View } from 'react-native';
 import style from './styles/searchBarStyles'
 
 const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleSearch = () => {
-    onSearch(searchTerm);
-  };
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      if (searchTerm) {
+        onSearch(searchTerm);
+      }
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm]);
 
   return (
     <View style={style.container}>
@@ -16,8 +22,9 @@ const SearchBar = ({ onSearch }) => {
         placeholder="Search cards..."
         value={searchTerm}
         onChangeText={setSearchTerm}
+        returnKeyType="search"
+        onSubmitEditing={() => onSearch(searchTerm)}
       />
-      <Button style={style.button} title="Search" onPress={handleSearch} />
     </View>
   );
 };

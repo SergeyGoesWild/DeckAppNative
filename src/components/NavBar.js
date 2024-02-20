@@ -8,6 +8,9 @@ const NavBar = () => {
   const navigation = useNavigation()
   return (
     <View style={style.container}>
+            <TouchableOpacity onPress={() => navigation.navigate('HomePage')}>
+        <Text style={style.link}>HomePage</Text>
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Home')}>
         <Text style={style.link}>Home</Text>
       </TouchableOpacity>

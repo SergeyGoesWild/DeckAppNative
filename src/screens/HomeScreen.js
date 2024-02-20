@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import CardContainer from '../components/CardContainer';
-import NavBar from '../components/NavBar';
-import SetsMenu from '../components/SetsMenu';
 import { useNavigation } from "@react-navigation/native";
 
 const HomeScreen = () => {
@@ -66,17 +64,16 @@ const HomeScreen = () => {
   };
 
   return (
-  <ScrollView contentContainerStyle={styles.scrollViewContent}>
-    <View style={styles.container}>
-      <NavBar navigation={navigation} />
-        <SearchBar value={searchTerm} onChangeText={setSearchTerm} onSearch={handleSearch} />
+    <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      <View style={styles.container}>
+        <SearchBar onSearch={handleSearch} />
         {loading ? (
-        <Text>Loading...</Text>
+          <Text>Loading...</Text>
         ) : (
-        <CardContainer cards={cards} handleImageClick={handleImageClick} />
+          <CardContainer cards={cards} handleImageClick={handleImageClick} />
         )}
-    </View>
-  </ScrollView>
+      </View>
+    </ScrollView>
   );
 };
 

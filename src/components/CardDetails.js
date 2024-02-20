@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, Image, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, Image, ScrollView, FlatList } from 'react-native';
 import style from './styles/cardDetailsStyles'
+import AttackCost from './AttackCost';
 
 const CardDetails = ({ card }) => {
   const [cardDetails, setCardDetails] = useState(null);
@@ -22,7 +23,7 @@ const CardDetails = ({ card }) => {
   const renderCostImage = (costType) => {
     const imageUrl = costTypeImages[costType];
     if (imageUrl) {
-      return <Image style={{ height: 16, width: 16 }} source={imageUrl} />;
+      return <Image style={{ height: 24, width: 24, resizeMode:'cover'}} source={imageUrl} />;
     }
   
     return null;
@@ -63,27 +64,28 @@ const CardDetails = ({ card }) => {
           <Text style={style.name}>{cardDetails.name}</Text>
           <Text style={style.setname}>{cardDetails.set.name}</Text>
           <Text style={style.rarity}>{cardDetails.rarity}</Text>
+          <View style={style.paragraph}>
           <Text style={style.types}>{cardDetails.types}</Text>
+          </View>
           {cardDetails.description && (
-            <>
+        <>
           <Text style={style.title}>Description : </Text>
+          <View style={style.paragraph}>
           <Text style={style.description}>{cardDetails.description}</Text>
-          </>
+          </View>
+        </>
           )}
           <Text style={style.title}>Attacks: </Text>
           {cardDetails.attacks.map((attack, index) => (
-  <View key={index} style={style.attacks}>
-    <Text style={style.attacks}>{attack.name}</Text>
+     <View key={index} style={style.attacks}>
+           <Text style={style.attacks}>{attack.name}</Text>
     {attack.cost && (
-      <Text style={style.attacks}>
-        Cost: {Array.isArray(attack.cost) ? attack.cost.map(renderCostImage) : renderCostImage(attack.cost)}
-      </Text>
+          <AttackCost cost={attack.cost} renderCostImage={renderCostImage} />
     )}
-    <Text style={style.attacks}>Effect: {attack.effect}</Text>
+             <Text style={style.attacks}>Effect: {attack.effect}</Text>
     {attack.damage && <Text style={style.attacks}>Damage: {attack.damage}</Text>}
-  </View>
-))}
-          <Image source={{ uri: `${cardDetails.image}/high.webp` }} style={style.image}/>
+      </View>
+    ))}
         </>
       ) : (
         <Text>No details available</Text>

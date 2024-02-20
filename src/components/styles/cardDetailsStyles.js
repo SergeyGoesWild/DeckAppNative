@@ -1,12 +1,14 @@
 import { StyleSheet } from 'react-native';
 
 const style = StyleSheet.create({
+  paragraph: {
+    alignSelf: 'center',
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderRadius: 5,
+  },
     container: {
-      flex: 1,
-      width: '100%',
       backgroundColor: '#fff',
-      padding: 20,
-      margin: 10,
     },
     loadingContainer: {
       flex: 1,
@@ -14,8 +16,10 @@ const style = StyleSheet.create({
       alignItems: 'center',
     },
     image : {
-      resizeMode: 'center',
-      height: '100%',
+      width: 200,
+      height: 200,
+      resizeMode: 'contain',
+      alignSelf: 'center',
     },
     title : {
       fontSize: 16,
@@ -64,6 +68,11 @@ const style = StyleSheet.create({
       textAlign: 'center',
       margin: 3,
       padding: 3,
+    },
+    attackCost : {
+      textAlign: 'center',
+      justifyContent: 'center',
+      alignSelf: 'center',
     },
   });
 

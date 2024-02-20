@@ -19,7 +19,7 @@ const SetsMenu = () => {
 
   const handleSetPress = (setId) => {
     navigation.navigate('CardsBySets', { setId });
-    console.log(setId)
+    console.log('From SetsMenu', setId)
   };
 
   const renderSetItem = ({ item }) => (

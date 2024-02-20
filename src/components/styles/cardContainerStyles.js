@@ -14,6 +14,12 @@ export const style = StyleSheet.create({
     height: 200, 
     resizeMode: 'contain',
   },
+  overlay : {
+    flex: 1,
+    margin: 10,
+    width: 35,
+    backgroundColor: '#fff',
+  },
 });
 
 export default style
