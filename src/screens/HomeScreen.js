@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, Button } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import CardContainer from '../components/CardContainer';
 import { useNavigation } from "@react-navigation/native";
@@ -26,6 +26,8 @@ const HomeScreen = () => {
         .map((card) => ({
           ...card,
           imageUrl: `${card.image}/low.webp`,
+          imageUrlHi: `${card.image}/high.webp`,
+          details: `https://api.tcgdex.net/v2/en/cards/${card.id}`,
         }));
       setAllCards(filteredData);
       setDisplayedCards(filteredData.slice(0, cardsPerPage)); 
@@ -56,14 +58,10 @@ const HomeScreen = () => {
     setOffset(cardsPerPage);
   };
 
-  const handleImageClick = (card) => {
-    navigation.navigate("FullSizeImage", { card: card.id });
-  };
-
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={styles.scrollViewContent}>
     <View style={styles.container}>
-      <SearchBar onSearch={handleSearch} />
+      <SearchBar onSearch={handleSearch} details={displayedCards.map(card => card.details)} />
       {loading ? (
         <Text>Loading...</Text>
       ) : (

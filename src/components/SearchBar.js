@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import style from './styles/searchBarStyles'
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = ({ onSearch, details }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
