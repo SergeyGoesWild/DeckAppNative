@@ -31,7 +31,7 @@ const HomeScreen = () => {
       setDisplayedCards(filteredData.slice(0, cardsPerPage)); 
       setOffset(cardsPerPage);
     } catch (error) {
-      console.error("Error fetching cards:", error);
+      throw new Error("Error fetching cards:", error);
     } finally {
       setLoading(false);
     }
