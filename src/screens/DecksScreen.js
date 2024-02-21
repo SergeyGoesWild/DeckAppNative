@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { ListItem, Icon, Avatar, Button } from "@rneui/themed";
+import { StyleSheet, FlatList } from "react-native";
+import { Button } from "@rneui/themed";
 import decksData from "../components/DataMock.js";
 import * as Colors from "../components/styles/colors";
 import DeckDropdown from "../components/DeckDropdown.js";
@@ -9,6 +9,15 @@ import AddDeckOverlay from "../components/AddDeckOverlay.js";
 const DecksScreen = () => {
   const [decksState, setDecksState] = useState(decksData);
   const [visibleState, setVisibleState] = useState(false);
+
+  const renderItem = ({ item }) => (
+    <DeckDropdown
+      key={item.id}
+      deck={item}
+      removeDeck={removeDeck}
+      renameDeck={renameDeck}
+    />
+  );
 
   const removeDeck = (id) => {
     const indexRemove = decksState.findIndex((item) => item.id === id);
@@ -59,14 +68,11 @@ const DecksScreen = () => {
         }}
       />
       <Button title="Add New Deck" onPress={() => setVisibleState(true)} />
-      {decksState.map((deck) => (
-        <DeckDropdown
-          key={deck.id}
-          deck={deck}
-          removeDeck={removeDeck}
-          renameDeck={renameDeck}
-        />
-      ))}
+      <FlatList
+        data={decksState}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+      />
     </>
   );
 };

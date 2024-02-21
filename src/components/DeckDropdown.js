@@ -27,7 +27,7 @@ function DeckDropdown({ deck, removeDeck, renameDeck }) {
             rounded
             source={deck.avatar}
             avatarStyle={{
-              resizeMode: "cover",
+              resizeMode: "contain",
               width: "auto",
               height: "auto",
             }}
@@ -75,7 +75,6 @@ function DeckDropdown({ deck, removeDeck, renameDeck }) {
       onLongPress={() => {
         console.log(deck.id);
         setEditMode(true);
-        // removeDeck(deck.id);
       }}
     >
       <OneDeckContent deckContent={deck.deckContent} />
@@ -92,7 +91,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.buttonBlue,
     color: Colors.white,
     marginHorizontal: 5,
-    borderRadius: 10,
+    borderRadius: 7,
     alignSelf: "center",
     height: 30,
     justifyContent: "center",
@@ -124,10 +123,6 @@ const styles = StyleSheet.create({
     elevation: 5,
     backgroundColor: Colors.white,
     marginRight: 5,
-  },
-  overlay: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
 });
 

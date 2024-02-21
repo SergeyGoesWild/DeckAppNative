@@ -1,13 +1,16 @@
 import React from "react";
 import OneCard from "./OneCard";
+import { FlatList } from "react-native";
 
 function OneDeckContent({ deckContent }) {
+  const renderItem = ({ item }) => <OneCard key={item.id} name={item.name} />;
   return (
     <>
-      {deckContent.map((item) => (
-        // TODO: Pass whole item, not only name
-        <OneCard key={item.id} name={item.name} />
-      ))}
+      <FlatList
+        data={deckContent}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+      />
     </>
   );
 }
