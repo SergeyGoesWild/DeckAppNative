@@ -1,33 +1,65 @@
 import React, { useState } from "react";
-import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
+import {
+  Modal,
+  StyleSheet,
+  Text,
+  Pressable,
+  View,
+  TextInput,
+  TouchableWithoutFeedback,
+  TouchableOpacity,
+} from "react-native";
+import * as Colors from "../components/styles/colors";
 
 function AddDeckOverlay({ visibleState, onModalClose, onAddDeckPress }) {
+  const [idState, setIdState] = useState(3);
+  const [inputState, setInputState] = useState("");
+  const handleChange = (text) => {
+    setInputState(text);
+  };
+
   return (
     <Modal
       animationType="slide"
       transparent={true}
       visible={visibleState}
       onRequestClose={() => {
-        Alert.alert("Modal has been closed.");
         onModalClose();
       }}
     >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <Text style={styles.modalText}>Hello World!</Text>
-          <Pressable
-            onPress={() => {
-              const deck = {
-                name: "Water",
-                deckContent: [],
-              };
-              onAddDeckPress(deck);
-            }}
-          >
-            <Text>Add Deck</Text>
-          </Pressable>
+      <TouchableWithoutFeedback onPress={onModalClose}>
+        <View style={styles.centeredView}>
+          <TouchableOpacity activeOpacity={1}>
+            <View style={styles.modalView}>
+              <Text style={styles.label}>The deck name:</Text>
+
+              <TextInput
+                style={styles.input}
+                placeholder="Type here..."
+                value={inputState}
+                onChangeText={handleChange}
+              />
+
+              <Pressable
+                onPress={() => {
+                  const deck = {
+                    id: idState,
+                    name: inputState,
+                    avatar: require("../../assets/psy.png"),
+                    deckContent: [],
+                  };
+                  setIdState(idState + 1);
+                  setInputState("");
+                  onAddDeckPress(deck);
+                }}
+                style={styles.button}
+              >
+                <Text style={styles.buttonText}>Add</Text>
+              </Pressable>
+            </View>
+          </TouchableOpacity>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 }
@@ -43,7 +75,8 @@ const styles = StyleSheet.create({
     margin: 20,
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
+    paddingVertical: 20,
+    paddingHorizontal: 35,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -55,24 +88,34 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    borderRadius: 20,
+    backgroundColor: Colors.buttonBlue,
+    color: Colors.white,
     padding: 10,
-    elevation: 2,
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
   },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
-  textStyle: {
-    color: "white",
+  buttonText: {
+    color: Colors.white,
+    fontSize: 12,
     fontWeight: "bold",
-    textAlign: "center",
+    paddingHorizontal: 20,
   },
-  modalText: {
+  input: {
+    height: 40,
+    borderColor: Colors.plainGrey,
+    borderWidth: 1,
+    marginBottom: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
+    borderRadius: 10,
+  },
+  label: {
     marginBottom: 15,
-    textAlign: "center",
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
 });
 

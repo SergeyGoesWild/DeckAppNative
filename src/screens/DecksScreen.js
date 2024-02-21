@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { ListItem, Icon, Button, Avatar } from "@rneui/themed";
+import { ListItem, Icon, Avatar, Button } from "@rneui/themed";
 import decksData from "../components/DataMock.js";
 import * as Colors from "../components/styles/colors";
 import DeckDropdown from "../components/DeckDropdown.js";
@@ -9,6 +9,20 @@ import AddDeckOverlay from "../components/AddDeckOverlay.js";
 const DecksScreen = () => {
   const [decksState, setDecksState] = useState(decksData);
   const [visibleState, setVisibleState] = useState(false);
+
+  const removeDeck = (id) => {
+    const indexRemove = decksState.findIndex((item) => item.id === id);
+    const newDecksState = decksState
+      .slice(0, indexRemove)
+      .concat(decksState.slice(indexRemove + 1));
+    setDecksState(newDecksState);
+  };
+
+  const renameDeck = (id, newName) => {
+    const indexRename = decksState.findIndex((item) => item.id === id);
+    decksState[indexRename].name = newName;
+    setDecksState(decksState);
+  };
 
   const addDeck = (deck) => {
     const nextDecksState = decksState.concat([deck]);
@@ -44,12 +58,38 @@ const DecksScreen = () => {
           setVisibleState(false);
         }}
       />
-      <Button title="ADD" onPress={() => setVisibleState(true)} />
-      {decksState.map((deck, i) => (
-        <DeckDropdown key={i} deck={deck} />
+      <Button title="Add New Deck" onPress={() => setVisibleState(true)} />
+      {decksState.map((deck) => (
+        <DeckDropdown
+          key={deck.id}
+          deck={deck}
+          removeDeck={removeDeck}
+          renameDeck={renameDeck}
+        />
       ))}
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  newDeckButton: {
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderRadius: 20,
+    backgroundColor: Colors.white,
+  },
+  button: {
+    backgroundColor: Colors.buttonBlue,
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonText: {
+    color: Colors.white,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+});
 
 export default DecksScreen;
