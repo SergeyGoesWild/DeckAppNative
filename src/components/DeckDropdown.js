@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Pressable,
 } from "react-native";
 import * as Colors from "../components/styles/colors";
 
@@ -44,7 +45,7 @@ function DeckDropdown({ deck, removeDeck, renameDeck }) {
                   style={styles.input}
                   onChangeText={handleChange}
                 />
-                <TouchableOpacity
+                <Pressable
                   style={styles.button}
                   onPress={() => {
                     setEditMode(false);
@@ -52,8 +53,8 @@ function DeckDropdown({ deck, removeDeck, renameDeck }) {
                   }}
                 >
                   <Text style={styles.buttonText}>OK</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
+                </Pressable>
+                <Pressable
                   style={styles.button}
                   onPress={() => {
                     removeDeck(deck.id);
@@ -61,7 +62,7 @@ function DeckDropdown({ deck, removeDeck, renameDeck }) {
                   }}
                 >
                   <Text style={styles.buttonText}>Delete</Text>
-                </TouchableOpacity>
+                </Pressable>
               </View>
             )}
           </ListItem.Content>
@@ -90,24 +91,22 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: Colors.buttonBlue,
     color: Colors.white,
+
     marginHorizontal: 5,
     borderRadius: 7,
-    alignSelf: "center",
-    height: 30,
     justifyContent: "center",
     alignItems: "center",
-    flexDirection: "column",
+    height: 30,
   },
   buttonText: {
-    flex: 1,
     color: Colors.white,
     fontSize: 12,
     fontWeight: "normal",
-    paddingHorizontal: 7,
+    paddingHorizontal: 15,
   },
   input: {
     height: 30,
-    width: 180,
+    width: 150,
     borderColor: Colors.plainGrey,
     borderWidth: 1,
     paddingLeft: 10,
