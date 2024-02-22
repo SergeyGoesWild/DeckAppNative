@@ -15,7 +15,6 @@ const CardsBySets = ({ route }) => {
         console.error('Error fetching cards:', error);
       });
   }, [setId]);
-    console.log('CARDS', cards)
     
 
   const renderCardItem = ({ item }) => (

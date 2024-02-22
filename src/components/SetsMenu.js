@@ -19,12 +19,11 @@ const SetsMenu = () => {
 
   const handleSetPress = (setId) => {
     navigation.navigate('CardsBySets', { setId });
-    console.log('From SetsMenu', setId)
   };
 
   const renderSetItem = ({ item }) => (
     <TouchableOpacity style={styles.itemContainer} onPress={() => handleSetPress(item.id)}>
-      <Image source={{ uri: item.symbol }} style={styles.image} />
+      <Image source={ `${item.symbol}.webp` } style={styles.image} />
       <Text style={styles.text}>{item.name}</Text>
     </TouchableOpacity>
   );

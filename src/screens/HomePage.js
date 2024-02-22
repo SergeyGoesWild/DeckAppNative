@@ -7,7 +7,7 @@ const HomePage = () => {
     const navigation = useNavigation()
 
     return (
-        <View style={style.container}>
+        <ScrollView style={style.container}>
           <ImageBackground source={require('../../assets/hero-bg.jpg')} style={style.heroHeader}>
             <Text style={style.heroText}>Build your DreamDeck</Text>
             <Button title="View Cards" onPress={() => navigation.navigate('Home')}/>
@@ -16,8 +16,8 @@ const HomePage = () => {
           <View style={style.comingSoon}>
             <Text style={style.comingSoonText}>Coming Soon...</Text>
           </View>
-        </View>
-      );
+        </ScrollView>
+      ); 
     };
 
 export default HomePage;

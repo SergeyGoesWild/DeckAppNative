@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { TextInput, View, Button } from 'react-native';
 import style from './styles/searchBarStyles'
 
-const SearchBar = ({ onSearch, details }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+const SearchBar = ({ onSearch, details, card }) => {
+const [searchTerm, setSearchTerm] = useState('');
+const [selectedCategory, setSelectedCategory] = useState('');
+const [selectedRarity, setSelectedRarity] = useState('');
+const [selectedType, setSelectedType] = useState('');
+console.log(details)
+
+const handleSearch = () => {
+  onSearch(searchTerm, selectedCategory, selectedRarity, selectedType);
+};
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {

@@ -6,7 +6,9 @@ import FullSizeImageScreen from './src/screens/FullSizeImageScreen';
 import SetScreen from './src/screens/SetScreen';
 import CardsBySets from './src/screens/CardsBySets';
 import HomePage from './src/screens/HomePage';
-import TabScreen from './src/screens/TabScreen'
+import TabsScreen from './src/screens/TabsScreen'
+import FirstScreen from './src/screens/FirstScreen';
+import ErrorScreen from "./src/screens/ErrorScreen";
 
 const Stack = createStackNavigator();
 
@@ -14,15 +16,15 @@ const App = () => {
   return (
     <NavigationContainer>
             <Stack.Navigator
-        initialRouteName="HomePage"
+        initialRouteName="First"
         screenOptions={{
           animationEnabled: true,
         }}
       >
-        <Stack.Screen name="HomePage" component={TabScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Decks" component={DecksScreen} />
-        <Stack.Screen name="Sets" component={SetScreen} />
+        <Stack.Screen name="First" component={FirstScreen} />
+        <Stack.Screen name="Pokemon Decks" component={TabsScreen} />
+        <Stack.Screen name="FullSizeImage" component={FullSizeImageScreen} />
+        <Stack.Screen name="Error" component={ErrorScreen} />
         <Stack.Screen name="CardsBySets" component={CardsBySets} />
       </Stack.Navigator>
     </NavigationContainer>

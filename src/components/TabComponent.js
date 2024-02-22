@@ -5,7 +5,6 @@ import style from './styles/tabModalStyles'
 
 const TabComponent = ({ card }) => {
   const [activeTab, setActiveTab] = useState('Tab1');
-  console.log(card);
 
   const handleTabPress = (tabName) => {
     setActiveTab(tabName);
