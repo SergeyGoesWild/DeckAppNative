@@ -2,6 +2,7 @@ import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import HomeScreen from "./HomeScreen";
 import DecksScreen from "./DecksScreen";
+import ErrorScreen from "./ErrorScreen";
 
 const Tab = createMaterialTopTabNavigator();
 
