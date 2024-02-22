@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, Image, ScrollView, FlatList } from 'react-native';
 import style from './styles/cardDetailsStyles'
 import AttackCost from './AttackCost';
+=======
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, Text, Image } from "react-native";
+import * as Colors from "../components/styles/colors";
+>>>>>>> 70d4ab247ee1b3cda1b9bd076188c83e1343e3b4
 
 const CardDetails = ({ card }) => {
   const [cardDetails, setCardDetails] = useState(null);
@@ -38,7 +44,7 @@ const CardDetails = ({ card }) => {
         const data = await response.json();
         setCardDetails(data);
       } catch (error) {
-        console.error('Error fetching card details:', error);
+        throw new Error(e);
       } finally {
         setLoading(false);
       }
@@ -46,7 +52,6 @@ const CardDetails = ({ card }) => {
 
     fetchCardDetails();
   }, [card]);
-
 
   if (loading) {
     return (
@@ -61,6 +66,7 @@ const CardDetails = ({ card }) => {
     <View style={style.container}>
       {cardDetails ? (
         <>
+<<<<<<< HEAD
           <Text style={style.name}>{cardDetails.name}</Text>
           <Text style={style.setname}>{cardDetails.set.name}</Text>
           <Text style={style.rarity}>{cardDetails.rarity}</Text>
@@ -86,14 +92,49 @@ const CardDetails = ({ card }) => {
     {attack.damage && <Text style={style.attacks}>Damage: {attack.damage}</Text>}
       </View>
     ))}
+=======
+          <Text>{cardDetails.name}</Text>
+          <Text>{cardDetails.set.name}</Text>
+          <Text>{cardDetails.rarity}</Text>
+          <Text>{cardDetails.types}</Text>
+          <Text>{cardDetails.description}</Text>
+          <Image
+            source={{ uri: `${cardDetails.image}/high.webp` }}
+            style={styles.image}
+          />
+>>>>>>> 70d4ab247ee1b3cda1b9bd076188c83e1343e3b4
         </>
       ) : (
         <Text>No details available</Text>
       )}
     </View>
+<<<<<<< HEAD
     </ScrollView>
 
   );
 };
 
+=======
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Colors.white,
+    paddingHorizontal: 10,
+    paddingVertical: 20,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  image: {
+    resizeMode: "center",
+    height: "100%",
+  },
+});
+
+>>>>>>> 70d4ab247ee1b3cda1b9bd076188c83e1343e3b4
 export default CardDetails;

@@ -9,7 +9,10 @@
     "web": "expo start --web"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@react-native-picker/picker": "^2.6.1",
+=======
+>>>>>>> 70d4ab247ee1b3cda1b9bd076188c83e1343e3b4
     "@react-navigation/material-top-tabs": "^6.6.6",
     "@react-navigation/stack": "^6.3.21",
     "@rneui/base": "^4.0.0-rc.7",
@@ -19,8 +22,13 @@
     "expo-status-bar": "~1.11.1",
     "react": "18.2.0",
     "react-native": "0.73.4",
+<<<<<<< HEAD
     "react-native-elements": "^3.4.3",
     "react-native-modal-dropdown": "^1.0.2"
+=======
+    "react-native-gesture-handler": "~2.14.0",
+    "use-debounce": "^10.0.0"
+>>>>>>> 70d4ab247ee1b3cda1b9bd076188c83e1343e3b4
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

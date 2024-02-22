@@ -1,4 +1,5 @@
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
+import * as Colors from "../components/styles/colors";
 
 function FirstScreen({ navigation }) {
   return (
@@ -24,14 +25,14 @@ const styles = StyleSheet.create({
     padding: 30,
   },
   button: {
-    backgroundColor: 'blue',
+    backgroundColor: Colors.buttonBlue,
     padding: 10,
     borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
   },
   buttonText: {
-    color: 'blue',
+    color: Colors.white,
     fontSize: 16,
     fontWeight: "bold",
   },
