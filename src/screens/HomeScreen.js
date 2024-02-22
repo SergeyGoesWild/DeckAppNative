@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import SearchBar from "../components/SearchBar";
 import CardContainer from "../components/CardContainer";
@@ -12,6 +12,7 @@ const HomeScreen = () => {
   const [loading, setLoading] = useState(false);
   const [offset, setOffset] = useState(0);
   const cardsPerPage = 50; 
+  const flashListRef = useRef(null);
 
   const navigation = useNavigation();
 
@@ -54,6 +55,9 @@ const HomeScreen = () => {
     setSearchTerm(term);
     setDisplayedCards(filteredCards.slice(0, cardsPerPage));
     setOffset(cardsPerPage);
+    if (flashListRef.current) {
+      flashListRef.current.scrollToOffset({ offset: 0, animated: true });
+    }
   };
 
   const handleImageClick = (card) => {
@@ -66,7 +70,7 @@ const HomeScreen = () => {
       {loading ? (
         <Text>Loading...</Text>
       ) : (
-        <CardContainer cards={displayedCards} handleImageClick={handleImageClick} loadMoreCards={loadMoreCards} />
+        <CardContainer ref={flashListRef} cards={displayedCards} handleImageClick={handleImageClick} loadMoreCards={loadMoreCards} />
       )}
     </View>
   );
