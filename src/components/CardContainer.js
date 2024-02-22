@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { FlashList } from '@shopify/flash-list'; 
 
-const CardContainer = ({ cards, handleImageClick, loadMoreCards }) => {
+const CardContainer = forwardRef(({ cards, handleImageClick, loadMoreCards }, ref) => {
   return (
     <FlashList
+      ref={ref} 
       data={cards}
       renderItem={({ item: card }) => (
         <TouchableOpacity onPress={() => handleImageClick(card)} style={cardContainerStyles.cardContainer}>
@@ -19,8 +20,7 @@ const CardContainer = ({ cards, handleImageClick, loadMoreCards }) => {
       onEndReachedThreshold={0.8}
     />
   );
-};
-
+});
 const cardContainerStyles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
@@ -38,4 +38,3 @@ const cardContainerStyles = StyleSheet.create({
 });
 
 export default React.memo(CardContainer);
-
