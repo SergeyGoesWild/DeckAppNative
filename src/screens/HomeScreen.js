@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import SearchBar from "../components/SearchBar";
 import CardContainer from "../components/CardContainer";
@@ -7,85 +7,76 @@ import * as Colors from "../components/styles/colors";
 
 const HomeScreen = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [cards, setCards] = useState([]);
+  const [allCards, setAllCards] = useState([]); 
+  const [displayedCards, setDisplayedCards] = useState([]); 
   const [loading, setLoading] = useState(false);
+  const [offset, setOffset] = useState(0);
+  const cardsPerPage = 50; 
+  const flashListRef = useRef(null);
+
   const navigation = useNavigation();
 
-  const fetchCards = async () => {
+  const fetchAllCards = async () => {
     setLoading(true);
     try {
-      const url = "https://api.tcgdex.net/v2/en/cards";
+      let url = "https://api.tcgdex.net/v2/en/cards";
       const response = await fetch(url);
       const data = await response.json();
-      const cardsWithImages = data
-        .slice(0, 50)
+      const filteredData = data
         .filter((card) => card.image)
         .map((card) => ({
           ...card,
-          imageUrl: `${card.image}/high.webp`,
+          imageUrl: `${card.image}/low.webp`,
         }));
-      setCards(cardsWithImages);
+      setAllCards(filteredData);
+      setDisplayedCards(filteredData.slice(0, cardsPerPage)); 
+      setOffset(cardsPerPage);
     } catch (error) {
-      throw new Error(e);
+      throw new Error("Error fetching cards:", error);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchCards();
+    fetchAllCards();
   }, []);
+
+  const loadMoreCards = () => {
+    const nextCards = allCards.slice(offset, offset + cardsPerPage);
+    setDisplayedCards((prevCards) => [...prevCards, ...nextCards]);
+    setOffset((prevOffset) => prevOffset + cardsPerPage);
+  };
+
+  const handleSearch = (term) => {
+    const filteredCards = allCards.filter((card) =>
+      card.name.toLowerCase().includes(term.toLowerCase())
+    );
+    setSearchTerm(term);
+    setDisplayedCards(filteredCards.slice(0, cardsPerPage));
+    setOffset(cardsPerPage);
+    if (flashListRef.current) {
+      flashListRef.current.scrollToOffset({ offset: 0, animated: true });
+    }
+  };
 
   const handleImageClick = (card) => {
     navigation.navigate("FullSizeImage", { card: card.id });
   };
 
-  const handleSearch = async (searchTerm) => {
-    setLoading(true);
-    try {
-      let url = "https://api.tcgdex.net/v2/en/cards";
-      if (searchTerm) {
-        url += `?name=${searchTerm}`;
-      }
-      const response = await fetch(url);
-      const data = await response.json();
-      const cardsWithImages = data
-        .slice(0, 50)
-        .filter((card) => card.image)
-        .map((card) => ({
-          ...card,
-          imageUrl: `${card.image}/high.webp`,
-        }));
-      setCards(cardsWithImages);
-    } catch (error) {
-      throw new Error(e);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
-    <ScrollView contentContainerStyle={styles.scrollViewContent}>
-      <View style={styles.container}>
-        <SearchBar
-          value={searchTerm}
-          onChangeText={setSearchTerm}
-          onSearch={handleSearch}
-        />
-        {loading ? (
-          <Text>Loading...</Text>
-        ) : (
-          <CardContainer cards={cards} handleImageClick={handleImageClick} />
-        )}
-      </View>
-    </ScrollView>
+    <View style={styles.container}>
+      <SearchBar onSearch={handleSearch} />
+      {loading ? (
+        <Text>Loading...</Text>
+      ) : (
+        <CardContainer ref={flashListRef} cards={displayedCards} handleImageClick={handleImageClick} loadMoreCards={loadMoreCards} />
+      )}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollViewContent: {
-    flexGrow: 1,
-  },
   container: {
     flex: 1,
     backgroundColor: Colors.white,
