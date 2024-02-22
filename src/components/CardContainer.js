@@ -28,18 +28,8 @@ const CardContainer = ({ cards, loadMoreCards }) => {
     setModalVisible(false);
   };
 
-  const renderModal = () => {
-    return (
-      <View style={styles.modalContainer}>
-        <Button title='Close' onPress={closeModal}/>
-        {selectedCard && (
-          <TabComponent card={selectedCard} />
-        )}
-      </View>
-    );
-  };
-
   return (
+    <View style={{flex: 1}}>
     <FlashList
       data={cards}
       renderItem={({ item: card }) => (
@@ -55,6 +45,8 @@ const CardContainer = ({ cards, loadMoreCards }) => {
       onEndReached={loadMoreCards}
       onEndReachedThreshold={0.8}
     />
+          <ModalComponent visible={modalVisible} closeModal={closeModal} selectedCard={selectedCard} />
+    </View>
   );
 };
 
