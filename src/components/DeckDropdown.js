@@ -1,23 +1,16 @@
 import React, { useState } from "react";
 import OneDeckContent from "../components/OneDeckContent.js";
 import { ListItem, Avatar } from "@rneui/themed";
-import {
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-} from "react-native";
-import * as Colors from "../components/styles/colors";
+import { TextInput, View, Pressable } from "react-native";
+import { styles } from "./styles/DeckDropdown.style.js";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
+import * as Colors from "./styles/colors.js";
 
 function DeckDropdown({ deck, removeDeck, renameDeck }) {
   const [expanded, setExpanded] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [deckName, setDeckName] = useState(deck.name);
   const handleChange = (text) => {
-    console.log(text);
     setDeckName(text);
   };
 
@@ -41,7 +34,7 @@ function DeckDropdown({ deck, removeDeck, renameDeck }) {
             {editMode && (
               <View style={styles.editContainer}>
                 <TextInput
-                  placeholder="Type here..."
+                  placeholder="Enter new name"
                   value={deckName}
                   style={styles.input}
                   onChangeText={handleChange}
@@ -89,57 +82,5 @@ function DeckDropdown({ deck, removeDeck, renameDeck }) {
     </ListItem.Accordion>
   );
 }
-
-const styles = StyleSheet.create({
-  editContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  buttonOk: {
-    backgroundColor: Colors.green,
-    color: Colors.white,
-    width: 50,
-    marginHorizontal: 5,
-    borderRadius: 7,
-    justifyContent: "center",
-    alignItems: "center",
-    height: 30,
-  },
-  buttonDel: {
-    backgroundColor: Colors.red,
-    color: Colors.white,
-    width: 50,
-    marginHorizontal: 5,
-    borderRadius: 7,
-    justifyContent: "center",
-    alignItems: "center",
-    height: 30,
-  },
-  buttonText: {
-    color: Colors.white,
-    fontSize: 12,
-    fontWeight: "normal",
-    paddingHorizontal: 15,
-  },
-  input: {
-    height: 30,
-    width: 150,
-    borderColor: Colors.plainGrey,
-    borderWidth: 1,
-    paddingLeft: 10,
-    paddingRight: 10,
-    borderRadius: 10,
-    shadowColor: Colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-    backgroundColor: Colors.white,
-    marginRight: 5,
-  },
-});
 
 export default DeckDropdown;

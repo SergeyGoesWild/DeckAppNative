@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { StyleSheet, FlatList, TouchableOpacity, Text } from "react-native";
+import { FlatList, TouchableOpacity, Text } from "react-native";
 import decksData from "../components/DataMock.js";
-import * as Colors from "../components/styles/colors";
 import DeckDropdown from "../components/DeckDropdown.js";
 import AddDeckOverlay from "../components/AddDeckOverlay.js";
+import { styles } from "../components/styles/DeckScreen.style.js";
 
 const DecksScreen = () => {
   const [decksState, setDecksState] = useState(decksData);
@@ -80,26 +80,5 @@ const DecksScreen = () => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  newDeckButton: {
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    borderRadius: 20,
-    backgroundColor: Colors.white,
-  },
-  button: {
-    backgroundColor: Colors.buttonBlue,
-    padding: 10,
-    borderRadius: 5,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonText: {
-    color: Colors.white,
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-});
 
 export default DecksScreen;
