@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef } from 'react';
 import { StyleSheet, Image, TouchableOpacity, View, Modal, Text, Button, Animated } from 'react-native';
 import { FlashList } from '@shopify/flash-list'; 
 import style from './styles/cardContainerStyles'
 import TabComponent from './TabComponent';
 import ModalComponent from './Modal'
 
-const CardContainer = ({ cards, loadMoreCards }) => {
+const CardContainer = forwardRef(({ cards, handleImageClick, loadMoreCards }, ref) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const fadeAnim = new Animated.Value(0);
@@ -31,6 +31,7 @@ const CardContainer = ({ cards, loadMoreCards }) => {
   return (
     <View style={{flex: 1}}>
     <FlashList
+     ref={ref} 
       data={cards}
       renderItem={({ item: card }) => (
         <TouchableOpacity onPress={() => openModal(card)} style={style.cardContainer}>
@@ -48,7 +49,7 @@ const CardContainer = ({ cards, loadMoreCards }) => {
           <ModalComponent visible={modalVisible} closeModal={closeModal} selectedCard={selectedCard} />
     </View>
   );
-};
+});
 
 
 const cardContainerStyles = StyleSheet.create({

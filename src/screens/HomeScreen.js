@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import SearchBar from "../components/SearchBar";
 import CardContainer from "../components/CardContainer";
 import { useNavigation } from "@react-navigation/native";
-
+import * as Colors from "../components/styles/colors";
 
 const HomeScreen = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,9 +11,8 @@ const HomeScreen = () => {
   const [displayedCards, setDisplayedCards] = useState([]); 
   const [loading, setLoading] = useState(false);
   const [offset, setOffset] = useState(0);
-  const [trainerCards, setTrainerCards] = useState([]);
-  const [pokemonCards, setPokemonCards] = useState([]);
   const cardsPerPage = 50; 
+  const flashListRef = useRef(null);
 
   const navigation = useNavigation();
 
@@ -28,24 +27,19 @@ const HomeScreen = () => {
         .map((card) => ({
           ...card,
           imageUrl: `${card.image}/low.webp`,
-          imageUrlHi: `${card.image}/high.webp`,
-          details: `https://api.tcgdex.net/v2/en/cards/${card.id}`, 
         }));
       setAllCards(filteredData);
       setDisplayedCards(filteredData.slice(0, cardsPerPage)); 
       setOffset(cardsPerPage);
-
     } catch (error) {
       throw new Error("Error fetching cards:", error);
     } finally {
       setLoading(false);
     }
-
   };
 
   useEffect(() => {
     fetchAllCards();
-
   }, []);
 
   const loadMoreCards = () => {
@@ -61,6 +55,9 @@ const HomeScreen = () => {
     setSearchTerm(term);
     setDisplayedCards(filteredCards.slice(0, cardsPerPage));
     setOffset(cardsPerPage);
+    if (flashListRef.current) {
+      flashListRef.current.scrollToOffset({ offset: 0, animated: true });
+    }
   };
 
   const handleImageClick = (card) => {
@@ -69,11 +66,11 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-    <SearchBar onSearch={handleSearch} details={displayedCards.map(card => card.details)} />
+      <SearchBar onSearch={handleSearch} />
       {loading ? (
         <Text>Loading...</Text>
       ) : (
-        <CardContainer cards={displayedCards} handleImageClick={handleImageClick} loadMoreCards={loadMoreCards} />
+        <CardContainer ref={flashListRef} cards={displayedCards} handleImageClick={handleImageClick} loadMoreCards={loadMoreCards} />
       )}
     </View>
   );
@@ -82,7 +79,7 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: Colors.white,
     paddingHorizontal: 10,
     paddingVertical: 20,
   },
