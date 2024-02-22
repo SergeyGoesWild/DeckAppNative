@@ -31,8 +31,4 @@ const styles = StyleSheet.create({
   },
 });
 
-<<<<<<< HEAD
 export default ErrorScreen;
-=======
-export default ErrorScreen;
->>>>>>> 70d4ab247ee1b3cda1b9bd076188c83e1343e3b4
