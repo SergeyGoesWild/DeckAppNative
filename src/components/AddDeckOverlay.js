@@ -8,7 +8,7 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
 } from "react-native";
-import { styles } from "./styles/DeckDropdown.style.js";
+import { styles } from "./styles/AddDeckOverlay.style.js";
 
 function AddDeckOverlay({ isVisible, onModalClose, onAddDeckPress }) {
   const [idDeck, setIdDeck] = useState(3);
