@@ -11,8 +11,8 @@ import {
 } from "react-native";
 import * as Colors from "../components/styles/colors";
 
-function AddDeckOverlay({ visibleState, onModalClose, onAddDeckPress }) {
-  const [idState, setIdState] = useState(3);
+function AddDeckOverlay({ isVisible, onModalClose, onAddDeckPress }) {
+  const [idDeck, setIdDeck] = useState(3);
   const [inputState, setInputState] = useState("");
   const handleChange = (text) => {
     setInputState(text);
@@ -22,7 +22,7 @@ function AddDeckOverlay({ visibleState, onModalClose, onAddDeckPress }) {
     <Modal
       animationType="slide"
       transparent={true}
-      visible={visibleState}
+      visible={isVisible}
       onRequestClose={() => {
         onModalClose();
       }}
@@ -35,7 +35,7 @@ function AddDeckOverlay({ visibleState, onModalClose, onAddDeckPress }) {
 
               <TextInput
                 style={styles.input}
-                placeholder="Type here..."
+                placeholder="Type deck name"
                 value={inputState}
                 onChangeText={handleChange}
               />
@@ -43,12 +43,12 @@ function AddDeckOverlay({ visibleState, onModalClose, onAddDeckPress }) {
               <Pressable
                 onPress={() => {
                   const deck = {
-                    id: idState,
+                    id: idDeck,
                     name: inputState,
                     avatar: require("../../assets/psy.png"),
                     deckContent: [],
                   };
-                  setIdState(idState + 1);
+                  setIdDeck(idDeck + 1);
                   setInputState("");
                   onAddDeckPress(deck);
                 }}
@@ -73,12 +73,12 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     borderRadius: 20,
     paddingVertical: 20,
     paddingHorizontal: 35,
     alignItems: "center",
-    shadowColor: "#000",
+    shadowColor: Colors.black,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: Colors.shadow,
   },
 });
 

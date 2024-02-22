@@ -10,14 +10,15 @@ import {
   Pressable,
 } from "react-native";
 import * as Colors from "../components/styles/colors";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 
 function DeckDropdown({ deck, removeDeck, renameDeck }) {
   const [expanded, setExpanded] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [inputState, setInputState] = useState(deck.name);
+  const [deckName, setDeckName] = useState(deck.name);
   const handleChange = (text) => {
     console.log(text);
-    setInputState(text);
+    setDeckName(text);
   };
 
   return (
@@ -41,27 +42,35 @@ function DeckDropdown({ deck, removeDeck, renameDeck }) {
               <View style={styles.editContainer}>
                 <TextInput
                   placeholder="Type here..."
-                  value={inputState}
+                  value={deckName}
                   style={styles.input}
                   onChangeText={handleChange}
                 />
                 <Pressable
-                  style={styles.button}
+                  style={styles.buttonOk}
                   onPress={() => {
                     setEditMode(false);
-                    renameDeck(deck.id, inputState);
+                    renameDeck(deck.id, deckName);
                   }}
                 >
-                  <Text style={styles.buttonText}>OK</Text>
+                  <AntDesign
+                    name="checkcircleo"
+                    size={20}
+                    color={Colors.white}
+                  />
                 </Pressable>
                 <Pressable
-                  style={styles.button}
+                  style={styles.buttonDel}
                   onPress={() => {
                     removeDeck(deck.id);
                     setEditMode(false);
                   }}
                 >
-                  <Text style={styles.buttonText}>Delete</Text>
+                  <Ionicons
+                    name="trash-bin-outline"
+                    size={22}
+                    color={Colors.white}
+                  />
                 </Pressable>
               </View>
             )}
@@ -71,10 +80,8 @@ function DeckDropdown({ deck, removeDeck, renameDeck }) {
       isExpanded={expanded}
       onPress={() => {
         setExpanded(!expanded);
-        console.log(deck);
       }}
       onLongPress={() => {
-        console.log(deck.id);
         setEditMode(true);
       }}
     >
@@ -88,10 +95,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  button: {
-    backgroundColor: Colors.buttonBlue,
+  buttonOk: {
+    backgroundColor: Colors.green,
     color: Colors.white,
-
+    width: 50,
+    marginHorizontal: 5,
+    borderRadius: 7,
+    justifyContent: "center",
+    alignItems: "center",
+    height: 30,
+  },
+  buttonDel: {
+    backgroundColor: Colors.red,
+    color: Colors.white,
+    width: 50,
     marginHorizontal: 5,
     borderRadius: 7,
     justifyContent: "center",

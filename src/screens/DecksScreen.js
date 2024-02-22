@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, FlatList } from "react-native";
-import { Button } from "@rneui/themed";
+import { StyleSheet, FlatList, TouchableOpacity, Text } from "react-native";
 import decksData from "../components/DataMock.js";
 import * as Colors from "../components/styles/colors";
 import DeckDropdown from "../components/DeckDropdown.js";
@@ -8,7 +7,7 @@ import AddDeckOverlay from "../components/AddDeckOverlay.js";
 
 const DecksScreen = () => {
   const [decksState, setDecksState] = useState(decksData);
-  const [visibleState, setVisibleState] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   const renderItem = ({ item }) => (
     <DeckDropdown
@@ -60,14 +59,19 @@ const DecksScreen = () => {
     <>
       {/* TODO: input + inputState + mv to separate component like <NameForm onSubmit={(data) => addDeck(data)} /> */}
       <AddDeckOverlay
-        visibleState={visibleState}
-        onModalClose={() => setVisibleState(false)}
+        isVisible={isVisible}
+        onModalClose={() => setIsVisible(false)}
         onAddDeckPress={(deck) => {
           addDeck(deck);
-          setVisibleState(false);
+          setIsVisible(false);
         }}
       />
-      <Button title="Add New Deck" onPress={() => setVisibleState(true)} />
+      <TouchableOpacity
+        onPress={() => setIsVisible(true)}
+        style={styles.button}
+      >
+        <Text style={styles.buttonText}>Add New Deck</Text>
+      </TouchableOpacity>
       <FlatList
         data={decksState}
         keyExtractor={(item) => item.id}
