@@ -3,6 +3,7 @@ import { StyleSheet, Image, TouchableOpacity, View, Modal, Text, Button, Animate
 import { FlashList } from '@shopify/flash-list'; 
 import style from './styles/cardContainerStyles'
 import TabComponent from './TabComponent';
+import ModalComponent from './Modal'
 
 const CardContainer = ({ cards, loadMoreCards }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -21,10 +22,21 @@ const CardContainer = ({ cards, loadMoreCards }) => {
     setSelectedCard(card);
     setModalVisible(true);
   };
+  console.log(modalVisible)
 
   const closeModal = () => {
-    fadeIn()
     setModalVisible(false);
+  };
+
+  const renderModal = () => {
+    return (
+      <View style={styles.modalContainer}>
+        <Button title='Close' onPress={closeModal}/>
+        {selectedCard && (
+          <TabComponent card={selectedCard} />
+        )}
+      </View>
+    );
   };
 
   return (
@@ -33,6 +45,7 @@ const CardContainer = ({ cards, loadMoreCards }) => {
       renderItem={({ item: card }) => (
         <TouchableOpacity onPress={() => openModal(card)} style={style.cardContainer}>
           <Image source={{ uri: card.imageUrl }} style={style.cardImage} />
+          <ModalComponent visible={modalVisible} closeModal={closeModal} selectedCard={selectedCard} />
         </TouchableOpacity>
       )}
       keyExtractor={(item) => item.id.toString()} 
@@ -41,21 +54,7 @@ const CardContainer = ({ cards, loadMoreCards }) => {
       numColumns={2}
       onEndReached={loadMoreCards}
       onEndReachedThreshold={0.8}
-    >
-      <Modal
-        animationType="fade"
-        transparent={false}
-        visible={modalVisible}
-        onRequestClose={closeModal}
-      >
-        <View style={styles.modalContainer}>
-          <Button title='Close' onPress={closeModal}/>
-          {selectedCard && (
-            <TabComponent card={selectedCard} />
-          )}
-        </View>
-      </Modal>
-    </FlashList>
+    />
   );
 };
 

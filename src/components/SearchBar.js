@@ -7,7 +7,6 @@ const [searchTerm, setSearchTerm] = useState('');
 const [selectedCategory, setSelectedCategory] = useState('');
 const [selectedRarity, setSelectedRarity] = useState('');
 const [selectedType, setSelectedType] = useState('');
-console.log(details)
 
 const handleSearch = () => {
   onSearch(searchTerm, selectedCategory, selectedRarity, selectedType);
