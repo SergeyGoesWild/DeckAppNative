@@ -28,7 +28,7 @@ const TabComponent = ({ card }) => {
       </View>
       <View style={style.content}>
         {activeTab === 'Tab1' ? (
-          <Image source={{ uri: card.imageUrlHi }} style={style.cardImage} />
+          <Image source={{ uri: card.imageUrl }} style={style.cardImage} />
         ) : (
           <CardDetails card={card.id} />
         )}
