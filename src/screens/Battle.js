@@ -1,126 +1,123 @@
-import React, { useState, useRef } from 'react';
-import { StyleSheet, SafeAreaView, Text, View, Animated, ScrollView } from 'react-native';
-import Constants from 'expo-constants';
-import DisplayResult from '../components/DisplayResult'
-import Actions from '../components/Actions'
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import History from '../components/History';
 
-export default function RockPaper() {
-    const [userChoice, setUserChoice] = useState(0);
-    const [computerChoice, setComputerChoice] = useState(0);
-    const [result, setResult] = useState('');
-    const [canPlay, setPlay] = useState(true);
+const PokemonGame = () => {
+  const [playerChoice, setPlayerChoice] = useState(null);
+  const [computerChoice, setComputerChoice] = useState(null);
+  const [result, setResult] = useState('');
+  const [playerScore, setPlayerScore] = useState(0);
+  const [computerScore, setComputerScore] = useState(0);
+  const [history, setHistory] = useState([]);
 
-    // For Animation
-    const fadeAnimation = useRef(new Animated.Value(1)).current;
+  const types = ['Colorless', 'Psychic', 'Fire', 'Grass', 'Fairy', 'Fighting', 'Metal', 'Dragon', 'Water', 'Dark', 'Rock'];
 
-    function play(choice){
-        // Set choices, 1 2 3
+  const typeMatchups = {
+    Colorless: ['Psychic'],
+    Psychic: ['Dark', 'Fighting'],
+    Fire: ['Grass'],
+    Grass: ['Water', 'Rock'],
+    Fairy: ['Dragon', 'Dark'],
+    Fighting: ['Normal', 'Dark', 'Rock'],
+    Metal: ['Fairy', 'Grass', 'Psychic'],
+    Dragon: ['Dragon'],
+    Water: ['Fire', 'Rock'],
+    Dark: ['Psychic', 'Ghost'],
+    Rock: ['Fire', 'Ghost']
+  };
 
-        const randomComputerChoice = Math.floor(Math.random() * 3 ) + 1;
-        let resultString = '';
+  const play = (choice) => {
+    const computerChoice = types[Math.floor(Math.random() * types.length)];
+    const roundResult = getRoundResult(choice, computerChoice);
 
-        if (choice === 1) {
-            resultString = randomComputerChoice === 3 ? 'WIN' : 'LOSE';
-        }
-        else if (choice === 2){
-            resultString = randomComputerChoice === 1 ? 'WIN' : 'LOSE';
-        }
-        else {
-            resultString = randomComputerChoice === 2 ? 'WIN' : 'LOSE';
-        }
-        if (choice === randomComputerChoice) {
-            resultString = 'DRAW';
-        }
+    setPlayerChoice(choice);
+    setComputerChoice(computerChoice);
+    setResult(roundResult);
 
-        setUserChoice(choice);
-        setComputerChoice(randomComputerChoice);
+    const newHistory = [...history, { playerChoice, computerChoice, result: roundResult }];
+    setHistory(newHistory);
 
-        // wait animation hide old result
-        setTimeout(() => {
-            setResult(resultString);
-        }, 300);
+    if (roundResult === 'You win!') {
+      setPlayerScore(playerScore + 1);
+    } else if (roundResult === 'Computer wins!') {
+      setComputerScore(computerScore + 1);
+    }
+  };
 
-        // Animation hide old and show new result
-        Animated.sequence([
-        Animated.timing(fadeAnimation, {
-            toValue: 0,
-            duration: 300,
-            useNativeDriver: true,
-        }),
-        Animated.timing(fadeAnimation, {
-            toValue: 1,
-            duration: 300,
-            useNativeDriver: true,
-        }),
-    ]).start();
+  const getRoundResult = (playerChoice, computerChoice) => {
+    if (typeMatchups[playerChoice] && typeMatchups[playerChoice].includes(computerChoice)) {
+      return 'You win!';
+    } else if (playerChoice === computerChoice) {
+      return 'It\'s a draw!';
+    } else {
+      return 'Computer wins!';
+    }
+  };
 
-    // Disable action when animation running
-    setPlay(false);
-    setTimeout(() => {
-        setPlay(true);
-    }, 600);
- }
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Choose your Pokémon type:</Text>
+      <View style={styles.choices}>
+        {types.map((type, index) => (
+          <TouchableOpacity
+            key={index}
+            style={styles.button}
+            onPress={() => play(type)}
+          >
+            <Text style={styles.buttonText}>{type}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+      <Text style={styles.result}>{result}</Text>
+      <View style={styles.scoreContainer}>
+        <Text style={styles.scoreText}>Your score: {playerScore}</Text>
+        <Text style={styles.scoreText}>Computer's score: {computerScore}</Text>
+      </View>
+      {playerChoice && computerChoice && (
+        <View style={styles.choices}>
+          <Text>You chose: {playerChoice}</Text>
+          <Text>Computer chose: {computerChoice}</Text>
+        </View>
+      )}
+      <History history={history} />
+    </View>
+  );
+};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+  },
+  choices: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: 20,
+  },
+  button: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: '#DDDDDD',
+    marginHorizontal: 5,
+    marginBottom: 10,
+  },
+  buttonText: {
+    fontSize: 18,
+  },
+  result: {
+    fontSize: 24,
+    marginBottom: 20,
+  },
+  scoreContainer: {
+    marginBottom: 20,
+  },
+  scoreText: {
+    fontSize: 16,
+  },
+});
 
- // return the view 
-    return(
-        <ScrollView>
-        <SafeAreaView style={StyleSheet.container}>
-            <View style={StyleSheet.content}>
-                <View style={StyleSheet.result}>
-                    <Animated.Text
-                    style={[styles.resultText, {opacity: fadeAnimation}]}
-                    >
-                        {result}
-                    </Animated.Text>
-                </View>
-                <View style={styles.screen}>
-                    {!result ? (
-                        <Text style={styles.readyText}>Let's Play</Text>
-                    ) : (
-                        <DisplayResult
-                        userChoice={userChoice}
-                        computerChoice={computerChoice}
-                        />
-                    )}
-                </View>
-                <Actions play={play} canPPlay={canPlay} />
-            </View>
-        </SafeAreaView>
-        </ScrollView>
-    );
-}
-
-    const styles = StyleSheet.create({
-        container : {
-        flex: 1,
-        padding: 10,
-    },
-    content : {
-        flex: 1,
-        marginBottom: 5,
-        backgroundColor: 'grey'
-    },
-    result : {
-        height: 100,
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-    },
-    resultText: {
-        fontSize: 48,
-        fontWeight: 'bold',
-    },
-    screen: {
-        flex: 1,
-        flexDirection: 'row'
-    },
-    readyText: {
-        marginTop: -48,
-        alignSelf: 'center',
-        textAlign: 'center',
-        width: '100%',
-        fontSize: 48,
-        fontWeight: 'bold'
-    },
-    })
-
-
+export default PokemonGame;
