@@ -60,7 +60,6 @@ const cardContainerStyles = StyleSheet.create({
     width: 200,
     height: 200,
     resizeMode: 'contain',
-    elevation: 4,
   },
 });
 
