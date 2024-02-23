@@ -10,7 +10,7 @@ const style = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 20,
         paddingBottom: 40,
-        resizeMode: 'cover',
+        resizeMode: 'contain',
       },
       heroText: {
         fontSize: 32,
