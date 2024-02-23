@@ -2,12 +2,9 @@ import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import HomeScreen from "./HomeScreen";
 import DecksScreen from "./DecksScreen";
-<<<<<<< HEAD
+import ErrorScreen from "./ErrorScreen";
 import SetScreen from './SetScreen';
 import Battle from './Battle';
-=======
-import ErrorScreen from "./ErrorScreen";
->>>>>>> b18c7bcbddedfc53d0cccf5a744cdc78c8ffb58e
 
 const Tab = createMaterialTopTabNavigator();
 
