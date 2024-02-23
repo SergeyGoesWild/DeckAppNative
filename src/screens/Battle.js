@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import History from '../components/History';
+import * as Animatable from "react-native-animatable";
 
 const PokemonGame = () => {
   const [playerChoice, setPlayerChoice] = useState(null);
@@ -9,6 +10,15 @@ const PokemonGame = () => {
   const [playerScore, setPlayerScore] = useState(0);
   const [computerScore, setComputerScore] = useState(0);
   const [history, setHistory] = useState([]);
+
+  handleViewRef = (ref) => (this.view = ref);
+
+   bounce = () =>
+      this.view
+         .bounce(800)
+         .then((endState) =>
+            console.log(endState.finished ? "bounce finished" : "bounce cancelled")
+         );
 
   const types = ['Colorless', 'Psychic', 'Fire', 'Grass', 'Fairy', 'Fighting', 'Metal', 'Dragon', 'Water', 'Dark', 'Rock'];
 
@@ -55,19 +65,30 @@ const PokemonGame = () => {
   };
 
   return (
+    <ScrollView>
     <View style={styles.container}>
       <Text style={styles.title}>Choose your Pokémon type:</Text>
+      <ScrollView
+  horizontal
+  showsHorizontalScrollIndicator={false}
+  directionalLockEnabled={true}
+  alwaysBounceVertical={false}
+>
       <View style={styles.choices}>
         {types.map((type, index) => (
           <TouchableOpacity
             key={index}
             style={styles.button}
-            onPress={() => play(type)}
+            onPress={() => {
+              play(type);
+              {this.bounce}
+                    }}
           >
             <Text style={styles.buttonText}>{type}</Text>
           </TouchableOpacity>
         ))}
       </View>
+      </ScrollView>
       <Text style={styles.result}>{result}</Text>
       <View style={styles.scoreContainer}>
         <Text style={styles.scoreText}>Your score: {playerScore}</Text>
@@ -79,8 +100,21 @@ const PokemonGame = () => {
           <Text>Computer chose: {computerChoice}</Text>
         </View>
       )}
+      <View style={styles.choices}>
+    {types.map((type, index) => (
+      <TouchableOpacity
+        key={index}
+        style={styles.button}
+        onPress={() => {}}
+        disabled={true}
+      >
+        <Text style={styles.buttonText}>{type}</Text>
+      </TouchableOpacity>
+    ))}
+  </View>
       <History history={history} />
     </View>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
@@ -95,8 +129,8 @@ const styles = StyleSheet.create({
   },
   choices: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
     marginBottom: 20,
+    height: 120,
   },
   button: {
     paddingHorizontal: 20,
@@ -104,6 +138,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#DDDDDD',
     marginHorizontal: 5,
     marginBottom: 10,
+    borderRadius: 8,
   },
   buttonText: {
     fontSize: 18,

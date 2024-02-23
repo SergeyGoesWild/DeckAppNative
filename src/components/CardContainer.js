@@ -22,7 +22,6 @@ const CardContainer = forwardRef(({ cards, handleImageClick, loadMoreCards }, re
     setSelectedCard(card);
     setModalVisible(true);
   };
-  console.log(modalVisible)
 
   const closeModal = () => {
     setModalVisible(false);

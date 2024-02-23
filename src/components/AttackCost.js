@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import style from './styles/cardDetailsStyles'
+import style from './styles/cardDetailsStyles';
+import * as Animatable from 'react-native-animatable';
 
 const AttackCost = ({ cost, renderCostImage }) => {
   if (!cost) {
@@ -9,7 +10,7 @@ const AttackCost = ({ cost, renderCostImage }) => {
 
   return (
     <View style={{ alignItems: 'center' }}>
-      <Text style={style.attacks}>Cost : </Text>
+      <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate" style={style.attacks}>Cost : </Animatable.Text>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         {Array.isArray(cost) ? (
           cost.map((costItem, index) => (

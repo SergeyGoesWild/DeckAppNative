@@ -5,7 +5,7 @@ import TabComponent from './TabComponent';
 const ModalComponent = ({ visible, closeModal, selectedCard }) => {
   return (
     <Modal
-      animationType="fade"
+      animationType="slide"
       transparent={false}
       visible={visible}
       onRequestClose={closeModal}

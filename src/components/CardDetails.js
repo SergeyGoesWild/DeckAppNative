@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, Image, ScrollView, FlatList } from 'react-native';
 import style from './styles/cardDetailsStyles'
 import AttackCost from './AttackCost';
+import * as Animatable from 'react-native-animatable';
 
 const CardDetails = ({ card }) => {
   const [cardDetails, setCardDetails] = useState(null);
@@ -60,34 +61,34 @@ const CardDetails = ({ card }) => {
     <View style={style.container}>
       {cardDetails ? (
         <>
-          <Text style={style.name}>{cardDetails.name}</Text>
-          <Text style={style.setname}>{cardDetails.set.name}</Text>
-          <Text style={style.rarity}>{cardDetails.rarity}</Text>
+          <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate" style={style.name}>{cardDetails.name}</Animatable.Text>
+          <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate" style={style.rarity}>{cardDetails.set.name}</Animatable.Text>
+          <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate" style={style.setname}>{cardDetails.rarity}</Animatable.Text>
           <View style={style.paragraph}>
-          <Text style={style.types}>{cardDetails.types}</Text>
+          <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate" style={style.rarity}>{cardDetails.types}</Animatable.Text>
           </View>
           {cardDetails.description && (
         <>
           <Text style={style.title}>Description : </Text>
           <View style={style.paragraph}>
-          <Text style={style.description}>{cardDetails.description}</Text>
+          <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate" style={style.description}>{cardDetails.description}</Animatable.Text>
           </View>
         </>
           )}
-          <Text style={style.title}>Attacks: </Text>
+          <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate" style={style.title}>Attacks: </Animatable.Text>
           {cardDetails.attacks.map((attack, index) => (
      <View key={index} style={style.attacks}>
-           <Text style={style.attacks}>{attack.name}</Text>
+           <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate" style={style.attacks}>{attack.name}</Animatable.Text>
     {attack.cost && (
           <AttackCost cost={attack.cost} renderCostImage={renderCostImage} />
     )}
-             <Text style={style.attacks}>Effect: {attack.effect}</Text>
-    {attack.damage && <Text style={style.attacks}>Damage: {attack.damage}</Text>}
+             <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate" style={style.attacks}>Effect: {attack.effect}</Animatable.Text>
+    {attack.damage && <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate" style={style.attacks}>Damage: {attack.damage}</Animatable.Text>}
       </View>
     ))}
         </>
       ) : (
-        <Text>No details available</Text>
+        <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate">No details available</Animatable.Text>
       )}
     </View>
     </ScrollView>
