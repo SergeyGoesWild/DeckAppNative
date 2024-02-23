@@ -23,7 +23,7 @@ const PokemonGame = () => {
     Dragon: ['Dragon'],
     Water: ['Fire', 'Rock'],
     Dark: ['Psychic', 'Ghost'],
-    Rock: ['Fire', 'Ghost']
+    Rock: ['Fire', 'Ghost'],
   };
 
   const play = (choice) => {
