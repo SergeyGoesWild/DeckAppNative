@@ -37,22 +37,27 @@ const DecksScreen = () => {
     setDecksState(nextDecksState);
   };
 
-  const updateDeck = (updatedDeck) => {
-    const oldDeckIndex = decksState.findIndex(
-      (item) => item.name === updatedDeck.name
-    );
-
-    const before = decksState.slice(0, oldDeckIndex);
-    const after = decksState.slice(oldDeckIndex + 1);
-    const nextState = [...before, updatedDeck, ...after];
-    setDecksState(nextState);
+  const raichu = {
+    id: "swsh12-050",
+    localId: "050",
+    name: "Raichu",
+    image: "https://assets.tcgdex.net/en/swsh/swsh12/050",
   };
 
-  const addCardToDeck = (card, deck) => {
-    deck.deckContent.push(card);
-    const updatedDeck = deck;
+  const addCardToDeck = (card, deckId) => {
+    const idToFind = decksState.findIndex((item) => item.id === deckId);
+    const deckToFind = decksState[idToFind];
+    card.idNative = card.id;
+    card.id = new Date().getTime();
+    deckToFind.deckContent = [...deckToFind.deckContent, card];
+    updateDeck(deckToFind);
+  };
 
-    updateDeck(updatedDeck);
+  const updateDeck = (updatedDeck) => {
+    const before = decksState.slice(0, updatedDeck.id);
+    const after = decksState.slice(updatedDeck.id + 1);
+    const nextState = [...before, updatedDeck, ...after];
+    setDecksState(nextState);
   };
 
   return (
@@ -66,6 +71,12 @@ const DecksScreen = () => {
           setIsVisible(false);
         }}
       />
+      <TouchableOpacity
+        onPress={() => addCardToDeck(raichu, 2)}
+        style={styles.button}
+      >
+        <Text style={styles.buttonText}>CARD !!!</Text>
+      </TouchableOpacity>
       <TouchableOpacity
         onPress={() => setIsVisible(true)}
         style={styles.button}

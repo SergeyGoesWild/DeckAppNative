@@ -339,19 +339,22 @@ const decksData = [
     avatar: require("../../assets/elec.png"),
     deckContent: [
       {
-        id: "basep-1",
+        id: 100,
+        idNative: "basep-1",
         localId: "1",
         name: "Pikachu",
         image: "https://assets.tcgdex.net/en/base/basep/1",
       },
       {
-        id: "pop5-1",
+        id: 101,
+        idNative: "pop5-1",
         localId: "1",
         name: "Ho-Oh",
         image: "https://assets.tcgdex.net/en/pop/pop5/1",
       },
       {
-        id: "pop9-1",
+        id: 102,
+        idNative: "pop9-1",
         localId: "1",
         name: "Garchomp",
         image: "https://assets.tcgdex.net/en/pop/pop9/1",
@@ -364,13 +367,15 @@ const decksData = [
     avatar: require("../../assets/plant.png"),
     deckContent: [
       {
-        id: "bw5-1",
+        id: 103,
+        idNative: "bw5-1",
         localId: "1",
         name: "Bulbasaur",
         image: "https://assets.tcgdex.net/en/bw/bw5/1",
       },
       {
-        id: "bw2-1",
+        id: 104,
+        idNative: "bw2-1",
         localId: "1",
         name: "Pansage",
         image: "https://assets.tcgdex.net/en/bw/bw2/1",
