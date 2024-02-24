@@ -10,7 +10,12 @@ const SetsMenu = () => {
     fetch('https://api.tcgdex.net/v2/en/sets')
       .then(response => response.json())
       .then(data => {
-        setSetsData(data);
+        const filteredData = data.filter(set => 
+          set.cardCount.total > 20 &&
+          (set.logo || set.symbol) &&
+          !set.name.includes('trainer Kit')
+        );
+        setSetsData(filteredData);
       })
       .catch(error => {
         console.error('Error fetching sets:', error);

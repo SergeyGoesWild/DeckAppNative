@@ -1,31 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, Image, Button, Modal } from 'react-native';
+import { View, FlatList, StyleSheet, Image, Button } from 'react-native';
+import BoosterOpener from '../components/BoosterOpener';
 
 const CardsBySets = ({ route }) => {
   const { setId } = route.params;
   const [cards, setCards] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedCards, setSelectedCards] = useState([]);
 
   useEffect(() => {
-    fetch(`https://api.tcgdex.net/v2/en/sets/${setId}`)
-      .then(response => response.json())
-      .then(data => {
-        setCards(data.cards);
-      })
-      .catch(error => {
+    const fetchCards = async () => {
+      try {
+        const response = await fetch(`https://api.tcgdex.net/v2/en/sets/${setId}`);
+        const data = await response.json();
+        const enrichedCards = await Promise.all(data.cards.map(fetchCardDetails));
+        const cardsWithImages = enrichedCards.filter(card => card.image);
+        setCards(cardsWithImages);
+      } catch (error) {
         console.error('Error fetching cards:', error);
-      });
+      }
+    };
+    fetchCards();
   }, [setId]);
 
-  const ouvrirBooster = () => {
-    let cartesBooster = [];
-    for (let i = 0; i < 5; i++) { // Supposons 5 cartes par booster
-      const carteAleatoire = cards[Math.floor(Math.random() * cards.length)];
-      cartesBooster.push(carteAleatoire);
+  const fetchCardDetails = async (card) => {
+    try {
+      const cardSetId = card.id.split('-')[0];
+      const response = await fetch(`https://api.tcgdex.net/v2/en/sets/${cardSetId}/${card.localId}`);
+      const cardDetails = await response.json();
+      return { ...card, ...cardDetails };
+    } catch (error) {
+      console.error('Error fetching card details:', error);
     }
-    setSelectedCards(cartesBooster);
-    setModalVisible(true);
   };
 
   const renderCardItem = ({ item }) => (
@@ -36,31 +40,12 @@ const CardsBySets = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ marginBottom: 20 }}>
-        <Button title="Ouvrir Booster" onPress={ouvrirBooster} />
-      </View>
+      <BoosterOpener cards={cards} />
       <FlatList
         data={cards}
         renderItem={renderCardItem}
         keyExtractor={(item) => item.id}
       />
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            {selectedCards.map((carte, index) => (
-              <Image key={index} style={styles.modalImage} source={{ uri: `${carte.image}/high.webp` }} />
-            ))}
-            <Button title="Fermer" onPress={() => setModalVisible(!modalVisible)} />
-          </View>
-        </View>
-      </Modal>
     </View>
   );
 };
@@ -81,33 +66,6 @@ const styles = StyleSheet.create({
     height: 200,
     resizeMode: 'contain',
     alignSelf: 'center',
-  },
-  modalImage: {
-    width: 100,
-    height: 100,
-    resizeMode: 'contain',
-    margin: 5,
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5
   }
 });
 
