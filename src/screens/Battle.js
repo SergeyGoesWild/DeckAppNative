@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native';
 import History from '../components/History';
 import * as Animatable from "react-native-animatable";
+import Colorless from '../components/pokemonTypes/Colorless'
 
 const PokemonGame = () => {
   const [playerChoice, setPlayerChoice] = useState(null);
@@ -11,16 +12,7 @@ const PokemonGame = () => {
   const [computerScore, setComputerScore] = useState(0);
   const [history, setHistory] = useState([]);
 
-  handleViewRef = (ref) => (this.view = ref);
-
-   bounce = () =>
-      this.view
-         .bounce(800)
-         .then((endState) =>
-            console.log(endState.finished ? "bounce finished" : "bounce cancelled")
-         );
-
-  const types = ['Colorless', 'Psychic', 'Fire', 'Grass', 'Fairy', 'Fighting', 'Metal', 'Dragon', 'Water', 'Dark', 'Rock'];
+  const types = ['Colorless', 'Psychic', 'Fire', 'Grass', 'Fairy', 'Fighting', 'Metal', 'Dragon', 'Water', 'Dark'];
 
   const typeMatchups = {
     Colorless: ['Psychic'],
@@ -33,7 +25,6 @@ const PokemonGame = () => {
     Dragon: ['Dragon'],
     Water: ['Fire', 'Rock'],
     Dark: ['Psychic', 'Ghost'],
-    Rock: ['Fire', 'Ghost'],
   };
 
   const play = (choice) => {
@@ -64,31 +55,45 @@ const PokemonGame = () => {
     }
   };
 
+  const renderChoiceImage = (choice) => {
+    const choiceImage = choiceImages[choice];
+    if (choiceImage) {
+      return <Image style={{ height: 50, width: 50, resizeMode: 'contain' }} source={choiceImage} />;
+    }
+    return null;
+  };
+
+  const choiceImages = {
+    Colorless: require('../../assets/colorless.png'),
+    Psychic: require('../../assets/psychic.png'),
+    Fire: require('../../assets/fire.png'),
+    Grass: require('../../assets/grass.png'),
+    Fairy: require('../../assets/fairy.png'),
+    Fighting: require('../../assets/fighting.png'),
+    Metal: require('../../assets/metal.png'),
+    Dragon: require('../../assets/dragon.png'),
+    Water: require('../../assets/water.png'),
+    Dark: require('../../assets/dark.png'),
+  };
+
   return (
     <ScrollView>
-    <View style={styles.container}>
-      <Text style={styles.title}>Choose your Pokémon type:</Text>
-      <ScrollView
-  horizontal
-  showsHorizontalScrollIndicator={false}
-  directionalLockEnabled={true}
-  alwaysBounceVertical={false}
->
-      <View style={styles.choices}>
-        {types.map((type, index) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.button}
-            onPress={() => {
-              play(type);
-              {this.bounce}
-                    }}
-          >
-            <Text style={styles.buttonText}>{type}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-      </ScrollView>
+      <View style={styles.container}>
+      {/* <Text style={styles.title}>Choose your Pokémon type:</Text> */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          directionalLockEnabled={true}
+          alwaysBounceVertical={false}
+        >
+          {types.map((type, index) => (
+            <Colorless
+              key={index}
+              type={type}
+              onPress={play}
+            />
+          ))}
+        </ScrollView>
       <Text style={styles.result}>{result}</Text>
       <View style={styles.scoreContainer}>
         <Text style={styles.scoreText}>Your score: {playerScore}</Text>
@@ -96,21 +101,36 @@ const PokemonGame = () => {
       </View>
       {playerChoice && computerChoice && (
         <View style={styles.choices}>
-          <Text>You chose: {playerChoice}</Text>
-          <Text>Computer chose: {computerChoice}</Text>
+
+          <View>
+          <Text>You chose: {playerChoice} </Text>
+          {renderChoiceImage(playerChoice)}
+          </View>
+
+          <View>
+          <Text>Computer chose: {computerChoice} </Text>
+          {renderChoiceImage(computerChoice)}
+          </View>
+          
         </View>
       )}
       <View style={styles.choices}>
+      <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          directionalLockEnabled={true}
+          alwaysBounceVertical={false}
+        >
     {types.map((type, index) => (
-      <TouchableOpacity
+      <Colorless
         key={index}
-        style={styles.button}
+        type={type}
         onPress={() => {}}
         disabled={true}
       >
-        <Text style={styles.buttonText}>{type}</Text>
-      </TouchableOpacity>
+      </Colorless>
     ))}
+    </ScrollView>
   </View>
       <History history={history} />
     </View>
@@ -122,13 +142,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 10,
   },
   title: {
     fontSize: 24,
     marginBottom: 20,
   },
   choices: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     marginBottom: 20,
     height: 120,
   },
