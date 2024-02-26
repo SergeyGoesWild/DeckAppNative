@@ -14,6 +14,7 @@
     "@rneui/base": "github:react-native-elements/react-native-elements#base",
     "@rneui/themed": "github:react-native-elements/react-native-elements#themed",
     "@shopify/flash-list": "^1.6.3",
+    "eslint-plugin-react-native": "^4.1.0",
     "expo": "^50.0.7",
     "expo-status-bar": "~1.11.1",
     "react": "18.2.0",

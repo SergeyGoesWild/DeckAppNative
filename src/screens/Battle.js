@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native';
 import History from '../components/History';
 import * as Animatable from "react-native-animatable";
-import Colorless from '../components/pokemonTypes/Colorless'
+import PlayCards from '../components/pokemonTypes/PlayCards'
 
 const PokemonGame = () => {
   const [playerChoice, setPlayerChoice] = useState(null);
@@ -23,8 +23,8 @@ const PokemonGame = () => {
     Fighting: ['Normal', 'Dark', 'Rock'],
     Metal: ['Fairy', 'Grass', 'Psychic'],
     Dragon: ['Dragon'],
-    Water: ['Fire', 'Rock'],
-    Dark: ['Psychic', 'Ghost'],
+    Water: ['Fire', 'Rock', 'Metal'],
+    Dark: ['Psychic', 'Ghost', 'Fighting'],
   };
 
   const play = (choice) => {
@@ -58,10 +58,32 @@ const PokemonGame = () => {
   const renderChoiceImage = (choice) => {
     const choiceImage = choiceImages[choice];
     if (choiceImage) {
-      return <Image style={{ height: 50, width: 50, resizeMode: 'contain' }} source={choiceImage} />;
+      return <Image style={{ height: 28, width: 28, resizeMode: 'stretch' }} source={choiceImage} />;
     }
     return null;
   };
+
+  const renderPlayImage = (choice, isPlayerChoice) => {
+    const choiceImage = choiceImages[choice];
+    const imageRef = useRef(null);
+  
+    useEffect(() => {
+      if (imageRef.current) {
+        if (isPlayerChoice) {
+          imageRef.current.slideInLeft(1000);
+        } else {
+          imageRef.current.slideInRight(1000);
+        }
+      }
+    }, [choice, isPlayerChoice]);
+  
+    return (
+      <Animatable.View ref={imageRef}>
+        {choiceImage && <Image style={{ height: 80, width: 80, resizeMode: 'contain' }} source={choiceImage} />}
+      </Animatable.View>
+    );
+  };
+  
 
   const choiceImages = {
     Colorless: require('../../assets/colorless.png'),
@@ -76,10 +98,21 @@ const PokemonGame = () => {
     Dark: require('../../assets/dark.png'),
   };
 
+const playerRef = useRef(null);
+const computerRef = useRef(null);
+
   return (
     <ScrollView>
-      <View style={styles.container}>
-      {/* <Text style={styles.title}>Choose your Pokémon type:</Text> */}
+<View style={styles.container}>
+        <View style={styles.player}>
+        <Image source={require('../../assets/player.png')} style={styles.avatar}/>
+        <Animatable.View animation="pulse" easing="ease-out" iterationCount="infinite" style={styles.choiceImg}>
+        {renderChoiceImage(playerChoice)}
+        </Animatable.View>
+          <View style={styles.scoreCount}>
+          <Text style={styles.scoreText}>{playerScore}</Text>
+          </View>
+        </View>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -87,34 +120,39 @@ const PokemonGame = () => {
           alwaysBounceVertical={false}
         >
           {types.map((type, index) => (
-            <Colorless
+            <PlayCards
               key={index}
               type={type}
               onPress={play}
             />
           ))}
         </ScrollView>
-      <Text style={styles.result}>{result}</Text>
+      <Text style={styles.result}>
+        {result}
+      </Text>
       <View style={styles.scoreContainer}>
-        <Text style={styles.scoreText}>Your score: {playerScore}</Text>
-        <Text style={styles.scoreText}>Computer's score: {computerScore}</Text>
-      </View>
-      {playerChoice && computerChoice && (
-        <View style={styles.choices}>
-
-          <View>
-          <Text>You chose: {playerChoice} </Text>
-          {renderChoiceImage(playerChoice)}
-          </View>
-
-          <View>
-          <Text>Computer chose: {computerChoice} </Text>
-          {renderChoiceImage(computerChoice)}
-          </View>
-          
-        </View>
-      )}
       <View style={styles.choices}>
+      <View style={styles.scoreContainer}>
+  <View style={styles.choices}>
+    <View>
+      {renderPlayImage(playerChoice, true)}
+    </View>    
+    <View>
+      {renderPlayImage(computerChoice, false)}
+    </View>
+  </View>
+</View>
+      </View>
+      </View>
+      <View style={styles.player}>
+      <Image source={require('../../assets/complayer.png')} style={styles.avatar}/>
+      <Animatable.View animation="pulse" easing="ease-in-back" iterationCount="infinite" style={styles.choiceImg}>
+        {renderChoiceImage(computerChoice)}
+        </Animatable.View>
+          <View style={styles.scoreCount}>
+          <Text style={styles.scoreText}>{computerScore}</Text>
+          </View>
+      </View>
       <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -122,18 +160,17 @@ const PokemonGame = () => {
           alwaysBounceVertical={false}
         >
     {types.map((type, index) => (
-      <Colorless
+      <PlayCards
         key={index}
         type={type}
         onPress={() => {}}
         disabled={true}
       >
-      </Colorless>
+      </PlayCards>
     ))}
     </ScrollView>
-  </View>
-      <History history={history} />
-    </View>
+
+</View>
     </ScrollView>
   );
 };
@@ -145,35 +182,71 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   title: {
-    fontSize: 24,
+    fontSize: 18,
     marginBottom: 20,
   },
   choices: {
-    flexDirection: 'column',
-    marginBottom: 20,
-    height: 120,
-  },
-  button: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    backgroundColor: '#DDDDDD',
-    marginHorizontal: 5,
-    marginBottom: 10,
-    borderRadius: 8,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
   },
   buttonText: {
     fontSize: 18,
   },
   result: {
-    fontSize: 24,
-    marginBottom: 20,
+    height: 20,
+    fontSize: 16,
+    marginBottom: 0,
   },
   scoreContainer: {
-    marginBottom: 20,
+    flexDirection: 'row',
+    margin: 25,
+    justifyContent: 'space-between',
+    width: '70%',
   },
   scoreText: {
     fontSize: 16,
   },
+avatar: {
+  height: 50,
+  width: 50,
+  resizeMode: 'contain',
+  alignSelf: 'flex-start',
+  borderWidth: 1,
+  margin: 5,
+  borderRadius: 8,
+  resizeMode: 'cover',
+  backgroundColor: 'white',
+},
+player: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  backgroundColor: '#DDDDDD',
+  margin: 15,
+  paddding: 10,
+  width: '100%',
+  borderRadius: 10,
+  borderWidth: 1,
+},
+scoreCount: {
+  height: 30,
+  width: 30,
+  alignItems: 'center',
+  alignSelf: 'center',
+  justifyContent: 'center',
+  marginLeft: 300,
+  backgroundColor: 'white',
+  borderWidth: 1,
+  borderColor: 'black',
+  borderRadius: 4,
+  position: 'absolute',
+},
+choiceImg: {
+  position: 'absolute',
+  marginLeft: 80,
+  borderWidth: 1,
+  borderRadius: 20,
+}
 });
 
 export default PokemonGame;
