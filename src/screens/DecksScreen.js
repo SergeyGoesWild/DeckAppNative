@@ -53,6 +53,20 @@ const DecksScreen = () => {
     updateDeck(deckToFind);
   };
 
+  const removeCard = (cardId, deckId) => {
+    const indexDeckToFind = decksState.findIndex((item) => item.id === deckId);
+    const deckToFind = decksState[indexDeckToFind];
+    const indexCardToFind = deckToFind.findIndex((item) => item.id === cardId);
+    const newDeck = deckToFind
+      .slice(0, indexCardToFind)
+      .concat(decksState.slice(indexCardToFind + 1));
+    const newDecksState = decksState
+      .slice(0, indexDeckToFind)
+      .concat([newDeck])
+      .concat(decksState.slice(indexDeckToFind + 1));
+    setDecksState(newDecksState);
+  };
+
   const updateDeck = (updatedDeck) => {
     const before = decksState.slice(0, updatedDeck.id);
     const after = decksState.slice(updatedDeck.id + 1);
