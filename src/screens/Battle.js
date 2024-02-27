@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, TextInput, Modal, Button } from 'react-native';
 import History from '../components/History';
 import * as Animatable from "react-native-animatable";
 import PlayCards from '../components/pokemonTypes/PlayCards'
@@ -11,6 +11,11 @@ const PokemonGame = () => {
   const [playerScore, setPlayerScore] = useState(0);
   const [computerScore, setComputerScore] = useState(0);
   const [history, setHistory] = useState([]);
+  const [playerName, setPlayerName] = useState('Player');
+  const [playerHealth, setPlayerHealth] = useState(10);
+  const [computerHealth, setComputerHealth] = useState(10);
+  const [showPlayerDefeatModal, setShowPlayerDefeatModal] = useState(false);
+  const [showComputerVictoryModal, setShowComputerVictoryModal] = useState(false);
 
   const types = ['Colorless', 'Psychic', 'Fire', 'Grass', 'Fairy', 'Fighting', 'Metal', 'Dragon', 'Water', 'Dark'];
 
@@ -40,9 +45,20 @@ const PokemonGame = () => {
 
     if (roundResult === 'You win!') {
       setPlayerScore(playerScore + 1);
+      setComputerHealth(computerHealth - 1);
     } else if (roundResult === 'Computer wins!') {
       setComputerScore(computerScore + 1);
+      setPlayerHealth(playerHealth - 1);
+    } else {
+
     }
+
+    if (playerHealth === 0) {
+      setShowPlayerDefeatModal(true);
+    } else if (computerHealth === 0) {
+      setShowComputerVictoryModal(true);
+    }
+
   };
 
   const getRoundResult = (playerChoice, computerChoice) => {
@@ -53,6 +69,19 @@ const PokemonGame = () => {
     } else {
       return 'Computer wins!';
     }
+  };
+
+  const resetGame = () => {
+    setPlayerChoice(null);
+    setComputerChoice(null);
+    setResult('');
+    setPlayerScore(0);
+    setComputerScore(0);
+    setHistory([]);
+    setPlayerHealth(10);
+    setComputerHealth(10);
+    setShowPlayerDefeatModal(false);
+    setShowComputerVictoryModal(false);
   };
 
   const renderChoiceImage = (choice) => {
@@ -83,7 +112,6 @@ const PokemonGame = () => {
       </Animatable.View>
     );
   };
-  
 
   const choiceImages = {
     Colorless: require('../../assets/colorless.png'),
@@ -102,16 +130,29 @@ const playerRef = useRef(null);
 const computerRef = useRef(null);
 
   return (
-    <ScrollView>
+<ScrollView>
 <View style={styles.container}>
         <View style={styles.player}>
         <Image source={require('../../assets/player.png')} style={styles.avatar}/>
+        <View style={styles.playerInfo}>
+            <TextInput
+              style={styles.input}
+              placeholder="Chose your name"
+              onChangeText={setPlayerName}
+              value={playerName}
+            />
+            </View>
         <Animatable.View animation="pulse" easing="ease-out" iterationCount="infinite" style={styles.choiceImg}>
         {renderChoiceImage(playerChoice)}
         </Animatable.View>
           <View style={styles.scoreCount}>
           <Text style={styles.scoreText}>{playerScore}</Text>
           </View>
+        </View>
+        <View style={styles.healthBarContainer}>
+              <View style={styles.healthBar}>
+                <View style={[styles.healthBarFill, { width: `${(playerHealth / 10) * 100}%` }]}></View>
+              </View>
         </View>
         <ScrollView
           horizontal
@@ -146,6 +187,7 @@ const computerRef = useRef(null);
       </View>
       <View style={styles.player}>
       <Image source={require('../../assets/complayer.png')} style={styles.avatar}/>
+      <Text>DreamDeck</Text>
       <Animatable.View animation="pulse" easing="ease-in-back" iterationCount="infinite" style={styles.choiceImg}>
         {renderChoiceImage(computerChoice)}
         </Animatable.View>
@@ -153,6 +195,11 @@ const computerRef = useRef(null);
           <Text style={styles.scoreText}>{computerScore}</Text>
           </View>
       </View>
+      <View style={styles.healthBarContainer}>
+              <View style={styles.healthBar}>
+                <View style={[styles.healthBarFill, { width: `${(computerHealth / 10) * 100}%` }]}></View>
+              </View>
+        </View>
       <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -169,9 +216,34 @@ const computerRef = useRef(null);
       </PlayCards>
     ))}
     </ScrollView>
+  <Modal
+          visible={showPlayerDefeatModal}
+          animationType="slide"
+          transparent={true}
+          >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalText}>YOU LOST.</Text>
+              <Button title="Play Again" onPress={resetGame} />
+            </View>
+          </View>
+  </Modal>
 
+
+  <Modal
+          visible={showComputerVictoryModal}
+          animationType="slide"
+          transparent={true}
+          >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalText}>YOU WON !</Text>
+              <Button title="Play Again" onPress={resetGame} />
+            </View>
+          </View>
+  </Modal>
 </View>
-    </ScrollView>
+</ScrollView>
   );
 };
 const styles = StyleSheet.create({
@@ -194,7 +266,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   result: {
-    height: 20,
     fontSize: 16,
     marginBottom: 0,
   },
@@ -222,7 +293,7 @@ player: {
   flexDirection: 'row',
   alignItems: 'center',
   backgroundColor: '#DDDDDD',
-  margin: 15,
+  margin: 10,
   paddding: 10,
   width: '100%',
   borderRadius: 10,
@@ -243,10 +314,51 @@ scoreCount: {
 },
 choiceImg: {
   position: 'absolute',
-  marginLeft: 80,
+  marginLeft: 230,
   borderWidth: 1,
   borderRadius: 20,
-}
+},
+input: {
+  height: 50,
+  borderColor: 'black',
+  borderWidth: 1,
+  paddingHorizontal: 10,
+  borderRadius: 5,
+  width: '100%',
+  backgroundColor: 'white',
+},
+healthBarContainer: {
+  marginBottom: 5,
+},
+healthBar: {
+  flexDirection: 'row',
+  height: 10,
+  width: '100%',
+  backgroundColor: '#ddd',
+  borderRadius: 5,
+  overflow: 'hidden',
+},
+healthBarFill: {
+  height: '100%',
+  backgroundColor: 'green',
+  borderWidth: 1,
+},
+modalContainer: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+},
+modalContent: {
+  backgroundColor: 'white',
+  padding: 20,
+  borderRadius: 10,
+  alignItems: 'center',
+},
+modalText: {
+  fontSize: 20,
+  marginBottom: 20,
+},
 });
 
 export default PokemonGame;
