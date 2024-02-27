@@ -24,7 +24,13 @@ export const SharedProvider = ({ children }) => {
     setChosenDeck(newValue);
   };
 
-  const changeReady = () => {
+  const readyOn = () => {
+    console.log("Ready is ON");
+    setReady(true);
+  };
+
+  const readyOff = () => {
+    console.log("Ready is OFF");
     setReady(false);
   };
 
@@ -37,7 +43,9 @@ export const SharedProvider = ({ children }) => {
         updateChosenCard,
         chosenDeck,
         updateChosenDeck,
-        changeReady,
+        ready,
+        readyOn,
+        readyOff,
       }}
     >
       {children}

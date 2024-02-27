@@ -9,17 +9,19 @@ import { useSharedContext } from "../components/SharedContext";
 const DecksScreen = () => {
   const [decksState, setDecksState] = useState(decksData);
   const [isVisible, setIsVisible] = useState(false);
-  const { updateContextDeck, chosenCard, chosenDeck } = useSharedContext();
+  const { updateContextDeck, chosenCard, chosenDeck, ready, readyOff } =
+    useSharedContext();
 
   useEffect(() => {
     updateContextDeck(decksState);
   }, []);
 
   useEffect(() => {
-    if (chosenDeck) {
+    if (ready) {
       addCardToDeck(chosenCard, chosenDeck);
+      readyOff();
     }
-  }, [chosenDeck]);
+  }, [ready]);
 
   const renderItem = ({ item }) => (
     <DeckDropdown
@@ -82,6 +84,11 @@ const DecksScreen = () => {
     const nextState = [...before, updatedDeck, ...after];
     setDecksState(nextState);
     updateContextDeck(nextState);
+    console.log(nextState[0]);
+    console.log("****************");
+    console.log(nextState[1]);
+    console.log("****************");
+    console.log(nextState[2]);
   };
 
   return (

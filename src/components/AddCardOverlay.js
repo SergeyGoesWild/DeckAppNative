@@ -12,7 +12,7 @@ import ListOfDecks from "./ListOfDecks.js";
 import { useSharedContext } from "./SharedContext";
 
 function AddCardOverlay({ isVisible, onModalClose }) {
-  const { updateChosenDeck } = useSharedContext();
+  const { updateChosenDeck, readyOn } = useSharedContext();
   const [valueFromList, setValueFromList] = useState("");
   const handleChange = (newValue) => {
     setValueFromList(newValue);
@@ -36,6 +36,7 @@ function AddCardOverlay({ isVisible, onModalClose }) {
               <Pressable
                 onPress={() => {
                   updateChosenDeck(valueFromList);
+                  readyOn();
                   onModalClose();
                 }}
                 style={styles.button}
