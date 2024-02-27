@@ -84,11 +84,6 @@ const DecksScreen = () => {
     const nextState = [...before, updatedDeck, ...after];
     setDecksState(nextState);
     updateContextDeck(nextState);
-    console.log(nextState[0]);
-    console.log("****************");
-    console.log(nextState[1]);
-    console.log("****************");
-    console.log(nextState[2]);
   };
 
   return (
