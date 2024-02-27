@@ -7,9 +7,10 @@ export const useSharedContext = () => {
 };
 
 export const SharedProvider = ({ children }) => {
-  const [contextDeck, setContextDeck] = useState("");
-  const [chosenCard, setChosenCard] = useState("");
-  const [chosenDeck, setChosenDeck] = useState("");
+  const [contextDeck, setContextDeck] = useState(null);
+  const [chosenCard, setChosenCard] = useState(null);
+  const [chosenDeck, setChosenDeck] = useState(null);
+  const [ready, setReady] = useState(false);
 
   const updateContextDeck = (newValue) => {
     setContextDeck(newValue);
@@ -23,6 +24,10 @@ export const SharedProvider = ({ children }) => {
     setChosenDeck(newValue);
   };
 
+  const changeReady = () => {
+    setReady(false);
+  };
+
   return (
     <SharedContext.Provider
       value={{
@@ -32,6 +37,7 @@ export const SharedProvider = ({ children }) => {
         updateChosenCard,
         chosenDeck,
         updateChosenDeck,
+        changeReady,
       }}
     >
       {children}

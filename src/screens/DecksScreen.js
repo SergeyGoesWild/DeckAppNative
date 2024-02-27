@@ -9,11 +9,17 @@ import { useSharedContext } from "../components/SharedContext";
 const DecksScreen = () => {
   const [decksState, setDecksState] = useState(decksData);
   const [isVisible, setIsVisible] = useState(false);
-  const { updateContextDeck } = useSharedContext();
+  const { updateContextDeck, chosenCard, chosenDeck } = useSharedContext();
 
   useEffect(() => {
     updateContextDeck(decksState);
   }, []);
+
+  useEffect(() => {
+    if (chosenDeck) {
+      addCardToDeck(chosenCard, chosenDeck);
+    }
+  }, [chosenDeck]);
 
   const renderItem = ({ item }) => (
     <DeckDropdown
@@ -44,13 +50,6 @@ const DecksScreen = () => {
     const nextDecksState = decksState.concat([deck]);
     setDecksState(nextDecksState);
     updateContextDeck(nextDecksState);
-  };
-
-  const raichu = {
-    id: "swsh12-050",
-    localId: "050",
-    name: "Raichu",
-    image: "https://assets.tcgdex.net/en/swsh/swsh12/050",
   };
 
   const addCardToDeck = (card, deckId) => {
@@ -96,12 +95,6 @@ const DecksScreen = () => {
           setIsVisible(false);
         }}
       />
-      <TouchableOpacity
-        onPress={() => addCardToDeck(raichu, 2)}
-        style={styles.button}
-      >
-        <Text style={styles.buttonText}>CARD !!!</Text>
-      </TouchableOpacity>
       <TouchableOpacity
         onPress={() => setIsVisible(true)}
         style={styles.button}
