@@ -27,6 +27,7 @@ const HomeScreen = () => {
         .map((card) => ({
           ...card,
           imageUrl: `${card.image}/low.webp`,
+          imageUrlHi: `${card.image}/high.webp`,
         }));
       setAllCards(filteredData);
       setDisplayedCards(filteredData.slice(0, cardsPerPage)); 

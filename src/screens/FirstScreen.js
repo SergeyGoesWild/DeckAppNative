@@ -1,41 +1,17 @@
-import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, Button, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
 import * as Colors from "../components/styles/colors";
+import style from '../components/styles/homePageStyles'
+import { useNavigation } from "@react-navigation/native";
 
-function FirstScreen({ navigation }) {
+function FirstScreen() {
+  const navigation = useNavigation()
+
   return (
-    <View style={styles.containerFirst}>
-      <Text style={styles.firstPageText}>This is the first page</Text>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("Pokemon Decks")}
-      >
-        <Text style={styles.buttonText}>Start</Text>
-      </TouchableOpacity>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  containerFirst: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  firstPageText: {
-    padding: 30,
-  },
-  button: {
-    backgroundColor: Colors.buttonBlue,
-    padding: 10,
-    borderRadius: 5,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonText: {
-    color: Colors.white,
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-});
+        <ImageBackground source={require('../../assets/hero-bg.jpg')} style={style.heroHeader}>
+          <Text style={style.heroText}>Build your DreamDeck</Text>
+          <Button title="Start Building" onPress={() => navigation.navigate("Pokemon Decks")}/>
+        </ImageBackground>
+    ); 
+  };
 
 export default FirstScreen;

@@ -1,15 +1,32 @@
-import React, { forwardRef } from 'react';
-import { StyleSheet, Image, TouchableOpacity } from 'react-native';
+import React, { useState, forwardRef } from 'react';
+import { StyleSheet, Image, TouchableOpacity, View, Modal, Text, Button, Animated } from 'react-native';
 import { FlashList } from '@shopify/flash-list'; 
+import style from './styles/cardContainerStyles'
+import * as colors from './styles/colors'
+import TabComponent from './TabComponent';
+import ModalComponent from './Modal'
 
-const CardContainer = forwardRef(({ cards, handleImageClick, loadMoreCards }, ref) => {
+const CardContainer = forwardRef(({ cards, loadMoreCards }, ref) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
+
+  const openModal = (card) => {
+    setSelectedCard(card);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   return (
+    <View style={{flex: 1}}>
     <FlashList
-      ref={ref} 
+     ref={ref} 
       data={cards}
       renderItem={({ item: card }) => (
-        <TouchableOpacity onPress={() => handleImageClick(card)} style={cardContainerStyles.cardContainer}>
-          <Image source={{ uri: card.imageUrl }} style={cardContainerStyles.cardImage} />
+        <TouchableOpacity onPress={() => openModal(card)} style={style.cardContainer}>
+          <Image source={{ uri: card.imageUrl }} style={style.cardImage} />
         </TouchableOpacity>
       )}
       keyExtractor={(item) => item.id.toString()} 
@@ -19,19 +36,18 @@ const CardContainer = forwardRef(({ cards, handleImageClick, loadMoreCards }, re
       onEndReached={loadMoreCards}
       onEndReachedThreshold={0.8}
     />
+          <ModalComponent visible={modalVisible} closeModal={closeModal} selectedCard={selectedCard} />
+    </View>
   );
 });
+
+
 const cardContainerStyles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
   },
-  cardContainer: {
-    flex: 1,
-    margin: 10,
-    width: 35, 
-  },
   cardImage: {
-    width: '100%',
+    width: 200,
     height: 200,
     resizeMode: 'contain',
   },

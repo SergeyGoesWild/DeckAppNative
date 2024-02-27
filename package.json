@@ -14,13 +14,15 @@
     "@rneui/base": "github:react-native-elements/react-native-elements#base",
     "@rneui/themed": "github:react-native-elements/react-native-elements#themed",
     "@shopify/flash-list": "^1.6.3",
-    "expo": "~50.0.6",
+    "eslint-plugin-react-native": "^4.1.0",
+    "expo": "^50.0.7",
     "expo-status-bar": "~1.11.1",
     "react": "18.2.0",
     "react-native": "0.73.4",
+    "react-native-animatable": "^1.4.0",
     "react-native-elements": "^3.4.3",
-    "react-native-vector-icons": "^10.0.3",
     "react-native-gesture-handler": "~2.14.0",
+    "react-native-vector-icons": "^10.0.3",
     "use-debounce": "^10.0.0"
   },
   "devDependencies": {

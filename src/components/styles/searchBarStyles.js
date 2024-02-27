@@ -1,9 +1,9 @@
 import { StyleSheet } from "react-native";
 import * as Colors from "./colors";
 
-export const searchBarStyles = StyleSheet.create({
+export const style = StyleSheet.create({
   container: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 0,
     paddingVertical: 5,
     backgroundColor: Colors.white,
     borderBottomWidth: 1,
@@ -14,5 +14,8 @@ export const searchBarStyles = StyleSheet.create({
     borderColor: Colors.plainGrey,
     borderWidth: 1,
     paddingHorizontal: 10,
+    borderRadius: 15,
   },
 });
+
+export default style
