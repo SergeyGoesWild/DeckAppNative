@@ -27,7 +27,6 @@ const CardContainer = forwardRef(({ cards, loadMoreCards }, ref) => {
       renderItem={({ item: card }) => (
         <TouchableOpacity onPress={() => openModal(card)} style={style.cardContainer}>
           <Image source={{ uri: card.imageUrl }} style={style.cardImage} />
-          <ModalComponent visible={modalVisible} closeModal={closeModal} selectedCard={selectedCard} />
         </TouchableOpacity>
       )}
       keyExtractor={(item) => item.id.toString()} 

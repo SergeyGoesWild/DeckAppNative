@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
     borderColor: colors.black,
     backgroundColor: colors.plainGrey,
     margin: 20,
+    padding: 10,
     borderRadius: 10,
   },
   modalResult: {
@@ -130,6 +131,16 @@ const styles = StyleSheet.create({
   sprite : {
     height : 120,
     width: 120,
+  },
+  renderChoice : {
+    height: 80,
+    width: 80,
+    resizeMode: 'cover',
+  },
+  renderChoiceSmall : {
+    height: 24,
+    width: 24,
+    resizeMode: 'cover',
   },
   });
 

@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, TextInput,
 import * as Animatable from "react-native-animatable";
 import PlayCards from '../components/pokemonTypes/PlayCards'
 import styles from '../components/styles/battleStyles'
+import { choiceImages } from '../components/imageData'
 
 const PokemonGame = () => {
   const [playerChoice, setPlayerChoice] = useState(null);
@@ -19,7 +20,6 @@ const PokemonGame = () => {
   const types = ['Colorless', 'Psychic', 'Fire', 'Grass', 'Fairy', 'Fighting', 'Metal', 'Dragon', 'Water', 'Dark', 'Lightning'];
 
   const typeMatchups = {
-    // Type : ['Weakness']
     Colorless: ['Psychic'],
     Psychic: ['Dark', 'Fighting'],
     Fire: ['Grass'],
@@ -48,7 +48,8 @@ const PokemonGame = () => {
       setComputerScore(computerScore + 1);
       setPlayerHealth(playerHealth - 1);
     } else {
-
+      setComputerScore(computerScore + 0);
+      setPlayerHealth(playerHealth + 0);
     }
 
     if (playerHealth === 0) {
@@ -84,7 +85,7 @@ const PokemonGame = () => {
   const renderChoiceImage = (choice) => {
     const choiceImage = choiceImages[choice];
     if (choiceImage) {
-      return <Image style={{ height: 28, width: 28, resizeMode: 'stretch' }} source={choiceImage} />;
+      return <Image style={styles.renderChoiceSmall} source={choiceImage} />;
     }
     return null;
   };
@@ -105,23 +106,9 @@ const PokemonGame = () => {
   
     return (
       <Animatable.View ref={imageRef}>
-        {choiceImage && <Image style={{ height: 80, width: 80, resizeMode: 'contain' }} source={choiceImage} />}
+        {choiceImage && <Image style={styles.renderChoice} source={choiceImage} />}
       </Animatable.View>
     );
-  };
-
-  const choiceImages = {
-    Colorless: require('../../assets/colorless.png'),
-    Psychic: require('../../assets/psychic.png'),
-    Fire: require('../../assets/fire.png'),
-    Grass: require('../../assets/grass.png'),
-    Fairy: require('../../assets/fairy.png'),
-    Fighting: require('../../assets/fighting.png'),
-    Metal: require('../../assets/metal.png'),
-    Dragon: require('../../assets/dragon.png'),
-    Water: require('../../assets/water.png'),
-    Dark: require('../../assets/dark.png'),
-    Lightning: require('../../assets/lightning.png'),
   };
 
   return (
@@ -220,9 +207,9 @@ const PokemonGame = () => {
             <View style={styles.modalContent}>
             <Image source={require('../../assets/comwinsprite.png')} style={styles.sprite}/>
             <Animatable.Image animation="slideInDown" iterationCount='infinite' direction="alternate" source={require('../../assets/youlost.png')} style={styles.modalResult}/>
-            <TouchableOpacity style={styles.modalButton} >
-              <Button title="Play Again" onPress={resetGame} />
-            </TouchableOpacity>
+          <TouchableOpacity style={styles.modalButton} onPress={resetGame}>
+            <Text style={styles.buttonText}>Play Again</Text>
+          </TouchableOpacity>
             </View>
           </View>
   </Modal>
@@ -237,9 +224,9 @@ const PokemonGame = () => {
             <View style={styles.modalContent}>
             <Image source={require('../../assets/playerwinsprite.png')} style={styles.sprite}/>
             <Animatable.Image animation="slideInDown" iterationCount='infinite' direction="alternate" source={require('../../assets/youwon.png')} style={styles.modalResult}/>
-            <TouchableOpacity style={styles.modalButton} >
-              <Button title="Play Again" onPress={resetGame} />
-            </TouchableOpacity>
+          <TouchableOpacity style={styles.modalButton} onPress={resetGame}>
+            <Text style={styles.buttonText}>Play Again</Text>
+          </TouchableOpacity>
             </View>
           </View>
   </Modal>
