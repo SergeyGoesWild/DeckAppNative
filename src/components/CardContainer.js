@@ -2,9 +2,12 @@ import React, { forwardRef } from "react";
 import { StyleSheet, Image, TouchableOpacity, Text } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import * as Colors from "./styles/colors.js";
+import { useSharedContext } from "./SharedContext";
 
 const CardContainer = forwardRef(
   ({ cards, handleImageClick, loadMoreCards, onAddCardClick }, ref) => {
+    const { updateChosenCard } = useSharedContext();
+
     return (
       <FlashList
         ref={ref}
@@ -19,7 +22,10 @@ const CardContainer = forwardRef(
               style={cardContainerStyles.cardImage}
             />
             <TouchableOpacity
-              onPress={() => onAddCardClick()}
+              onPress={() => {
+                updateChosenCard(card);
+                onAddCardClick();
+              }}
               style={cardContainerStyles.button}
             >
               <Text style={cardContainerStyles.buttonText}> + </Text>

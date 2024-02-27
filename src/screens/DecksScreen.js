@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, TouchableOpacity, Text } from "react-native";
 import decksData from "../components/DataMock.js";
 import DeckDropdown from "../components/DeckDropdown.js";
 import AddDeckOverlay from "../components/AddDeckOverlay.js";
 import { styles } from "../components/styles/DeckScreen.style.js";
+import { useSharedContext } from "../components/SharedContext";
 
 const DecksScreen = () => {
   const [decksState, setDecksState] = useState(decksData);
   const [isVisible, setIsVisible] = useState(false);
+  const { updateContextDeck } = useSharedContext();
+
+  useEffect(() => {
+    updateContextDeck(decksState);
+  }, []);
 
   const renderItem = ({ item }) => (
     <DeckDropdown
@@ -24,17 +30,20 @@ const DecksScreen = () => {
       .slice(0, indexRemove)
       .concat(decksState.slice(indexRemove + 1));
     setDecksState(newDecksState);
+    updateContextDeck(newDecksState);
   };
 
   const renameDeck = (id, newName) => {
     const indexRename = decksState.findIndex((item) => item.id === id);
     decksState[indexRename].name = newName;
     setDecksState(decksState);
+    updateContextDeck(decksState);
   };
 
   const addDeck = (deck) => {
     const nextDecksState = decksState.concat([deck]);
     setDecksState(nextDecksState);
+    updateContextDeck(nextDecksState);
   };
 
   const raichu = {
@@ -65,6 +74,7 @@ const DecksScreen = () => {
       .concat([newDeck])
       .concat(decksState.slice(indexDeckToFind + 1));
     setDecksState(newDecksState);
+    updateContextDeck(newDecksState);
   };
 
   const updateDeck = (updatedDeck) => {
@@ -72,6 +82,7 @@ const DecksScreen = () => {
     const after = decksState.slice(updatedDeck.id + 1);
     const nextState = [...before, updatedDeck, ...after];
     setDecksState(nextState);
+    updateContextDeck(nextState);
   };
 
   return (

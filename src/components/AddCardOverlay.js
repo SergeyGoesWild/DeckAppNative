@@ -4,14 +4,20 @@ import {
   Text,
   Pressable,
   View,
-  TextInput,
   TouchableWithoutFeedback,
   TouchableOpacity,
 } from "react-native";
 import { styles } from "./styles/AddCardOverlay.style.js";
 import ListOfDecks from "./ListOfDecks.js";
+import { useSharedContext } from "./SharedContext";
 
 function AddCardOverlay({ isVisible, onModalClose }) {
+  const { updateChosenDeck } = useSharedContext();
+  const [valueFromList, setValueFromList] = useState("");
+  const handleChange = (newValue) => {
+    setValueFromList(newValue);
+  };
+
   return (
     <Modal
       animationType="slide"
@@ -26,10 +32,10 @@ function AddCardOverlay({ isVisible, onModalClose }) {
           <TouchableOpacity activeOpacity={1}>
             <View style={styles.modalView}>
               <Text style={styles.label}>Adding to:</Text>
-              <ListOfDecks />
+              <ListOfDecks getValue={handleChange} />
               <Pressable
                 onPress={() => {
-                  // TO DO: SEND DATA
+                  updateChosenDeck(valueFromList);
                   onModalClose();
                 }}
                 style={styles.button}
