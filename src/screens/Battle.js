@@ -75,7 +75,6 @@ const PokemonGame = () => {
     setResult('');
     setPlayerScore(0);
     setComputerScore(0);
-    setHistory([]);
     setPlayerHealth(10);
     setComputerHealth(10);
     setShowPlayerDefeatModal(false);
