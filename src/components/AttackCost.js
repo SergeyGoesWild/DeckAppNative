@@ -9,22 +9,22 @@ const AttackCost = ({ cost, renderCostImage }) => {
   }
 
   return (
-    <View style={{ alignItems: 'center' }}>
-      <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate" style={style.attacks}>Cost : </Animatable.Text>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+    <Animatable.View animation="slideInDown" iterationCount={1} direction="alternate" style={style.cost}>
+      <Animatable.Text style={style.attacks}>Cost : </Animatable.Text>
+      <View style={style.costImg}>
         {Array.isArray(cost) ? (
           cost.map((costItem, index) => (
-            <View key={index} style={{ alignItems: 'center', marginRight: 5 }}>
+            <View key={index}>
               {renderCostImage(costItem)}
             </View>
           ))
         ) : (
-          <View style={{ alignItems: 'center', marginRight: 5 }}>
+          <View>
             {renderCostImage(cost)}
           </View> 
         )}
       </View>
-    </View>
+    </Animatable.View>
   );
 };
 

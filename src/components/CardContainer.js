@@ -2,21 +2,13 @@ import React, { useState, forwardRef } from 'react';
 import { StyleSheet, Image, TouchableOpacity, View, Modal, Text, Button, Animated } from 'react-native';
 import { FlashList } from '@shopify/flash-list'; 
 import style from './styles/cardContainerStyles'
+import * as colors from './styles/colors'
 import TabComponent from './TabComponent';
 import ModalComponent from './Modal'
 
-const CardContainer = forwardRef(({ cards, handleImageClick, loadMoreCards }, ref) => {
+const CardContainer = forwardRef(({ cards, loadMoreCards }, ref) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
-  const fadeAnim = new Animated.Value(0);
-
-  const fadeIn = () => {
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
-  };
 
   const openModal = (card) => {
     setSelectedCard(card);
@@ -61,16 +53,5 @@ const cardContainerStyles = StyleSheet.create({
     resizeMode: 'contain',
   },
 });
-
-const styles = StyleSheet.create({
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    padding: 20,
-  },
-});
-
 
 export default React.memo(CardContainer);

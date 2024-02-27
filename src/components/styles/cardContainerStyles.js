@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import * as colors from './colors'
 
 export const style = StyleSheet.create({
   container: {
@@ -10,7 +11,7 @@ export const style = StyleSheet.create({
     width: 35, 
   },
   cardImage: {
-    width: '100%',
+    width: 200,
     height: 200, 
     resizeMode: 'contain',
   },
@@ -18,7 +19,14 @@ export const style = StyleSheet.create({
     flex: 1,
     margin: 10,
     width: 35,
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.shadow,
+    padding: 20,
   },
 });
 

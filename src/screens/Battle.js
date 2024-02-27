@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, TextInput, Modal, Button } from 'react-native';
-import History from '../components/History';
 import * as Animatable from "react-native-animatable";
 import PlayCards from '../components/pokemonTypes/PlayCards'
+import styles from '../components/styles/battleStyles'
 
 const PokemonGame = () => {
   const [playerChoice, setPlayerChoice] = useState(null);
@@ -10,26 +10,27 @@ const PokemonGame = () => {
   const [result, setResult] = useState('');
   const [playerScore, setPlayerScore] = useState(0);
   const [computerScore, setComputerScore] = useState(0);
-  const [history, setHistory] = useState([]);
   const [playerName, setPlayerName] = useState('Player');
   const [playerHealth, setPlayerHealth] = useState(10);
   const [computerHealth, setComputerHealth] = useState(10);
   const [showPlayerDefeatModal, setShowPlayerDefeatModal] = useState(false);
   const [showComputerVictoryModal, setShowComputerVictoryModal] = useState(false);
 
-  const types = ['Colorless', 'Psychic', 'Fire', 'Grass', 'Fairy', 'Fighting', 'Metal', 'Dragon', 'Water', 'Dark'];
+  const types = ['Colorless', 'Psychic', 'Fire', 'Grass', 'Fairy', 'Fighting', 'Metal', 'Dragon', 'Water', 'Dark', 'Lightning'];
 
   const typeMatchups = {
+    // Type : ['Weakness']
     Colorless: ['Psychic'],
     Psychic: ['Dark', 'Fighting'],
     Fire: ['Grass'],
-    Grass: ['Water', 'Rock'],
+    Grass: ['Water',],
     Fairy: ['Dragon', 'Dark'],
-    Fighting: ['Normal', 'Dark', 'Rock'],
+    Fighting: ['Normal', 'Dark',],
     Metal: ['Fairy', 'Grass', 'Psychic'],
-    Dragon: ['Dragon'],
-    Water: ['Fire', 'Rock', 'Metal'],
+    Dragon: ['Normal'],
+    Water: ['Fire', 'Metal'],
     Dark: ['Psychic', 'Ghost', 'Fighting'],
+    Lightning: ['Water',]
   };
 
   const play = (choice) => {
@@ -39,9 +40,6 @@ const PokemonGame = () => {
     setPlayerChoice(choice);
     setComputerChoice(computerChoice);
     setResult(roundResult);
-
-    const newHistory = [...history, { playerChoice, computerChoice, result: roundResult }];
-    setHistory(newHistory);
 
     if (roundResult === 'You win!') {
       setPlayerScore(playerScore + 1);
@@ -59,7 +57,7 @@ const PokemonGame = () => {
       setShowComputerVictoryModal(true);
     }
 
-  };
+};
 
   const getRoundResult = (playerChoice, computerChoice) => {
     if (typeMatchups[playerChoice] && typeMatchups[playerChoice].includes(computerChoice)) {
@@ -124,10 +122,8 @@ const PokemonGame = () => {
     Dragon: require('../../assets/dragon.png'),
     Water: require('../../assets/water.png'),
     Dark: require('../../assets/dark.png'),
+    Lightning: require('../../assets/lightning.png'),
   };
-
-const playerRef = useRef(null);
-const computerRef = useRef(null);
 
   return (
 <ScrollView>
@@ -223,8 +219,11 @@ const computerRef = useRef(null);
           >
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
-              <Text style={styles.modalText}>YOU LOST.</Text>
+            <Image source={require('../../assets/comwinsprite.png')} style={styles.sprite}/>
+            <Animatable.Image animation="slideInDown" iterationCount='infinite' direction="alternate" source={require('../../assets/youlost.png')} style={styles.modalResult}/>
+            <TouchableOpacity style={styles.modalButton} >
               <Button title="Play Again" onPress={resetGame} />
+            </TouchableOpacity>
             </View>
           </View>
   </Modal>
@@ -237,8 +236,11 @@ const computerRef = useRef(null);
           >
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
-              <Text style={styles.modalText}>YOU WON !</Text>
+            <Image source={require('../../assets/playerwinsprite.png')} style={styles.sprite}/>
+            <Animatable.Image animation="slideInDown" iterationCount='infinite' direction="alternate" source={require('../../assets/youwon.png')} style={styles.modalResult}/>
+            <TouchableOpacity style={styles.modalButton} >
               <Button title="Play Again" onPress={resetGame} />
+            </TouchableOpacity>
             </View>
           </View>
   </Modal>
@@ -246,119 +248,5 @@ const computerRef = useRef(null);
 </ScrollView>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 10,
-  },
-  title: {
-    fontSize: 18,
-    marginBottom: 20,
-  },
-  choices: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-  buttonText: {
-    fontSize: 18,
-  },
-  result: {
-    fontSize: 16,
-    marginBottom: 0,
-  },
-  scoreContainer: {
-    flexDirection: 'row',
-    margin: 25,
-    justifyContent: 'space-between',
-    width: '70%',
-  },
-  scoreText: {
-    fontSize: 16,
-  },
-avatar: {
-  height: 50,
-  width: 50,
-  resizeMode: 'contain',
-  alignSelf: 'flex-start',
-  borderWidth: 1,
-  margin: 5,
-  borderRadius: 8,
-  resizeMode: 'cover',
-  backgroundColor: 'white',
-},
-player: {
-  flexDirection: 'row',
-  alignItems: 'center',
-  backgroundColor: '#DDDDDD',
-  margin: 10,
-  paddding: 10,
-  width: '100%',
-  borderRadius: 10,
-  borderWidth: 1,
-},
-scoreCount: {
-  height: 30,
-  width: 30,
-  alignItems: 'center',
-  alignSelf: 'center',
-  justifyContent: 'center',
-  marginLeft: 300,
-  backgroundColor: 'white',
-  borderWidth: 1,
-  borderColor: 'black',
-  borderRadius: 4,
-  position: 'absolute',
-},
-choiceImg: {
-  position: 'absolute',
-  marginLeft: 230,
-  borderWidth: 1,
-  borderRadius: 20,
-},
-input: {
-  height: 50,
-  borderColor: 'black',
-  borderWidth: 1,
-  paddingHorizontal: 10,
-  borderRadius: 5,
-  width: '100%',
-  backgroundColor: 'white',
-},
-healthBarContainer: {
-  marginBottom: 5,
-},
-healthBar: {
-  flexDirection: 'row',
-  height: 10,
-  width: '100%',
-  backgroundColor: '#ddd',
-  borderRadius: 5,
-  overflow: 'hidden',
-},
-healthBarFill: {
-  height: '100%',
-  backgroundColor: 'green',
-  borderWidth: 1,
-},
-modalContainer: {
-  flex: 1,
-  justifyContent: 'center',
-  alignItems: 'center',
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-},
-modalContent: {
-  backgroundColor: 'white',
-  padding: 20,
-  borderRadius: 10,
-  alignItems: 'center',
-},
-modalText: {
-  fontSize: 20,
-  marginBottom: 20,
-},
-});
 
 export default PokemonGame;

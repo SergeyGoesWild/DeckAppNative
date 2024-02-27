@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import * as colors from './styles/colors'
 
 const SetsMenu = () => {
   const [setsData, setSetsData] = useState([]);
@@ -18,7 +19,7 @@ const SetsMenu = () => {
         setSetsData(filteredData);
       })
       .catch(error => {
-        console.error('Error fetching sets:', error);
+        throw new Error(error)
       });
   }, []);
 
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 5,
     borderRadius: 10,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: colors.plainGrey,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 10,

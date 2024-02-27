@@ -1,9 +1,10 @@
 import { StyleSheet } from 'react-native';
+import * as colors from './colors'
 
 const style = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: 'white',
+      backgroundColor: colors.white,
       borderRadius: 10,
       padding: 10,
       margin: 10,
@@ -13,7 +14,7 @@ const style = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-around',
       borderBottomWidth: 1,
-      borderBottomColor: '#ccc',
+      borderBottomColor: colors.plainGrey,
       paddingBottom: 10,
     },
     tab: {
@@ -21,7 +22,7 @@ const style = StyleSheet.create({
     },
     activeTab: {
       borderBottomWidth: 2,
-      borderBottomColor: 'blue',
+      borderBottomColor: colors.buttonBlue,
     },
     tabText: {
       fontSize: 16,

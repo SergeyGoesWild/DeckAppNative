@@ -19,15 +19,6 @@ const style = StyleSheet.create({
         marginBottom: 20,
         textAlign: 'center',
       },
-      comingSoon: {
-        backgroundColor: '#f0f0f0',
-        paddingVertical: 20,
-        paddingHorizontal: 20,
-      },
-      comingSoonText: {
-        fontSize: 24,
-        textAlign: 'center',
-      },
     });
 
   export default style

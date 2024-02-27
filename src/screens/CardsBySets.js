@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, Image } from 'react-native';
+import * as colors from '../components/styles/colors'
 
 const CardsBySets = ({ route }) => {
   const { setId } = route.params;
@@ -12,7 +13,7 @@ const CardsBySets = ({ route }) => {
         setCards(data.cards);
       })
       .catch(error => {
-        console.error('Error fetching cards:', error);
+        throw new Error(error)
       });
   }, [setId]);
     
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: colors.plainGrey,
   },
   image : {
     width: 200,

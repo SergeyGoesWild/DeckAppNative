@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, View, StyleSheet, Button } from 'react-native';
 import TabComponent from './TabComponent';
+import * as colors from './styles/colors'
 
 const ModalComponent = ({ visible, closeModal, selectedCard }) => {
   return (
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: colors.shadow,
     padding: 20,
   },
 });

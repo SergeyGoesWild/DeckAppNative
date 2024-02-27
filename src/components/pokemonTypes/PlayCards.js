@@ -15,6 +15,7 @@ const PlayCards = ({ type, onPress }) => {
     Dragon: require('../../../assets/dragon.png'),
     Water: require('../../../assets/water.png'),
     Dark: require('../../../assets/dark.png'),
+    Lightning: require('../../../assets/lightning.png'),
   };
 
   const renderCostImage = (costType) => {

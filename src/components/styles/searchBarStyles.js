@@ -16,9 +16,6 @@ export const style = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 15,
   },
-  button: {
-    borderColor: 'blue',
-  },
 });
 
 export default style
