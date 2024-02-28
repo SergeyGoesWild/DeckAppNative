@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Modal, Image, Button, StyleSheet, ScrollView, TouchableOpacity, Text, Animated, TouchableWithoutFeedback } from 'react-native';
-import cardBackImage from '../../assets/cardBackImage.png'; // Assurez-vous que le chemin est correct
+import cardBackImage from '../../assets/cardBackImage.png';
+import closeIcon from '../../assets/closeIcon.png';
+import revealIcon from '../../assets/skipIcon.png';
 
 const FlipCard = ({ frontSrc, backSrc = cardBackImage, showFront }) => {
-  const animatedValue = useRef(new Animated.Value(180)).current; // Commence avec le dos visible
+  const animatedValue = useRef(new Animated.Value(180)).current; 
 
   const frontInterpolate = animatedValue.interpolate({
     inputRange: [0, 180],
@@ -16,7 +18,7 @@ const FlipCard = ({ frontSrc, backSrc = cardBackImage, showFront }) => {
   });
 
   const flipCard = () => {
-    if (animatedValue._value >= 90) { // Utilisez _value pour accéder à la valeur actuelle
+    if (animatedValue._value >= 90) { 
       Animated.spring(animatedValue, {
         toValue: 0,
         friction: 8,
@@ -42,7 +44,7 @@ const FlipCard = ({ frontSrc, backSrc = cardBackImage, showFront }) => {
   };
 
   useEffect(() => {
-    const finalValue = showFront ? 0 : 180; // 0 pour montrer le devant, 180 pour le derrière
+    const finalValue = showFront ? 0 : 180; 
     Animated.spring(animatedValue, {
       toValue: finalValue,
       friction: 8,
@@ -73,7 +75,7 @@ const BoosterOpener = ({ cards, logo, symbol }) => {
   const [boosterVisible, setBoosterVisible] = useState(true);
   const [showFront, setShowFront] = useState(false);
 
-  const fadeAnim = useRef(new Animated.Value(0)).current; // Initial fade animation value
+  const fadeAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     Animated.timing(fadeAnim, {
@@ -83,33 +85,31 @@ const BoosterOpener = ({ cards, logo, symbol }) => {
     }).start();
   }, [boosterVisible]);
 
-  const ouvrirBooster = () => {
+  const openBooster = () => {
     
-    const filtrerEtSelectionner = (rarity, nombre) => {
-      const cartesFiltrees = cards.filter(carte => carte.rarity === rarity && carte.category !== "Energy");
-      return selectionAleatoire(cartesFiltrees, nombre);
+    const filterAndSelect = (rarity, number) => {
+      const filteredCards = cards.filter(card => card.rarity === rarity && card.category !== "Energy");
+      return randomSelection(filteredCards, number);
     };
 
-    let cartesBooster = [
-      ...filtrerEtSelectionner("Rare", 2),
-      ...filtrerEtSelectionner("Uncommon", 3),
-      ...filtrerEtSelectionner("Common", 5),
+    let boosterCards = [
+      ...filterAndSelect("Rare", 1),
+      ...filterAndSelect("Uncommon", 4),
+      ...filterAndSelect("Common", 5),
     ];
 
-    console.log("Cartes sélectionnées pour le booster :", cartesBooster);
-
-    setSelectedCards(cartesBooster);
+    setSelectedCards(boosterCards);
     setBoosterVisible(false);
   };
 
-  const selectionAleatoire = (cartes, n) => {
+  const randomSelection = (cards, n) => {
     let result = [];
-    let indices = new Set(); // Utiliser un Set pour éviter les doublons d'indices
+    let indices = new Set();
     while (result.length < n) {
-      let index = Math.floor(Math.random() * cartes.length);
+      let index = Math.floor(Math.random() * cards.length);
       if (!indices.has(index)) {
         indices.add(index);
-        result.push(cartes[index]);
+        result.push(cards[index]);
       }
     }
     return result;
@@ -131,9 +131,9 @@ const BoosterOpener = ({ cards, logo, symbol }) => {
 
   return (
     <View>
-      <Button title="Ouvrir Booster" onPress={() => {
+      <Button title="Open Booster" onPress={() => {
        setModalVisible(true);
-       ouvrirBooster(); // Générer le booster dès l'ouverture du modal
+       openBooster();
       }} />
       <Modal
         animationType="slide"
@@ -145,7 +145,7 @@ const BoosterOpener = ({ cards, logo, symbol }) => {
           fadeAnim.setValue(0);
         }}
       >
-        <ScrollView style={styles.centeredView}>
+        <ScrollView style={styles.pageContainer}>
           {boosterVisible ? (
             <TouchableOpacity style={styles.boosterContainer} onPress={() => setBoosterVisible(false)}>
               <View>
@@ -157,20 +157,19 @@ const BoosterOpener = ({ cards, logo, symbol }) => {
             </TouchableOpacity>
           ) : (
             <Animated.View style={[styles.modalView, { opacity: fadeAnim }]}>
-              <View style={styles.cardsContainer}>
-                {selectedCards.map((carte, index) => (
-                  <FlipCard key={index} frontSrc={`${carte.image}/high.webp`} backSrc={cardBackImage} showFront={showFront} />
+            <View style={styles.cardsContainer}>
+                {selectedCards.map((card, index) => (
+                <FlipCard key={index} frontSrc={`${card.image}/high.webp`} backSrc={cardBackImage} showFront={showFront} />
                 ))}
-              </View>
-              <Button title="Fermer" onPress={() => setModalVisible(!modalVisible)} />
-              <Button title="Montrer les Faces" onPress={() => setShowFront(!showFront)} />
-              <Button title="Relancer Booster" onPress={() => {
-                ouvrirBooster();
-                setBoosterVisible(true);
-                setModalVisible(false);
-                setShowFront(false);
-                fadeAnim.setValue(0); // Reset animation for next booster
-              }} />
+            </View>
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible); setShowFront(false); fadeAnim.setValue(0); setModalVisible(false); setBoosterVisible(true);}}>
+                    <Image source={closeIcon} style={styles.boutonImage} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setShowFront(!showFront)}>
+                    <Image source={revealIcon} style={styles.boutonImage} />
+                </TouchableOpacity>
+            </View>
             </Animated.View>
           )}
         </ScrollView>
@@ -190,7 +189,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 100, // Ajustez selon vos besoins
+    marginTop: 100, 
   },
   modalImage: {
     width: '48%',
@@ -213,17 +212,17 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   card: {
-    width: 150,  // Largeur de la carte
-    height: 220, // Hauteur de la carte
-    margin: 5,   // Marge autour de la carte
+    width: 150,  
+    height: 220,
+    margin: 5,   
     justifyContent: 'center',
     alignItems: 'center',
     backfaceVisibility: 'hidden',
   },
   cardImage: {
-    width: '108%',  // Assure que l'image couvre toute la largeur de la carte
-    height: '100%', // Assure que l'image couvre toute la hauteur de la carte
-    resizeMode: 'cover', // Assure que l'image de la carte soit contenue dans les limites de la carte sans être déformée
+    width: '108%',  
+    height: '100%', 
+    resizeMode: 'cover', 
   },
   overlayContainer: {
     position: 'absolute',
@@ -236,9 +235,25 @@ const styles = StyleSheet.create({
   },
   centerImage: {
     position: 'absolute',
-    width: 100, // Ajustez selon vos besoins
-    height: 100, // Ajustez selon vos besoins
+    width: 100, 
+    height: 100, 
     resizeMode: 'contain',
+  },
+  buttonContainer: {
+    flexDirection: 'row', 
+    justifyContent: 'space-evenly', 
+    alignItems: 'center', 
+    marginTop: 20, 
+    marginBottom: 50, 
+    gap: 125,
+  },
+  pageContainer: {
+    flex: 1, 
+    marginTop: 30, 
+  },
+  boutonImage: {
+    width: 50,
+    height: 50,
   },
 });
 
