@@ -8,10 +8,10 @@ const HomePage = () => {
 
     return (
         <ScrollView style={style.container}>
-          <ImageBackground source={require('../../assets/hero-bg.jpg')} style={style.heroHeader}>
+
             <Text style={style.heroText}>Build your DreamDeck</Text>
             <Button title="View Cards" onPress={() => navigation.navigate('Home')}/>
-          </ImageBackground>
+
           
           <View style={style.comingSoon}>
             <Text style={style.comingSoonText}>Coming Soon...</Text>
