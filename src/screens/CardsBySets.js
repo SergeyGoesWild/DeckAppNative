@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, StyleSheet, Image, Button } from 'react-native';
 import BoosterOpener from '../components/BoosterOpener';
-import * as colors from '../components/styles/colors'
+import { styles } from './../components/styles/CardsBySetsStyle';
 
 const CardsBySets = ({ route }) => {
   const { setId } = route.params;
@@ -50,24 +50,5 @@ const CardsBySets = ({ route }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-  },
-  cardContainer: {
-    flex: 1,
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.plainGrey,
-  },
-  image: {
-    width: 200,
-    height: 200,
-    resizeMode: 'contain',
-    alignSelf: 'center',
-  }
-});
 
 export default CardsBySets;
