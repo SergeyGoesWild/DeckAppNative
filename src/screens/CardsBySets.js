@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, StyleSheet, Image, Button } from 'react-native';
 import BoosterOpener from '../components/BoosterOpener';
+import * as colors from '../components/styles/colors'
 
 const CardsBySets = ({ route }) => {
   const { setId } = route.params;
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: colors.plainGrey,
   },
   image: {
     width: 200,
