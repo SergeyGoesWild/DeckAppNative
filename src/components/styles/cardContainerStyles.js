@@ -3,12 +3,13 @@ import * as colors from './colors'
 
 export const style = StyleSheet.create({
   container: {
-    paddingHorizontal: 10,
+    flex: 1,
   },
   cardContainer: {
     flex: 1,
     margin: 10,
-    width: 35, 
+    width: '100%',
+    alignItems: 'center', 
   },
   cardImage: {
     width: 200,
