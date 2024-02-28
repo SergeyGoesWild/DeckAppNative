@@ -213,8 +213,6 @@ const PokemonGame = () => {
             </View>
           </View>
   </Modal>
-
-
   <Modal
           visible={showComputerVictoryModal}
           animationType="slide"
