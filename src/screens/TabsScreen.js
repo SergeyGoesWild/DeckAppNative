@@ -11,7 +11,7 @@ const Tab = createMaterialTopTabNavigator();
 const TabsScreen = () => {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Search" component={HomeScreen} />
+      <Tab.Screen name="Search" component={HomeScreen}/>
       <Tab.Screen name="Decks" component={DecksScreen} />
       <Tab.Screen name="Sets" component={SetScreen}/>
       <Tab.Screen name='Battle' component={Battle}/>
