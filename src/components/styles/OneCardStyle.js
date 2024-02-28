@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
           padding: 10,
           backgroundColor: colors.white,
           borderBottomWidth: 1,
-          borderBottomColor: '#eee',
+          borderBottomColor: colors.bottomBorder,
         },
         text: {
           flex: 1,
