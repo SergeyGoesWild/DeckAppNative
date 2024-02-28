@@ -16,7 +16,7 @@ const CardsBySets = ({ route }) => {
         const cardsWithImages = enrichedCards.filter(card => card.image);
         setCards(cardsWithImages);
       } catch (error) {
-        console.error('Error fetching cards:', error);
+        throw new error('Error fetching cards:', error);
       }
     };
     fetchCards();
@@ -29,7 +29,7 @@ const CardsBySets = ({ route }) => {
       const cardDetails = await response.json();
       return { ...card, ...cardDetails };
     } catch (error) {
-      console.error('Error fetching card details:', error);
+      throw new error('Error fetching card details:', error);
     }
   };
 

@@ -102,6 +102,13 @@ const BoosterOpener = ({ cards, logo, symbol }) => {
     setBoosterVisible(false);
   };
 
+  const handleCloseBooster = () => {
+    setModalVisible(false);
+    setShowFront(false);
+    fadeAnim.setValue(0);
+    setBoosterVisible(true);
+  };
+
   const randomSelection = (cards, n) => {
     let result = [];
     let indices = new Set();
@@ -124,8 +131,6 @@ const BoosterOpener = ({ cards, logo, symbol }) => {
         url += '.png';
       }
       setImageURL(url);
-    } else {
-      
     }
   }, [cards]);
 
@@ -163,12 +168,12 @@ const BoosterOpener = ({ cards, logo, symbol }) => {
                 ))}
             </View>
             <View style={styles.buttonContainer}>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible); setShowFront(false); fadeAnim.setValue(0); setModalVisible(false); setBoosterVisible(true);}}>
-                    <Image source={closeIcon} style={styles.boutonImage} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => setShowFront(!showFront)}>
-                    <Image source={revealIcon} style={styles.boutonImage} />
-                </TouchableOpacity>
+              <TouchableOpacity onPress={handleCloseBooster}>
+                <Image source={closeIcon} style={styles.boutonImage} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setShowFront(!showFront)}>
+                <Image source={revealIcon} style={styles.boutonImage} />
+              </TouchableOpacity>
             </View>
             </Animated.View>
           )}
