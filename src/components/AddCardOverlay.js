@@ -20,33 +20,35 @@ function AddCardOverlay({ isVisible, onModalClose }) {
 
   return (
     <Modal
-      animationType="slide"
+      animationType="fade"
       transparent={true}
       visible={isVisible}
       onRequestClose={() => {
         onModalClose();
       }}
     >
-      <TouchableWithoutFeedback onPress={onModalClose}>
-        <View style={styles.centeredView}>
-          <TouchableOpacity activeOpacity={1}>
-            <View style={styles.modalView}>
-              <Text style={styles.label}>Adding to:</Text>
-              <ListOfDecks getValue={handleChange} />
-              <Pressable
-                onPress={() => {
-                  updateChosenDeck(valueFromList);
-                  readyOn();
-                  onModalClose();
-                }}
-                style={styles.button}
-              >
-                <Text style={styles.buttonText}>Add</Text>
-              </Pressable>
-            </View>
-          </TouchableOpacity>
-        </View>
-      </TouchableWithoutFeedback>
+      <View style={styles.overlay}>
+        <TouchableWithoutFeedback onPress={onModalClose}>
+          <View style={styles.centeredView}>
+            <TouchableOpacity activeOpacity={1}>
+              <View style={styles.modalView}>
+                <Text style={styles.label}>Adding to:</Text>
+                <ListOfDecks getValue={handleChange} />
+                <Pressable
+                  onPress={() => {
+                    updateChosenDeck(valueFromList);
+                    readyOn();
+                    onModalClose();
+                  }}
+                  style={styles.button}
+                >
+                  <Text style={styles.buttonText}>Add</Text>
+                </Pressable>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </TouchableWithoutFeedback>
+      </View>
     </Modal>
   );
 }

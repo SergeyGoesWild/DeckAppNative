@@ -12,6 +12,16 @@ const CardContainer = forwardRef(
       <FlashList
         ref={ref}
         data={cards}
+        keyExtractor={(item, index) => {
+          // console.log("key extractor card container ", item.id.toString());
+          console.log("key extractor card container ", index);
+          return `${item.id.toString()}-${index}`;
+        }}
+        contentContainerStyle={cardContainerStyles.container}
+        estimatedItemSize={220}
+        numColumns={2}
+        onEndReached={loadMoreCards}
+        onEndReachedThreshold={0.8}
         renderItem={({ item: card }) => (
           <TouchableOpacity
             onPress={() => handleImageClick(card)}
@@ -22,6 +32,7 @@ const CardContainer = forwardRef(
               style={cardContainerStyles.cardImage}
             />
             <TouchableOpacity
+              activeOpacity={0.8}
               onPress={() => {
                 updateChosenCard(card);
                 onAddCardClick();
@@ -32,12 +43,6 @@ const CardContainer = forwardRef(
             </TouchableOpacity>
           </TouchableOpacity>
         )}
-        keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={cardContainerStyles.container}
-        estimatedItemSize={220}
-        numColumns={2}
-        onEndReached={loadMoreCards}
-        onEndReachedThreshold={0.8}
       />
     );
   }
@@ -50,25 +55,39 @@ const cardContainerStyles = StyleSheet.create({
     flex: 1,
     margin: 10,
     width: 35,
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: 5,
   },
   cardImage: {
     width: "100%",
     height: 200,
     resizeMode: "contain",
+    zIndex: 5,
   },
   button: {
     backgroundColor: Colors.buttonBlue,
     color: Colors.white,
-    padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
+    position: "absolute",
+    width: 110,
+    height: 40,
+    zIndex: 10,
+    margin: 5,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   buttonText: {
     color: Colors.white,
-    fontSize: 12,
+    fontSize: 22,
     fontWeight: "bold",
-    //paddingHorizontal: 20,
   },
 });
 

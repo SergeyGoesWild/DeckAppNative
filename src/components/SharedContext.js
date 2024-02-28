@@ -25,12 +25,10 @@ export const SharedProvider = ({ children }) => {
   };
 
   const readyOn = () => {
-    console.log("Ready is ON");
     setReady(true);
   };
 
   const readyOff = () => {
-    console.log("Ready is OFF");
     setReady(false);
   };
 

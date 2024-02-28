@@ -51,4 +51,8 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     marginRight: 5,
   },
+  overlay: {
+    flex: 1,
+    backgroundColor: Colors.shadow,
+  },
 });

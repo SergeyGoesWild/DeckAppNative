@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, TouchableOpacity, Text } from "react-native";
+import { FlatList, TouchableOpacity, Text, View } from "react-native";
 import decksData from "../components/DataMock.js";
 import DeckDropdown from "../components/DeckDropdown.js";
 import AddDeckOverlay from "../components/AddDeckOverlay.js";
@@ -29,6 +29,7 @@ const DecksScreen = () => {
       deck={item}
       removeDeck={removeDeck}
       renameDeck={renameDeck}
+      removeCard={removeCard}
     />
   );
 
@@ -55,27 +56,27 @@ const DecksScreen = () => {
   };
 
   const addCardToDeck = (card, deckId) => {
-    const idToFind = decksState.findIndex((item) => item.id === deckId);
-    const deckToFind = decksState[idToFind];
-    card.idNative = card.id;
-    card.id = new Date().getTime();
-    deckToFind.deckContent = [...deckToFind.deckContent, card];
-    updateDeck(deckToFind);
+    const newDecksState = decksState.map((deck) => {
+      if (deck.id === deckId) {
+        const newCard = { ...card, id: new Date().getTime() };
+        const newDeckContent = [...deck.deckContent, newCard];
+        return { ...deck, deckContent: newDeckContent };
+      }
+      return deck;
+    });
+    setDecksState(newDecksState);
+    updateContextDeck(newDecksState);
   };
 
   const removeCard = (cardId, deckId) => {
     const indexDeckToFind = decksState.findIndex((item) => item.id === deckId);
-    const deckToFind = decksState[indexDeckToFind];
+    const deckToFind = decksState[indexDeckToFind].deckContent;
     const indexCardToFind = deckToFind.findIndex((item) => item.id === cardId);
     const newDeck = deckToFind
       .slice(0, indexCardToFind)
-      .concat(decksState.slice(indexCardToFind + 1));
-    const newDecksState = decksState
-      .slice(0, indexDeckToFind)
-      .concat([newDeck])
-      .concat(decksState.slice(indexDeckToFind + 1));
-    setDecksState(newDecksState);
-    updateContextDeck(newDecksState);
+      .concat(deckToFind.slice(indexCardToFind + 1));
+    decksState[indexDeckToFind].deckContent = newDeck;
+    updateDeck(decksState[indexDeckToFind]);
   };
 
   const updateDeck = (updatedDeck) => {
@@ -87,8 +88,7 @@ const DecksScreen = () => {
   };
 
   return (
-    <>
-      {/* TODO: input + inputState + mv to separate component like <NameForm onSubmit={(data) => addDeck(data)} /> */}
+    <View style={styles.container}>
       <AddDeckOverlay
         isVisible={isVisible}
         onModalClose={() => setIsVisible(false)}
@@ -97,6 +97,7 @@ const DecksScreen = () => {
           setIsVisible(false);
         }}
       />
+
       <TouchableOpacity
         onPress={() => setIsVisible(true)}
         style={styles.button}
@@ -108,7 +109,7 @@ const DecksScreen = () => {
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
       />
-    </>
+    </View>
   );
 };
 

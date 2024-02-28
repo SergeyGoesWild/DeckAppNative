@@ -65,13 +65,6 @@ const decksData = [
         image: "https://assets.tcgdex.net/en/base/basep/1",
       },
       {
-        id: 101,
-        idNative: "pop5-1",
-        localId: "1",
-        name: "Ho-Oh",
-        image: "https://assets.tcgdex.net/en/pop/pop5/1",
-      },
-      {
         id: 102,
         idNative: "pop9-1",
         localId: "1",

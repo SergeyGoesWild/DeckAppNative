@@ -2,8 +2,16 @@ import React from "react";
 import OneCard from "./OneCard";
 import { FlatList } from "react-native";
 
-function OneDeckContent({ deckContent }) {
-  const renderItem = ({ item }) => <OneCard key={item.id} name={item.name} />;
+function OneDeckContent({ deckContent, deckId, removeCard }) {
+  const renderItem = ({ item }) => (
+    <OneCard
+      key={item.id}
+      name={item.name}
+      cardId={item.id}
+      deckId={deckId}
+      removeCard={removeCard}
+    />
+  );
   return (
     <>
       <FlatList

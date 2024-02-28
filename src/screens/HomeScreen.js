@@ -76,6 +76,7 @@ const HomeScreen = () => {
         isVisible={popUpVisible}
         onModalClose={() => setPopUpVisible(false)}
       />
+
       <SearchBar onSearch={handleSearch} />
       {loading ? (
         <Text>Loading...</Text>
@@ -98,6 +99,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     paddingHorizontal: 10,
     paddingVertical: 20,
+    position: "relative",
+  },
+  empty: {
+    position: "absolute",
+    backgroundColor: Colors.shadow,
+    flex: 1,
   },
 });
 
