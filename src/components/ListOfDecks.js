@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
-import { StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSharedContext } from "./SharedContext";
+import { styles } from "./styles/ListOfDecks.style.js";
 
 const ListOfDecks = ({ getValue }) => {
   const { contextDeck } = useSharedContext();
@@ -39,30 +39,3 @@ const ListOfDecks = ({ getValue }) => {
 };
 
 export default ListOfDecks;
-
-const styles = StyleSheet.create({
-  dropdown: {
-    marginBottom: 25,
-    height: 50,
-    width: 150,
-    borderBottomColor: "gray",
-    borderBottomWidth: 0.5,
-  },
-  icon: {
-    marginRight: 10,
-  },
-  placeholderStyle: {
-    fontSize: 16,
-  },
-  selectedTextStyle: {
-    fontSize: 16,
-  },
-  iconStyle: {
-    width: 20,
-    height: 20,
-  },
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 16,
-  },
-});

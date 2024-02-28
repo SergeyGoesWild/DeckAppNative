@@ -12,11 +12,7 @@ const CardContainer = forwardRef(
       <FlashList
         ref={ref}
         data={cards}
-        keyExtractor={(item, index) => {
-          // console.log("key extractor card container ", item.id.toString());
-          console.log("key extractor card container ", index);
-          return `${item.id.toString()}-${index}`;
-        }}
+        keyExtractor={(item) => item.id}
         contentContainerStyle={cardContainerStyles.container}
         estimatedItemSize={220}
         numColumns={2}

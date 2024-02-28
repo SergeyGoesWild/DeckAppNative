@@ -64,9 +64,7 @@ const HomeScreen = () => {
   const handleImageClick = (card) => {
     navigation.navigate("FullSizeImage", { card: card.id });
   };
-  const plusClick = () => {
-    navigation.navigate("FullSizeImage", { card: card.id });
-  };
+
   const onAddCardClick = () => {
     setPopUpVisible(true);
   };
@@ -99,12 +97,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     paddingHorizontal: 10,
     paddingVertical: 20,
-    position: "relative",
-  },
-  empty: {
-    position: "absolute",
-    backgroundColor: Colors.shadow,
-    flex: 1,
   },
 });
 
