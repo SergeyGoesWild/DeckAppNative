@@ -10,7 +10,10 @@ const Tab = createMaterialTopTabNavigator();
 
 const TabsScreen = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+    screenOptions={{
+      tabBarInactiveTintColor: 'black',
+    }}>
       <Tab.Screen name="Search" component={HomeScreen}/>
       <Tab.Screen name="Decks" component={DecksScreen} />
       <Tab.Screen name="Sets" component={SetScreen}/>
