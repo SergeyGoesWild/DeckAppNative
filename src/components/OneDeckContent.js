@@ -3,7 +3,7 @@ import OneCard from "./OneCard";
 import { FlatList } from "react-native";
 
 function OneDeckContent({ deckContent }) {
-  const renderItem = ({ item }) => <OneCard key={item.id} name={item.name} />;
+  const renderItem = ({ item }) => <OneCard key={item.id} name={item.name} image={item.image} />;
   return (
     <>
       <FlatList
