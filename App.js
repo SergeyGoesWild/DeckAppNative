@@ -28,7 +28,7 @@ const App = () => {
           ),
         })}
       >
-        <Stack.Screen name="First" component={FirstScreen} />
+        <Stack.Screen name="First" component={FirstScreen}  options={{ headerShown: false }}/>
         <Stack.Screen name="Pokemon Decks" component={TabsScreen} />
         <Stack.Screen name="FullSizeImage" component={FullSizeImageScreen} />
         <Stack.Screen name="Error" component={ErrorScreen} />
