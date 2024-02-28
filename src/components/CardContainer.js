@@ -20,7 +20,7 @@ const CardContainer = forwardRef(({ cards, loadMoreCards }, ref) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={style.container}>
     <FlashList
      ref={ref} 
       data={cards}
@@ -44,12 +44,7 @@ const CardContainer = forwardRef(({ cards, loadMoreCards }, ref) => {
 
 const cardContainerStyles = StyleSheet.create({
   container: {
-    paddingHorizontal: 10,
-  },
-  cardImage: {
-    width: 200,
-    height: 200,
-    resizeMode: 'contain',
+  padding: 10,
   },
 });
 

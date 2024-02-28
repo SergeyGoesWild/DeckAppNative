@@ -205,7 +205,7 @@ const PokemonGame = () => {
           >
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
-            <Image source={require('../../assets/comwinsprite.png')} style={styles.sprite}/>
+            <Image source={require('../../assets/comwingif.gif')} style={styles.sprite}/>
             <Animatable.Image animation="slideInDown" iterationCount='infinite' direction="alternate" source={require('../../assets/youlost.png')} style={styles.modalResult}/>
           <TouchableOpacity style={styles.modalButton} onPress={resetGame}>
             <Text style={styles.buttonText}>Play Again</Text>
@@ -222,7 +222,7 @@ const PokemonGame = () => {
           >
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
-            <Image source={require('../../assets/playerwinsprite.png')} style={styles.sprite}/>
+            <Image source={require('../../assets/playwingif.gif')} style={styles.sprite}/>
             <Animatable.Image animation="slideInDown" iterationCount='infinite' direction="alternate" source={require('../../assets/youwon.png')} style={styles.modalResult}/>
           <TouchableOpacity style={styles.modalButton} onPress={resetGame}>
             <Text style={styles.buttonText}>Play Again</Text>

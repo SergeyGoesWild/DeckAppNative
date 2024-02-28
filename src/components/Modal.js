@@ -1,7 +1,8 @@
 import React from 'react';
-import { Modal, View, StyleSheet, Button } from 'react-native';
+import { Modal, View, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import TabComponent from './TabComponent';
 import * as colors from './styles/colors'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const ModalComponent = ({ visible, closeModal, selectedCard }) => {
   return (
@@ -12,7 +13,9 @@ const ModalComponent = ({ visible, closeModal, selectedCard }) => {
       onRequestClose={closeModal}
     >
       <View style={styles.modalContainer}>
-        <Button title='Close' onPress={closeModal}/>
+      <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+          <Icon name="times" size={24} color="black" />
+        </TouchableOpacity>
         {selectedCard && (
           <TabComponent card={selectedCard} />
         )}
@@ -28,6 +31,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.shadow,
     padding: 20,
+  },
+  closeButton: {
+    backgroundColor: colors.white,
+    padding: 5,
+    borderRadius: 5,
+    right: 150,
   },
 });
 
