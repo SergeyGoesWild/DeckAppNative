@@ -3,8 +3,8 @@ import * as colors from '../styles/colors'
 
 const styles = StyleSheet.create({
     renderCost : {
-      height: 60,
-      width: 60,
+      height: 40,
+      width: 40,
       resizeMode: 'cover',
     },
     button: {

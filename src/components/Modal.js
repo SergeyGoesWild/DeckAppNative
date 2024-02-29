@@ -14,7 +14,7 @@ const ModalComponent = ({ visible, closeModal, selectedCard }) => {
     >
       <View style={styles.modalContainer}>
       <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
-          <Icon name="times" size={24} color="black" />
+          <Icon name="times" size={20} color="white" />
         </TouchableOpacity>
         {selectedCard && (
           <TabComponent card={selectedCard} />
@@ -33,10 +33,13 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   closeButton: {
-    backgroundColor: colors.white,
-    padding: 5,
-    borderRadius: 5,
+    backgroundColor: 'transparent',
+    padding: 10,
+    margin: 10,
+    borderRadius: 50,
     right: 150,
+    borderWidth: 1,
+    borderColor: colors.white,
   },
 });
 
