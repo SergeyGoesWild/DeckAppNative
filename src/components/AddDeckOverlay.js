@@ -52,7 +52,7 @@ function AddDeckOverlay({ isVisible, onModalClose, onAddDeckPress }) {
                         const deck = {
                           id: idDeck,
                           name: inputState,
-                          avatar: require("../../assets/psy.png"),
+                          avatar: require("../../assets/poke_ball.jpg"),
                           deckContent: [],
                         };
                         setIdDeck(idDeck + 1);
