@@ -6,7 +6,7 @@ import { styles } from "./styles/DeckDropdown.style.js";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import * as Colors from "./styles/colors.js";
 
-function DeckDropdown({ deck, removeDeck, renameDeck }) {
+function DeckDropdown({ deck, removeDeck, renameDeck, removeCard }) {
   const [expanded, setExpanded] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [deckName, setDeckName] = useState(deck.name);
@@ -78,7 +78,11 @@ function DeckDropdown({ deck, removeDeck, renameDeck }) {
         setEditMode(true);
       }}
     >
-      <OneDeckContent deckContent={deck.deckContent} />
+      <OneDeckContent
+        deckContent={deck.deckContent}
+        deckId={deck.id}
+        removeCard={removeCard}
+      />
     </ListItem.Accordion>
   );
 }

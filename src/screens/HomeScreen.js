@@ -4,16 +4,17 @@ import SearchBar from "../components/SearchBar";
 import CardContainer from "../components/CardContainer";
 import { useNavigation } from "@react-navigation/native";
 import * as Colors from "../components/styles/colors";
+import AddCardOverlay from "../components/AddCardOverlay";
 
 const HomeScreen = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [allCards, setAllCards] = useState([]); 
-  const [displayedCards, setDisplayedCards] = useState([]); 
+  const [allCards, setAllCards] = useState([]);
+  const [displayedCards, setDisplayedCards] = useState([]);
   const [loading, setLoading] = useState(false);
   const [offset, setOffset] = useState(0);
-  const cardsPerPage = 50; 
+  const cardsPerPage = 50;
   const flashListRef = useRef(null);
-
+  const [popUpVisible, setPopUpVisible] = useState(false);
   const navigation = useNavigation();
 
   const fetchAllCards = async () => {
@@ -30,7 +31,7 @@ const HomeScreen = () => {
           imageUrlHi: `${card.image}/high.webp`,
         }));
       setAllCards(filteredData);
-      setDisplayedCards(filteredData.slice(0, cardsPerPage)); 
+      setDisplayedCards(filteredData.slice(0, cardsPerPage));
       setOffset(cardsPerPage);
     } catch (error) {
       throw new Error("Error fetching cards:", error);
@@ -65,13 +66,27 @@ const HomeScreen = () => {
     navigation.navigate("FullSizeImage", { card: card.id });
   };
 
+  const onAddCardClick = () => {
+    setPopUpVisible(true);
+  };
   return (
     <View style={styles.container}>
+      <AddCardOverlay
+        isVisible={popUpVisible}
+        onModalClose={() => setPopUpVisible(false)}
+      />
+
       <SearchBar onSearch={handleSearch} />
       {loading ? (
         <Text>Loading...</Text>
       ) : (
-        <CardContainer ref={flashListRef} cards={displayedCards} handleImageClick={handleImageClick} loadMoreCards={loadMoreCards} />
+        <CardContainer
+          ref={flashListRef}
+          cards={displayedCards}
+          handleImageClick={handleImageClick}
+          loadMoreCards={loadMoreCards}
+          onAddCardClick={onAddCardClick}
+        />
       )}
     </View>
   );
