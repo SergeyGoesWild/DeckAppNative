@@ -21,26 +21,34 @@ Ensure you have Node.js, npm (or Yarn), Expo, and an IDE/editor installed on you
 
 Clone the repo
 
+```
 $ git clone git@github.com:SergeyGoesWild/DeckAppNative.git
+```
 
  Install NPM packages
 
+```
 $ npm install
+```
 
 or, if using Yarn,
 
+```
 $ yarn install
+```
 
  Running the App
 
 Launch the app by running the following command in your terminal:
 
+```
 $ npm start
-
+```
 or, if using Yarn,
 
+```
 $ yarn start
-
+```
 
 ## Usage
 
