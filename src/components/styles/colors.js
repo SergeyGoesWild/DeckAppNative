@@ -11,3 +11,4 @@ export const shadowWhite = 'rgba(255, 255, 255, 0.2)';
 
 export const pokeYellow = '#FFCC01';
 export const pokeBlue = '#152A60';
+export const bottomBorder = '#eee';
