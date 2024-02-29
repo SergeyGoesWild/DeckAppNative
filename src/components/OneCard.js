@@ -1,20 +1,21 @@
 import React from "react";
-import { ListItem } from "@rneui/themed";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { View, Text, Image, StyleSheet } from "react-native";
+import { styles } from "./../components/styles/OneCardStyle";
 
-function OneCard({ name, cardId, deckId, removeCard }) {
+function OneCard({ name, image }) {
+  const imageUrl = `${image}/low.webp`;
+
   return (
-    <TouchableOpacity
-      onLongPress={() => {
-        removeCard(cardId, deckId);
-      }}
-    >
-      <ListItem bottomDivider>
-        <ListItem.Content>
-          <ListItem.Title>{name}</ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
-    </TouchableOpacity>
+    <View style={styles.card}>
+      <Text style={styles.text}>{name}</Text>
+      <View style={styles.imageContainer}>
+        <Image
+          source={{ uri: imageUrl }}
+          style={styles.image}
+          resizeMode="cover"
+        />
+      </View>
+    </View>
   );
 }
 

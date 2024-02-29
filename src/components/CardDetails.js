@@ -1,10 +1,30 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
-import * as Colors from "../components/styles/colors";
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, Text, Image, ScrollView, FlatList } from 'react-native';
+import style from './styles/cardDetailsStyles'
+import AttackCost from './AttackCost';
+import * as Animatable from 'react-native-animatable';
+import { costTypeImages, typesImages } from './imageData';
 
 const CardDetails = ({ card }) => {
   const [cardDetails, setCardDetails] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  
+  const renderCostImage = (costType) => {
+    const imageUrl = costTypeImages[costType];
+    if (imageUrl) {
+      return <Image style={style.renderCost} source={imageUrl} />;
+    }
+    return null;
+  };
+
+  const renderTypesImage = (pokeType) => {
+    const imageUrl = typesImages[pokeType];
+    if (imageUrl) {
+      return <Image style={style.renderType} source={imageUrl} />;
+    }
+    return null;
+  };
 
   useEffect(() => {
     const fetchCardDetails = async () => {
@@ -26,49 +46,56 @@ const CardDetails = ({ card }) => {
 
   if (loading) {
     return (
-      <View style={styles.loadingContainer}>
+      <View style={style.loadingContainer}>
         <Text> Still loading</Text>
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView>
+    <View style={style.container}>
       {cardDetails ? (
         <>
-          <Text>{cardDetails.name}</Text>
-          <Text>{cardDetails.set.name}</Text>
-          <Text>{cardDetails.rarity}</Text>
-          <Text>{cardDetails.types}</Text>
-          <Text>{cardDetails.description}</Text>
-          <Image
-            source={{ uri: `${cardDetails.image}/high.webp` }}
-            style={styles.image}
-          />
+        <Animatable.View animation="slideInDown" iterationCount={1} direction="alternate" style={style.typesContainer}>
+          {cardDetails.types.map((type, index) => (
+          <View key={index} style={style.typeItem}>
+                {renderTypesImage(type)}
+           </View>
+            ))}
+          </Animatable.View>
+          <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate" style={style.name}>{cardDetails.name}</Animatable.Text>
+          <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate" style={style.setname}>Set : {cardDetails.set.name}</Animatable.Text>
+          <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate" style={style.rarity}>{cardDetails.rarity}</Animatable.Text>
+          
+          {cardDetails.description && (
+        <>
+          <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate" style={style.title}>Description : </Animatable.Text>
+          <Animatable.View animation="slideInDown" iterationCount={1} direction="alternate" style={style.paragraph}>
+          <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate" style={style.description}>{cardDetails.description}</Animatable.Text>
+          </Animatable.View>
+        </>
+          )}
+          <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate" style={style.title}>Attacks: </Animatable.Text>
+          {cardDetails.attacks.map((attack, index) => (
+     <View key={index} style={style.attacks}>
+           <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate" style={style.attackName}>{attack.name}</Animatable.Text>
+    {attack.cost && (
+          <AttackCost cost={attack.cost} renderCostImage={renderCostImage} />
+    )}
+             <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate" style={style.attacks}>Effect:</Animatable.Text>
+             <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate" style={style.attacks}>{attack.effect}</Animatable.Text>
+    {attack.damage && <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate" style={style.attacks}>Damage: {attack.damage}</Animatable.Text>}
+      </View>
+    ))}
         </>
       ) : (
-        <Text>No details available</Text>
+        <Animatable.Text animation="slideInDown" iterationCount={1} direction="alternate">No details available</Animatable.Text>
       )}
     </View>
+    </ScrollView>
+
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.white,
-    paddingHorizontal: 10,
-    paddingVertical: 20,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  image: {
-    resizeMode: "center",
-    height: "100%",
-  },
-});
 
 export default CardDetails;

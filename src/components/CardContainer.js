@@ -1,45 +1,62 @@
 import React, { forwardRef } from "react";
-import { StyleSheet, Image, TouchableOpacity, Text } from "react-native";
+import { StyleSheet, Image, TouchableOpacity } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-import * as Colors from "./styles/colors.js";
+import style from "./styles/cardContainerStyles";
+import * as colors from "./styles/colors";
+import TabComponent from "./TabComponent";
+import ModalComponent from "./Modal";
 import { useSharedContext } from "./SharedContext";
 
 const CardContainer = forwardRef(
   ({ cards, handleImageClick, loadMoreCards, onAddCardClick }, ref) => {
+    const [modalVisible, setModalVisible] = useState(false);
+    const [selectedCard, setSelectedCard] = useState(null);
     const { updateChosenCard } = useSharedContext();
 
+    const openModal = (card) => {
+      setSelectedCard(card);
+      setModalVisible(true);
+    };
+
+    const closeModal = () => {
+      setModalVisible(false);
+    };
     return (
-      <FlashList
-        ref={ref}
-        data={cards}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={cardContainerStyles.container}
-        estimatedItemSize={220}
-        numColumns={2}
-        onEndReached={loadMoreCards}
-        onEndReachedThreshold={0.8}
-        renderItem={({ item: card }) => (
-          <TouchableOpacity
-            onPress={() => handleImageClick(card)}
-            style={cardContainerStyles.cardContainer}
-          >
-            <Image
-              source={{ uri: card.imageUrl }}
-              style={cardContainerStyles.cardImage}
-            />
+      <View style={style.container}>
+        <FlashList
+          ref={ref}
+          data={cards}
+          renderItem={({ item: card }) => (
             <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => {
-                updateChosenCard(card);
-                onAddCardClick();
-              }}
-              style={cardContainerStyles.button}
+              onPress={() => openModal(card)}
+              style={style.cardContainer}
             >
-              <Text style={cardContainerStyles.buttonText}> + </Text>
+              <Image source={{ uri: card.imageUrl }} style={style.cardImage} />
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => {
+                  updateChosenCard(card);
+                  onAddCardClick();
+                }}
+                style={cardContainerStyles.button}
+              >
+                <Text style={cardContainerStyles.buttonText}> + </Text>
+              </TouchableOpacity>
             </TouchableOpacity>
-          </TouchableOpacity>
-        )}
-      />
+          )}
+          keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={cardContainerStyles.container}
+          estimatedItemSize={220}
+          numColumns={2}
+          onEndReached={loadMoreCards}
+          onEndReachedThreshold={0.8}
+        />
+        <ModalComponent
+          visible={modalVisible}
+          closeModal={closeModal}
+          selectedCard={selectedCard}
+        />
+      </View>
     );
   }
 );

@@ -10,6 +10,7 @@ function OneDeckContent({ deckContent, deckId, removeCard }) {
       cardId={item.id}
       deckId={deckId}
       removeCard={removeCard}
+      image={item.image}
     />
   );
   return (
