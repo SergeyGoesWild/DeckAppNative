@@ -1,8 +1,8 @@
-import React, { forwardRef } from "react";
-import { StyleSheet, Image, TouchableOpacity } from "react-native";
+import React, { forwardRef, useState } from "react";
+import { StyleSheet, Image, TouchableOpacity, View, Text } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import style from "./styles/cardContainerStyles";
-import * as colors from "./styles/colors";
+import * as Colors from "./styles/colors";
 import TabComponent from "./TabComponent";
 import ModalComponent from "./Modal";
 import { useSharedContext } from "./SharedContext";
@@ -69,8 +69,6 @@ const cardContainerStyles = StyleSheet.create({
     margin: 10,
     width: 35,
     alignItems: "center",
-    justifyContent: "flex-end",
-    padding: 5,
   },
   cardImage: {
     width: "100%",
@@ -88,7 +86,7 @@ const cardContainerStyles = StyleSheet.create({
     width: 110,
     height: 40,
     zIndex: 10,
-    margin: 5,
+    //margin: 5,
     shadowColor: Colors.black,
     shadowOffset: {
       width: 0,
