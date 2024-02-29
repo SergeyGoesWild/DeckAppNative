@@ -10,39 +10,39 @@ Sets Tab: Explore Pokémon card sets to discover new cards and add them to your 
 Booster Opening: Experience the thrill of opening booster packs within the app, adding an exciting element of surprise to your card collection.
 Battle Simulator: Engage in simulated Pokémon battles in the Battle tab, where the outcome is determined by Pokémon types, mimicking the classic "rock, paper, scissors" game mechanics.
 
-# Getting Started
+## Getting Started
 
 To begin using Dream Deck, follow these simple installation instructions.
 
 Prerequisites
-Ensure you have Node.js, npm (or Yarn), and an IDE/editor installed on your system.
+Ensure you have Node.js, npm (or Yarn), Expo, and an IDE/editor installed on your system.
 
-# Installation
+### Installation
 
 Clone the repo
 
-git clone git@github.com:SergeyGoesWild/DeckAppNative.git
+$ git clone git@github.com:SergeyGoesWild/DeckAppNative.git
 
+ Install NPM packages
 
-Install NPM packages
-
-npm install
+$ npm install
 
 or, if using Yarn,
 
-yarn install
+$ yarn install
 
-Running the App
+ Running the App
+
 Launch the app by running the following command in your terminal:
 
-npm start
+$ npm start
 
 or, if using Yarn,
 
-yarn start
+$ yarn start
 
 
-# Usage
+## Usage
 
 Use Dream Deck to enhance your Pokémon card collecting and battling experience. Navigate through the tabs to search for cards, manage your decks, explore sets, open boosters, and simulate battles. Whether you're a seasoned collector or new to the world of Pokémon, Dream Deck offers something for everyone.
 
