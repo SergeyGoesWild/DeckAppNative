@@ -1,4 +1,5 @@
-![Simplon.co](https://raw.githubusercontent.com/SergeyGoesWild/DeckAppNative/readme/assets/DreamDeckLogoTransparent.png =250x250)
+<img src="https://raw.githubusercontent.com/SergeyGoesWild/DeckAppNative/readme/assets/DreamDeckLogoTransparent.png" width="48">
+
 # Dream Deck
 
 
