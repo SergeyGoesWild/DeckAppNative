@@ -1,6 +1,5 @@
-<img src="https://raw.githubusercontent.com/SergeyGoesWild/DeckAppNative/readme/assets/DreamDeckLogoTransparent.png" width="48">
 
-# Dream Deck
+# Dream Deck <img src="https://raw.githubusercontent.com/SergeyGoesWild/DeckAppNative/readme/assets/DreamDeckLogoTransparent.png" width="48">
 
 
 Welcome to Dream Deck, an innovative React Native application developed as a school project. Dream Deck is designed for Pokémon enthusiasts, offering a unique platform to search for Pokémon cards, manage decks, explore sets, open boosters, and engage in simulated Pokémon battles. Our app takes advantage of React Native's cross-platform capabilities to ensure a seamless and responsive experience on both iOS and Android devices.
