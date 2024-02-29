@@ -2,8 +2,11 @@ import { StyleSheet } from "react-native";
 import * as Colors from "./colors";
 
 export const style = StyleSheet.create({
-  container: {
+  superContainer: {
     flex: 1,
+  },
+  container: {
+    padding: 10,
   },
   cardContainer: {
     flex: 1,
@@ -55,6 +58,12 @@ export const style = StyleSheet.create({
     color: Colors.white,
     fontSize: 22,
     fontWeight: "bold",
+  },
+  scrollTopButton: {
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+    margin: 10,
   },
 });
 

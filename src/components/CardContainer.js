@@ -35,7 +35,7 @@ const CardContainer = forwardRef(
     };
 
     return (
-      <View style={style.container}>
+      <View style={style.superContainer}>
         <FlashList
           ref={ref}
           data={cards}
@@ -54,14 +54,14 @@ const CardContainer = forwardRef(
                   updateChosenCard(card);
                   onAddCardClick();
                 }}
-                style={cardContainerStyles.button}
+                style={style.button}
               >
-                <Text style={cardContainerStyles.buttonText}> + </Text>
+                <Text style={style.buttonText}> + </Text>
               </TouchableOpacity>
             </TouchableOpacity>
           )}
           keyExtractor={(item) => item.id.toString()}
-          contentContainerStyle={cardContainerStyles.container}
+          contentContainerStyle={style.container}
           estimatedItemSize={220}
           numColumns={2}
           onEndReached={loadMoreCards}
@@ -79,7 +79,7 @@ const CardContainer = forwardRef(
             color="grey"
             raised
             reverse
-            containerStyle={cardContainerStyles.scrollTopButton}
+            containerStyle={style.scrollTopButton}
             onPress={() => {
               ref.current.scrollToOffset({ offset: 0, animated: true });
             }}
