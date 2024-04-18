@@ -1,23 +1,26 @@
-import React from 'react';
-import { Modal, View, StyleSheet, Button, TouchableOpacity } from 'react-native';
-import TabComponent from './TabComponent';
-import * as colors from './styles/colors'
-import Icon from 'react-native-vector-icons/FontAwesome';
+import React from "react";
+import {
+  Modal,
+  View,
+  StyleSheet,
+  Button,
+  TouchableWithoutFeedback,
+} from "react-native";
+import TabComponent from "./TabComponent";
+import * as colors from "./styles/colors";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const ModalComponent = ({ visible, closeModal, selectedCard }) => {
   return (
     <Modal
-      animationType="slide"
-      transparent={false}
+      animationType="fade"
+      transparent={true}
       visible={visible}
       onRequestClose={closeModal}
     >
       <View style={styles.modalContainer}>
-      <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
-          <Icon name="times" size={20} color="white" />
-        </TouchableOpacity>
         {selectedCard && (
-          <TabComponent card={selectedCard} />
+          <TabComponent card={selectedCard} closeModal={closeModal} />
         )}
       </View>
     </Modal>
@@ -27,13 +30,13 @@ const ModalComponent = ({ visible, closeModal, selectedCard }) => {
 const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.shadow,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.shadowStrong,
     padding: 20,
   },
   closeButton: {
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     padding: 10,
     margin: 10,
     borderRadius: 50,
